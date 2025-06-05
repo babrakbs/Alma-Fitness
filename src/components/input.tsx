@@ -1,0 +1,239 @@
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import CalendarIcon from '../assets/icons/CalendarIcon.svg';
+import {colors, fontFamily} from '../constants';
+// import DropdownIcon from '../assets/icons/DropDown_icon.svg';
+
+interface InputProps {
+  placeholder: string;
+  showLeftIcon?: boolean;
+  showRighIcon?: boolean;
+  leftSVGIcon?: any;
+  rightSVGIcon?: any;
+  type?: string;
+  inputBG?: string;
+  onChangeText?: (value: string) => void;
+  numberoflines?: number;
+  textalignvertical?: boolean;
+  secureTextEntry: false;
+  rightIconPress?: (value: string) => void;
+  value?: any;
+  error: string;
+  errorColor: string;
+}
+
+const Input: React.FC<InputProps> = ({
+  placeholder,
+  showLeftIcon,
+  showRighIcon,
+  leftSVGIcon: LeftSVGIcon,
+  rightSVGIcon: RightSVGIcon,
+  type = 'text',
+  inputBG = '#FFFFFF',
+  onChangeText,
+  numberoflines,
+  textalignvertical = false,
+  customStyles,
+  secureTextEntry,
+  rightIconPress,
+  value,
+  error,
+  errorColor,
+}) => {
+  const [selectedGender, setSelectedGender] = useState('');
+  const [dob, setDob] = useState('');
+  const [nameValue, setNameValue] = useState('');
+  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
+  console.log('value', value);
+
+  // Sync selectedGender, dob, and nameValue with value prop
+  useEffect(() => {
+    if (placeholder === 'Gender' && value !== selectedGender) {
+      setSelectedGender(value || '');
+    }
+    if (placeholder === 'Date of Birth') {
+      let formatted = value || '';
+      if (formatted && formatted.includes('T')) {
+        formatted = formatted.split('T')[0]; // Extract YYYY-MM-DD
+      }
+      if (formatted !== dob) {
+        setDob(formatted);
+      }
+    }
+    if (placeholder === 'Name' && value !== nameValue) {
+      setNameValue(value || '');
+    }
+  }, [value, placeholder]);
+
+  const handleConfirm = (date: Date) => {
+    const formattedDate = date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+    setDob(formattedDate);
+    setDatePickerVisible(false);
+    onChangeText?.(formattedDate);
+  };
+
+  return (
+    <>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: inputBG, marginBottom: error ? 0 : 10},
+        ]}>
+        {showLeftIcon && LeftSVGIcon}
+
+        {placeholder === 'Gender' ? (
+          <Picker
+            selectedValue={selectedGender}
+            onValueChange={value => {
+              setSelectedGender(value);
+              onChangeText?.(value);
+            }}
+            dropdownIconColor={colors.darkGray}
+            dropdownIconRippleColor={colors.darkGray}
+            style={[
+              styles.picker,
+              {
+                textAlign: 'left',
+                textAlignVertical: 'center',
+                marginHorizontal: -10,
+              },
+            ]}
+            itemStyle={{textAlign: 'left'}}>
+            <Picker.Item label="Gender" value="" />
+            <Picker.Item label="Male" value="Male" />
+            <Picker.Item label="Female" value="Female" />
+          </Picker>
+        ) : placeholder === 'Date of Birth' ? (
+          <TouchableOpacity
+            style={[styles.inputField, {height: 50, paddingTop: 12}]}
+            onPress={() => setDatePickerVisible(true)}>
+            <Text style={dob ? styles.inputText : styles.placeholderText}>
+              {dob || 'Date of Birth'}
+            </Text>
+          </TouchableOpacity>
+        ) : placeholder === 'Name' ? (
+          <TextInput
+            placeholderTextColor={colors.darkWhite}
+            placeholder={placeholder}
+            style={
+              customStyles
+                ? customStyles
+                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
+            }
+            secureTextEntry={secureTextEntry ? secureTextEntry : false}
+            onChangeText={text => {
+              setNameValue(text);
+              onChangeText?.(text);
+            }}
+            numberOfLines={numberoflines || 1}
+            textAlignVertical={textalignvertical ? 'top' : 'auto'}
+            multiline={textalignvertical}
+            value={nameValue}
+          />
+        ) : (
+          <TextInput
+            placeholderTextColor={colors.darkWhite}
+            placeholder={placeholder}
+            style={
+              customStyles
+                ? customStyles
+                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
+            }
+            secureTextEntry={secureTextEntry ? secureTextEntry : false}
+            onChangeText={onChangeText}
+            numberOfLines={numberoflines || 1}
+            textAlignVertical={textalignvertical ? 'top' : 'auto'}
+            multiline={textalignvertical}
+            value={value}
+          />
+        )}
+
+        {placeholder === 'Date of Birth' && (
+          <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
+            <CalendarIcon width={20} height={20} />
+          </TouchableOpacity>
+        )}
+
+        {showRighIcon && RightSVGIcon && (
+          <TouchableOpacity onPress={rightIconPress}>
+            <RightSVGIcon />
+          </TouchableOpacity>
+        )}
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={() => setDatePickerVisible(false)}
+        />
+      </View>
+      {error ? (
+        <Text
+          allowFontScaling={false}
+          style={[styles.error, {color: errorColor || colors.error}]}>
+          {error}
+        </Text>
+      ) : null}
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 26,
+    // marginBottom: 10,
+    backgroundColor: '#EFEFEB',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    // height: 50,
+    justifyContent: 'space-between',
+  },
+  inputField: {
+    flex: 1,
+    color: colors.black,
+    fontFamily: fontFamily.regular,
+    fontSize: 16,
+  },
+  inputText: {
+    color: colors.black,
+    fontFamily: fontFamily.regular,
+    fontSize: 16,
+  },
+  placeholderText: {
+    color: colors.darkWhite,
+    fontFamily: fontFamily.regular,
+    fontSize: 16,
+  },
+  pickerContainer: {
+    flex: 1,
+    textAlign: 'center',
+    // justifyContent: 'space-around',
+    // alignItems:'flex-start',
+    // height: '100%',
+  },
+  picker: {
+    width: '105%',
+    height: 50,
+    // marginRight:10,
+    color: colors.darkWhite,
+  },
+  error: {
+    fontSize: 14,
+    color: colors.error,
+    textAlign: 'left',
+    paddingHorizontal: 10,
+    // marginTop: 4,
+    marginVertical: 10,
+  },
+});
+
+export default Input;

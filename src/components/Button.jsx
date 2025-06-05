@@ -1,0 +1,180 @@
+import {
+  ActivityIndicator,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React from 'react';
+import {colors, fontFamily} from '../constants';
+
+const Button = ({
+  text = 'Button',
+  theme = 'blackWhite',
+  widthSize = 'large',
+  borderLess = true,
+  textBold = true,
+  handleClick,
+  fontSize,
+  marginTop = 0,
+  disabled = false,
+  rounded = 65,
+  transparent = false,
+  deleteBtn = false,
+  loading,
+}) => {
+  return (
+    <Pressable
+      onPress={handleClick}
+      style={[
+        styles.buttonContainer,
+        styles[`${theme}`]?.button,
+        styles?.widthSize[widthSize],
+        !borderLess && [
+          styles?.border,
+          {borderColor: theme === 'gray' ? colors.darkWhite : colors.black},
+        ],
+        disabled && styles.disabled,
+        {marginTop: marginTop},
+        {borderRadius: rounded},
+        transparent && {backgroundColor: 'rgba(245, 249, 255, 0.4)'},
+        deleteBtn && {backgroundColor: colors.red},
+      ]}
+      disabled={disabled}>
+      {loading ? (
+        <ActivityIndicator
+          style={{
+            flex: 1,
+            alignSelf: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          size="small"
+          color={colors.white}
+        />
+      ) : (
+        <Text
+          style={[
+            styles.textStyle,
+            styles[`${theme}`].text,
+            textBold ? styles?.boldText : styles?.nonBold,
+            {fontSize: fontSize && fontSize},
+            transparent && {color: colors.white},
+          ]}>
+          {text}
+        </Text>
+      )}
+    </Pressable>
+  );
+};
+
+export default Button;
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    height: 45,
+    width: '90%',
+    padding: 0,
+    elevation: 5,
+  },
+  blackWhite: {
+    button: {
+      backgroundColor: colors.black,
+    },
+    text: {
+      color: colors.white,
+      fontWeight: '500',
+      fontSize: 16,
+      fontFamily: fontFamily.medium,
+    },
+  },
+  gray: {
+    button: {
+      backgroundColor: colors.white,
+      borderColor: colors.darkWhite,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.darkWhite,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  grayWhite: {
+    button: {
+      backgroundColor: colors.black,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.white,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  outline: {
+    button: {
+      backgroundColor: 'transparent',
+      borderWidth: 1,
+      borderColor: colors.white,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  whiteBlack: {
+    button: {
+      backgroundColor: colors.white,
+      borderColor: colors.black,
+      borderWidth: 1,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.black,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  textStyle: {
+    margin: 'auto',
+    fontSize: 18,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  widthSize: {
+    large: {
+      width: '100%',
+    },
+    large2: {
+      width: '90%',
+    },
+    medium: {
+      width: '65%',
+    },
+    xmedium: {
+      width: '50%',
+    },
+    small: {
+      width: '41%',
+    },
+    xsmall: {
+      width: '35%',
+    },
+  },
+  border: {
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  boldText: {
+    fontWeight: '800',
+  },
+  nonBold: {
+    fontWeight: '500',
+  },
+  disabled: {
+    backgroundColor: '#DCDCDC',
+  },
+});

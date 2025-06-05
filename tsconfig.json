@@ -1,0 +1,13 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json"
+}
+
+
+
+// {
+//   "extends": "@react-native/typescript-config/tsconfig.json",
+//   "include": [
+//     "src", // Adjust this path based on your project's structure
+//     "" // Include the directory where svg.d.ts is located
+//   ]
+// }

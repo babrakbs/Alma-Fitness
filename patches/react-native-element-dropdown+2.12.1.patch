@@ -1,0 +1,35 @@
+diff --git a/node_modules/react-native-element-dropdown/.index.tsx.swp b/node_modules/react-native-element-dropdown/.index.tsx.swp
+new file mode 100644
+index 0000000..22aad98
+Binary files /dev/null and b/node_modules/react-native-element-dropdown/.index.tsx.swp differ
+diff --git a/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx b/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
+index db976f5..905b7b6 100644
+--- a/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
++++ b/node_modules/react-native-element-dropdown/src/components/Dropdown/index.tsx
+@@ -25,7 +25,7 @@ import {
+   Modal,
+   StyleSheet,
+   Text,
+-  TouchableHighlight,
++  Pressable,
+   TouchableWithoutFeedback,
+   View,
+   ViewStyle,
+@@ -479,7 +479,7 @@ const DropdownComponent: <T>(
+         const selected = _isEqual(_get(item, valueField), isSelected);
+         _assign(item, { _index: index });
+         return (
+-          <TouchableHighlight
++          <Pressable
+             key={index.toString()}
+             testID={_get(item, itemTestIDField || labelField)}
+             accessible={!!accessibilityLabel}
+@@ -514,7 +514,7 @@ const DropdownComponent: <T>(
+                 </View>
+               )}
+             </View>
+-          </TouchableHighlight>
++          </Pressable>
+         );
+       },
+       [

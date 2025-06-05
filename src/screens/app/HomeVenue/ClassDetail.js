@@ -1,0 +1,1138 @@
+import {
+  Dimensions,
+  Image,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import moment from 'moment';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import Header from '../../../components/header';
+import {ScrollView} from 'react-native-gesture-handler';
+import AlmaIconSm from '../../../assets/icons/AlmaIconSm';
+import AlmaXSIcon from '../../../assets/icons/AlmaXSIcon';
+import TiltRectangleIcon from '../../../assets/icons/PersonGray.svg';
+import ProfileAvatarImage from '../../../assets/icons/ProfileCoverAvatar';
+import MapSvgImage from '../../../assets/images/MapImageIcon';
+import MapPinIcon from '../../../assets/icons/MapIcon.svg';
+import Button from '../../../components/Button';
+import {useNavigation} from '@react-navigation/native';
+import Modal from 'react-native-modal';
+import {DangerwarningIcon, TickSuccessIcon} from '../../../constants/svgs';
+import {set} from 'date-fns';
+import {colors, fontFamily} from '../../../constants';
+import ArrowIcon from '../../../assets/icons/ArrowIcon';
+import BottomSheet from '@gorhom/bottom-sheet';
+import MessageIconScreen from '../../../components/MessageIconScreen';
+import BookingComponent from '../../../components/BookingComponent';
+import axiosInstance from '../../../helper/axiosInstance';
+import {
+  CardField,
+  StripeProvider,
+  useConfirmPayment,
+  useStripe,
+} from '@stripe/stripe-react-native';
+import {useSelector} from 'react-redux';
+import {ToastAndroid, Platform, Alert, ActivityIndicator} from 'react-native'; // Add this import for toast
+import CustomBottomSheet from '../../../components/CustomBottomSheet';
+import StripePaymentSheet from '../../../components/StripePaymentSheet';
+import BlueBgComponent from '../../../components/BlueBgComponent';
+import CrossCircleIcon from '../../../assets/icons/crossCircle';
+
+// const StipePayment = ({clientSecret, onSuccess}) =>{
+//   console.log('clientSecret', clientSecret);
+
+//   const {confirmPayment, loading} = useConfirmPayment();
+//   const [cardDetails, setCardDetails] = useState();
+//   const [errorMsg, setErrorMsg] = useState(""); // Add error state
+//   const user = useSelector((state)=>state.reducer.user);
+//   console.log('user', user?.email);
+//   const handlePayPress = async () => {
+//     console.log('cardDetails', cardDetails);
+
+//     const {paymentIntent, error} = await confirmPayment(clientSecret, {
+//       paymentMethodType: 'Card',
+//       paymentMethodData: {
+//         email: user?.email
+//       },
+//     });
+
+//     if (error) {
+//       console.log('Payment confirmation error', error);
+//     } else if (paymentIntent) {
+//       console.log('Success from promise', paymentIntent);
+//       onSuccess();
+
+//     }
+//   };
+//   return (
+//     <View style={{ width:'100%', alignItems: 'center', justifyContent: 'center'}}>
+//       <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center', color: 'black', marginBottom: 10}}>Pay via card</Text>
+//       <CardField
+//                     postalCodeEnabled={false}
+//                     cardStyle={{
+//                       placeholderColor:  false ? '#EBF1F1': '#4D4D4D',
+//                       textColor:  false ?  '#EBF1F1': '#4D4D4D',
+//                       borderRadius: 30,
+//                       // fontFamily: fonts.regular,
+//                       backgroundColor: '#EBF1F1',
+//                     }}
+//                     style={{
+//                       height: 50,
+//                       width: '100%',
+//                       backgroundColor: '#EBF1F1',
+//                       marginBottom: 30,
+
+//                       // alignSelf: 'center'
+//                     }}
+
+//                   />
+//       {errorMsg ? (
+//         <Text style={{color:'red', textAlign:'center', marginBottom:10}}>{errorMsg}</Text>
+//       ) : null}
+//       <Button
+//         handleClick={handlePayPress}
+//         text={loading ? "Processing..." : "Pay"}
+//         disabled={loading}
+//         loading={loading}
+//         style={{
+//           marginTop: 10,
+//         }}
+//       />
+//     </View>
+//   );
+// }
+
+const ClassDetail = ({route}) => {
+  //   const screenWidth = Dimensions.get('window').width;
+  const {width: screenWidth, height} = useWindowDimensions();
+  // Remove all modal state variables
+  // const [cancelBookingModal, setCancelBookingModal] = useState(false);
+  // const [successBookingModal, setSuccessBookingModal] = useState(false);
+  // const [warningModal, setWarningModal] = useState(false);
+  // const [successCancelModal, setSuccessCancelModal] = useState(false);
+  // const [addedCalenderModal, setAddedCalenderModal] = useState(false);
+  const user = useSelector(state => state.reducer.user);
+  //   console.log('user', user?.email);
+  // Add refs for custom sheets
+  const successBookingSheetRef = useRef();
+  const cancelBookingSheetRef = useRef();
+  const warningSheetRef = useRef();
+  const successCancelSheetRef = useRef();
+  const addedCalendarSheetRef = useRef();
+  const classDetailRef = useRef();
+
+  const navigation = useNavigation();
+  const classId = route?.params?.id;
+  const [classDetails, setClassDetails] = useState([]);
+  const [statusBooked, setStatusBooked] = useState(false);
+  const [publishableKey, setPublishableKey] = useState(
+    process.env.Publishable_key,
+  );
+  // console.log('publishableKey', publishableKey);
+  // const fetchPublishableKey = async () => {
+  //   const key = await fetchKey(); // fetch key from your server here
+  //   setPublishableKey(key);
+  // };
+
+  // useEffect(() => {
+  //   fetchPublishableKey();
+  // }, []);
+  const [componentLoading, setComponentLoading] = useState(true);
+  const fetchClassDetails = async classId => {
+    try {
+      setComponentLoading(true);
+      const response = await axiosInstance.get(
+        `/api/venueClassDetail?class_schedule_id=${classId}`,
+      );
+      console.log('response class detaiks', response?.data?.data[0]);
+      setClassDetails(response?.data?.data[0]);
+      setComponentLoading(false);
+    } catch (error) {
+      setComponentLoading(false);
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (classId) {
+      fetchClassDetails(classId);
+    }
+    // Add a small delay to ensure the component is mounted
+    const timer = setTimeout(() => {
+      classDetailRef.current?.open();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [classId]);
+
+  const [clientSecret, setClientSecret] = useState('');
+  const [showResult, setShowResult] = useState(null); // "success" | "fail" | null
+  const [loading, setLoading] = useState(false);
+  const {initPaymentSheet, presentPaymentSheet} = useStripe();
+  const [showStripeOverlay, setShowStripeOverlay] = useState(false);
+
+  const bookSubscription = async () => {
+    if (classDetails?.price === 0) {
+      // Show toast for free item
+      if (Platform.OS === 'android') {
+        ToastAndroid.show('This class is free!', ToastAndroid.SHORT);
+      } else {
+        Alert.alert('Free Class', 'This class is free!');
+      }
+      return;
+    }
+    try {
+      const response = await axiosInstance.post(`/api/bookSchedule`, {
+        product_name: classDetails?.class_title,
+        class_schedule_id: classDetails?.schedule_id,
+        class_id: classDetails?.class_id,
+        venue_id: classDetails?.venue_id,
+        class_venue_id: classDetails?.class_venue_id,
+        amount: classDetails?.price,
+      });
+      const secret = response?.data?.data?.clientSecret;
+      // console.log('clientSecret', secret);
+      if (secret) {
+        setClientSecret(secret);
+        console.log('about to open ==========>');
+        const {error: initError} = await initPaymentSheet({
+          paymentIntentClientSecret: secret,
+          merchantDisplayName: 'Alma Fitness',
+          billingDetailsCollectionConfiguration: {
+            address: 'never',
+            name: 'never',
+            email: 'never',
+            phone: 'never',
+          },
+          defaultBillingDetails: {
+            email: user?.email,
+          },
+          appearance: {
+            colors: {
+              primary: '#000000',
+              primaryText: '#000000',
+            },
+            shapes: {
+              borderRadius: 32,
+            },
+          },
+        });
+        if (initError) {
+          setShowResult('fail');
+          setLoading(false);
+          return;
+        }
+        const {error: presentError} = await presentPaymentSheet();
+        setLoading(false);
+        if (presentError) {
+          setShowResult('fail');
+        } else {
+          setShowResult('success');
+          setStatusBooked(true);
+        }
+      }
+    } catch (error) {
+      console.error('Booking error:', error);
+      setShowResult('fail');
+    }
+  };
+
+  const handlePaymentSuccess = () => {
+    setClientSecret('');
+    setShowStripeOverlay(false);
+    setStatusBooked(true);
+  };
+
+  return (
+    <>
+      {/* Stripe Payment Sheet Modal */}
+      {/* <Modal
+      isVisible={showStripeOverlay}
+      onBackdropPress={() => setShowStripeOverlay(false)}
+      style={{margin: 0, justifyContent: 'center', alignItems: 'center'}}
+      useNativeDriver
+    >
+      <View style={{backgroundColor: 'white', borderRadius: 16, padding: 20, width: '90%'}}>
+        <StripePaymentSheet
+          publishableKey={publishableKey}
+          clientSecret={clientSecret}
+          loading={loading}
+          setLoading={setLoading}
+          onSuccess={() => {
+            setShowStripeOverlay(false);
+            successBookingSheetRef.current?.open();
+            setStatusBooked(true);
+          }}
+          onCancel={() => setShowStripeOverlay(false)}
+        />
+      </View>
+    </Modal> */}
+      {/* Bottom Sheet for Stripe Payment */}
+      {componentLoading ? (
+        <ActivityIndicator
+          style={{height: '100%', justifyContent: 'center'}}
+          size="large"
+          color="#000"
+        />
+      ) : showResult ? (
+        showResult === 'success' ? (
+          <BlueBgComponent
+            heading="Booking Confirmed"
+            description={` ${classDetails?.class_title}`}
+            btnText="Continue"
+            onPressBtn={() => {
+              setShowResult(null);
+            }}
+            isIcon={true}
+            theme="blackWhite"
+            bottomText={
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: colors.white,
+                  textAlign: 'center',
+                  fontFamily: fontFamily.regular,
+                  fontWeight: '400',
+                }}>
+                Cancel at least 6 hours before the class to avoid fees. Scan the
+                QR code upon arrival to confirm attendance. Late cancellations
+                or no-shows will incur charges as per our policy.
+              </Text>
+            }
+            bottomButton={
+              <TouchableOpacity
+                style={{
+                  borderColor: colors.white,
+                  borderWidth: 1,
+                  borderRadius: 65,
+                  padding: 10,
+                  width: '100%',
+                  paddingHorizontal: '33%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => addedCalendarSheetRef.current?.open()}>
+                <Text
+                  style={{
+                    color: colors.white,
+                    fontWeight: '500',
+                    fontSize: 16,
+                    fontFamily: fontFamily.medium,
+                  }}>
+                  Add to Calendar
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+        ) : (
+          <BlueBgComponent
+            heading="Booking Failed"
+            description="Review your payment method and try again."
+            btnText="Change Payment Method"
+            isIcon={false}
+            onPressBtn={() => {
+              setShowResult(null);
+            }}
+            icon={<CrossCircleIcon />}
+            theme="blackWhite"
+            bottomButton={
+              <TouchableOpacity
+                style={{
+                  borderColor: colors.white,
+                  borderWidth: 1,
+                  borderRadius: 65,
+                  padding: 10,
+                  width: '100%',
+                  paddingHorizontal: '33%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => setShowResult(null)}>
+                <Text
+                  style={{
+                    color: colors.white,
+                    fontWeight: '500',
+                    fontSize: 16,
+                    fontFamily: fontFamily.medium,
+                  }}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            }
+          />
+        )
+      ) : (
+        <>
+          <View style={{flex: 1}}>
+            <View>
+              <View
+                id="image"
+                style={{
+                  overflow: 'hidden',
+                  backgroundColor: 'black',
+                }}>
+                <View
+                  style={{
+                    width: '95%',
+                    margin: 'auto',
+                    position: 'absolute',
+                    elevation: 10,
+                    zIndex: 10,
+                    left: 10,
+                  }}>
+                  <Header
+                    label={classDetails?.class_title}
+                    showArrow
+                    theme="black"
+                    venueId={classDetails?.venue_id}
+                    classId={classDetails?.class_id}
+                    isClass={true}
+                    initialIsFavourite={classDetails?.is_favourite}
+                    onFavouriteChanged={() => {
+                      fetchClassDetails(classId);
+                    }}
+                    showFavourite={true}
+                  />
+                </View>
+                <Image
+                  style={{width: '100%', height: 400}}
+                  source={{uri: classDetails?.image}}
+                />
+              </View>
+            </View>
+          </View>
+          <CustomBottomSheet
+            ref={classDetailRef}
+            snapPoints={['70%']}
+            enablePanDownToClose={false}
+            index={0}
+            hasPadding={false}
+            hasThumb={false}>
+            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+              <View
+                id="details"
+                style={{
+                  borderTopRightRadius: 24,
+                  borderTopLeftRadius: 24,
+                  backgroundColor: '#FFFFFF',
+                  paddingTop: 20,
+                }}>
+                <View
+                  style={{
+                    width: '90%',
+                    margin: 'auto',
+                  }}>
+                  <View style={{flexDirection: 'row', gap: 10}}>
+                    <Text
+                      style={{
+                        color: colors.black,
+                        fontFamily: fontFamily.medium,
+                        fontWeight: '500',
+                        fontSize: 17,
+                        marginBottom: 5,
+                      }}>
+                      {classDetails?.start_date
+                        ? `${moment(classDetails.start_date).format(
+                            'ddd D MMM',
+                          )}     ${moment(
+                            classDetails.start_time,
+                            'HH:mm:ss',
+                          ).format('HH:mm')} - ${moment(
+                            classDetails.end_time,
+                            'HH:mm:ss',
+                          ).format('HH:mm')}`
+                        : ''}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 28,
+                        fontWeight: '600',
+                        color: colors.black,
+                      }}>
+                      {classDetails?.class_title.trim()}
+                    </Text>
+
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}></View>
+                  </View>
+                  <View style={[styles.locationContainer, {marginTop: 20}]}>
+                    <MapPinIcon />
+                    <Text
+                      style={[
+                        styles.locationText,
+                        {marginLeft: 11, fontSize: 15.88},
+                      ]}>
+                      AREA Athens, 500m
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      marginTop: '4%',
+
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <TiltRectangleIcon />
+                      <View style={{marginHorizontal: 7}}>
+                        <Text
+                          style={{
+                            color: colors.darkWhite,
+                            fontWeight: '500',
+                            fontSize: 15.88,
+                            fontFamily: fontFamily.semiBold,
+                          }}>
+                          Available Spots
+                        </Text>
+                        <Text
+                          style={{
+                            fontWeight: '500',
+                            fontSize: 15.88,
+                            color: colors.black,
+                            fontFamily: fontFamily.semiBold,
+                          }}>
+                          7/10
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#F3F3F3',
+                    padding: 5,
+                    marginTop: 32,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 10,
+                    paddingHorizontal: 15,
+                    paddingVertical: 20,
+                    backgroundColor: '#FFFFFF',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={[styles.locationText, {fontSize: 16}]}>
+                    {classDetails?.description}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    backgroundColor: '#F3F3F3',
+                    padding: 5,
+                    marginTop: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 10,
+                    width: '100%',
+                    margin: 'auto',
+                    paddingHorizontal: 15,
+                    paddingVertical: 15,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    backgroundColor: '#FFFFFF',
+                    alignItems: 'center',
+                  }}>
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <ProfileAvatarImage />
+                    <Text
+                      style={{
+                        color: '#15161E',
+                        fontWeight: '500',
+                        fontSize: 18,
+                        marginHorizontal: 10,
+                      }}>
+                      Fitness First
+                    </Text>
+                  </View>
+
+                  <Pressable
+                    onPress={() => {
+                      navigation.navigate('VenueProfile');
+                    }}
+                    style={{
+                      width: 30,
+                      height: 37,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: 22,
+                    }}>
+                    <ArrowIcon />
+                  </Pressable>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#F3F3F3',
+                    padding: 5,
+                    marginTop: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: 10,
+                    width: '100%',
+                    margin: 'auto',
+                    backgroundColor: '#FFFFFF',
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    display: 'flex',
+                  }}>
+                  <View style={{width: '100%'}}>
+                    <View
+                      style={[
+                        styles.locationContainer,
+                        {justifyContent: 'space-between'},
+                      ]}>
+                      <Text
+                        style={[
+                          styles.locationText,
+                          {textDecorationLine: 'underline', marginLeft: 10},
+                        ]}>
+                        Ieros Kazika 6, 10331 Athens, Greece
+                      </Text>
+                      <Text
+                        style={[
+                          styles.locationText,
+                          {
+                            textDecorationLine: 'underline',
+                            marginRight: 10,
+                          },
+                        ]}>
+                        2km away
+                      </Text>
+                    </View>
+                    <Image
+                      style={[styles.image, {width: '100%'}]}
+                      resizeMode="contain"
+                      source={require('../../../assets/icons/Map.png')}
+                    />
+                  </View>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#F3F3F3',
+                    padding: 5,
+                    marginTop: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    width: '100%',
+                    margin: 'auto',
+                    marginTop: 10,
+                    marginBottom: 100,
+                    backgroundColor: 'white',
+                    padding: 20,
+                  }}>
+                  <Text
+                    style={[
+                      styles.modalTextTitle,
+                      {textAlign: 'left', fontSize: 18, fontWeight: 500},
+                    ]}>
+                    Cancellation Policy
+                  </Text>
+
+                  <View style={styles.sectionClass}>
+                    <Text
+                      style={{
+                        fontWeight: '600',
+                        fontSize: 16,
+                        color: '#202226',
+                        lineHeight: 24,
+                      }}>
+                      Late Cancellation
+                    </Text>
+                    <Text
+                      style={{
+                        fontWeight: '400',
+                        fontSize: 14,
+                        color: '#46515A',
+                        lineHeight: 24,
+                        fontFamily: 'Inter Tight, sans-serif',
+                        marginTop: 10,
+                      }}>
+                      Canceling your spot less than 6 hours before the booking
+                      starts will incur a €5 late cancellation fee. The
+                      remaining cost of the booking will be automatically
+                      refunded to your account for future use.
+                    </Text>
+                  </View>
+                  <View style={[styles.sectionClass, {marginBottom: 30}]}>
+                    <Text
+                      style={{
+                        fontWeight: '600',
+                        fontSize: 16,
+                        color: '#202226',
+                        lineHeight: 24,
+                      }}>
+                      No-Show
+                    </Text>
+                    <Text
+                      style={{
+                        fontWeight: '400',
+                        fontSize: 14,
+                        color: '#46515A',
+                        lineHeight: 24,
+                        fontFamily: 'Inter Tight, sans-serif',
+                        marginTop: 10,
+                      }}>
+                      Canceling your booking less than 1 hour before it starts,
+                      or failing to attend, will result in no refunds being
+                      issued.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </ScrollView>
+          </CustomBottomSheet>
+
+          <View
+            style={{
+              position: 'fixed',
+              left: 0,
+              right: 0,
+              bottom: 0,
+
+              paddingVertical: 20,
+              backgroundColor: '#fff', // Optional: for visibility
+            }}>
+            <View
+              style={{
+                paddingHorizontal: 20,
+                paddingBottom: 10,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-starts',
+              }}>
+              <Text
+                style={{
+                  fontWeight: 600,
+                  fontSize: 18,
+                  color: colors?.darkGray,
+                }}>
+                Total
+                {'\n'}
+                <Text
+                  style={{
+                    fontWeight: 600,
+                    fontSize: 11,
+                    color: colors?.darkGray,
+                  }}>
+                  excl VAT
+                </Text>
+              </Text>
+              <Text
+                style={{fontWeight: 600, fontSize: 18, color: colors?.black}}>
+                {classDetails?.price === 0
+                  ? 'Free'
+                  : '$' + classDetails?.price + '.00'}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+              }}>
+              <Button
+                widthSize="small"
+                handleClick={() => {
+                  addedCalendarSheetRef.current?.open();
+                }}
+                text={'Add to Calendar'}
+                textBold={false}
+                borderLess={false}
+                theme="gray"
+              />
+              <Button
+                widthSize="small"
+                handleClick={() => {
+                  if (statusBooked) {
+                    warningSheetRef.current?.open();
+                  } else {
+                    cancelBookingSheetRef.current?.open();
+                  }
+                }}
+                text={statusBooked ? 'Cancel Booking' : 'Book Now'}
+                textBold={false}
+                borderLess={false}
+                theme={statusBooked ? 'grayWhite' : 'blackWhite'}
+              />
+            </View>
+          </View>
+        </>
+      )}
+      {/* Bottom sheets are now outside the ScrollView */}
+      <CustomBottomSheet ref={successBookingSheetRef} snapPoints={['50']}>
+        <View style={[styles.modalContent]}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <TickSuccessIcon />
+          </View>
+          <Text style={styles.modalTextTitle}>Booking Successfull</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: '400',
+              color: '#202226',
+              textAlign: 'center',
+              lineHeight: 24,
+              marginVertical: 10,
+            }}>
+            Your booking for {classDetails?.workout_type} Techniques on{' '}
+            {classDetails?.start_date
+              ? `${moment(classDetails.start_date).format('D MMM')}`
+              : ''}
+            {classDetails?.start_time && classDetails?.end_time
+              ? ` from ${moment(classDetails.start_time, 'HH:mm:ss').format(
+                  'h:mm A',
+                )} to ${moment(classDetails.end_time, 'HH:mm:ss').format(
+                  'h:mm A',
+                )}`
+              : ''}
+            {classDetails?.start_date !== classDetails?.end_date
+              ? classDetails?.end_date
+                ? ` to ${moment(classDetails.end_date).format('D MMM')} `
+                : ''
+              : ''}
+            has been confirmed.
+          </Text>
+          <View
+            style={{
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              width: '20%',
+            }}>
+            <AlmaXSIcon />
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '600',
+                color: '#202226',
+                textAlign: 'center',
+                lineHeight: 24,
+              }}>
+              10
+            </Text>
+          </View>
+          <View style={{marginLeft: 80}}>
+            <Button
+              handleClick={() => {
+                successBookingSheetRef.current?.close();
+                setStatusBooked(true);
+              }}
+              text="Done"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'medium'}
+            />
+          </View>
+        </View>
+      </CustomBottomSheet>
+
+      <CustomBottomSheet ref={cancelBookingSheetRef} snapPoints={['60']}>
+        <View
+          style={{
+            width: '100%',
+            margin: 'auto',
+            marginTop: 10,
+            backgroundColor: 'white',
+          }}>
+          <Text
+            style={[
+              styles.modalTextTitle,
+              {textAlign: 'center', fontSize: 18, fontWeight: 500},
+            ]}>
+            Cancellation Policy
+          </Text>
+
+          <View style={styles.sectionClass}>
+            <Text
+              style={{
+                fontWeight: '600',
+                fontSize: 16,
+                color: '#202226',
+                lineHeight: 24,
+              }}>
+              Late Cancellation
+            </Text>
+            <Text
+              style={{
+                fontWeight: '400',
+                fontSize: 14,
+                color: '#46515A',
+                lineHeight: 24,
+                fontFamily: 'Inter Tight, sans-serif',
+                marginTop: 10,
+              }}>
+              Canceling your spot less than 6 hours before the booking starts
+              will incur a €5 late cancellation fee. The remaining cost of the
+              booking will be automatically refunded to your account for future
+              use.
+            </Text>
+          </View>
+          <View style={styles.sectionClass}>
+            <Text
+              style={{
+                fontWeight: '600',
+                fontSize: 16,
+                color: '#202226',
+                lineHeight: 24,
+              }}>
+              No-Show
+            </Text>
+            <Text
+              style={{
+                fontWeight: '400',
+                fontSize: 14,
+                color: '#46515A',
+                lineHeight: 24,
+                fontFamily: 'Inter Tight, sans-serif',
+                marginTop: 10,
+              }}>
+              Canceling your booking less than 1 hour before it starts, or
+              failing to attend, will result in no refunds being issued.
+            </Text>
+          </View>
+        </View>
+        <View style={{marginTop: 20}}>
+          <Button
+            handleClick={async () => {
+              cancelBookingSheetRef.current?.close();
+              await bookSubscription();
+            }}
+            text="Book"
+            textBold={true}
+            marginTop={15}
+            borderLess={false}
+            widthSize={'large'}
+          />
+        </View>
+        <View style={{marginBottom: 20}}>
+          <Button
+            handleClick={async () => {
+              cancelBookingSheetRef.current?.close();
+            }}
+            text="Cancel"
+            marginTop={10}
+            textBold={false}
+            theme="whiteBlack"
+            widthSize={'large'}
+          />
+        </View>
+      </CustomBottomSheet>
+
+      {/* Warning Bottom Sheet */}
+      <CustomBottomSheet ref={warningSheetRef} snapPoints={['40']}>
+        <View style={[styles.modalContent]}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <DangerwarningIcon />
+          </View>
+          <Text style={styles.modalTextTitle}>Warning</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: '400',
+              color: colors.darkWhite,
+              textAlign: 'center',
+              lineHeight: 24,
+              fontFamily: fontFamily.regular,
+              marginVertical: 10,
+            }}>
+            Are you sure you want to cancel this booking?
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              width: '100%',
+            }}>
+            <Button
+              handleClick={() => warningSheetRef.current?.close()}
+              text="Yes"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'small'}
+            />
+            <Button
+              handleClick={() => warningSheetRef.current?.close()}
+              text="No"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              theme="outline"
+              widthSize={'small'}
+            />
+          </View>
+        </View>
+      </CustomBottomSheet>
+
+      {/* Success Cancel Bottom Sheet */}
+      <CustomBottomSheet ref={successCancelSheetRef} snapPoints={['50']}>
+        <View style={[styles.modalContent]}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+            <TickSuccessIcon />
+          </View>
+          <Text style={styles.modalTextTitle}>Booking Cancelled</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: '400',
+              color: '#202226',
+              textAlign: 'center',
+              lineHeight: 24,
+              marginVertical: 10,
+            }}>
+            Your booking has been cancelled successfully.
+          </Text>
+          <View style={{marginLeft: 80}}>
+            <Button
+              handleClick={() => successCancelSheetRef.current?.close()}
+              text="Done"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'medium'}
+            />
+          </View>
+        </View>
+      </CustomBottomSheet>
+
+      {/* Added Calendar Bottom Sheet */}
+      <CustomBottomSheet ref={addedCalendarSheetRef} snapPoints={['30']}>
+        <View style={[styles.modalContent]}>
+          <Text style={styles.modalTextTitle}>Added to Calendar</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: '400',
+              color: '#202226',
+              textAlign: 'center',
+              lineHeight: 24,
+              marginVertical: 10,
+            }}>
+            This class has been added to your calendar.
+          </Text>
+          <View style={{marginLeft: 80}}>
+            <Button
+              handleClick={() => addedCalendarSheetRef.current?.close()}
+              text="Done"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'medium'}
+            />
+          </View>
+        </View>
+      </CustomBottomSheet>
+    </>
+  );
+};
+
+export default ClassDetail;
+
+const styles = StyleSheet.create({
+  locationContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  locationText: {
+    color: colors.darkWhite,
+    fontWeight: '500',
+    fontFamily: fontFamily.medium,
+    fontSize: 12,
+    textAlign: 'left',
+    marginLeft: 5,
+  },
+  detailText: {
+    fontFamily: fontFamily.regular,
+    color: colors.darkWhite,
+    fontWeight: '400',
+    fontSize: 14,
+    lineHeight: 24,
+    marginTop: 12,
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    width: '100%',
+    height: 'auto',
+    alignSelf: 'center',
+    borderRadius: 20,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    paddingHorizontal: 15,
+    paddingVertical: 20,
+  },
+  handleIndicatorS: {
+    width: '20%',
+    color: colors.lightGray,
+  },
+  modalTextTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#202226',
+    textAlign: 'center',
+  },
+  section: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  sectionClass: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    color: '#202226',
+    fontSize: 12,
+  },
+  text: {
+    fontSize: 12,
+    color: '#46515A',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+  },
+});
