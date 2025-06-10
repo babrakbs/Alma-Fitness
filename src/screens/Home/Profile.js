@@ -388,12 +388,15 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   priceTag: {
-    width: '25%',
+    width: '30%',
     marginTop: 5,
-    padding: 5,
+    // padding: 5,
     borderWidth: 1,
     borderColor: colors.darkWhite,
     borderRadius: 5,
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"center"
   },
   price: {
     fontSize: 14,

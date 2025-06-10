@@ -10,6 +10,7 @@ import {Picker} from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import CalendarIcon from '../assets/icons/CalendarIcon.svg';
 import {colors, fontFamily} from '../constants';
+import RNPickerSelect from 'react-native-picker-select';
 // import DropdownIcon from '../assets/icons/DropDown_icon.svg';
 
 interface InputProps {
@@ -90,27 +91,24 @@ const Input: React.FC<InputProps> = ({
         {showLeftIcon && LeftSVGIcon}
 
         {placeholder === 'Gender' ? (
-          <Picker
-            selectedValue={selectedGender}
-            onValueChange={value => {
-              setSelectedGender(value);
-              onChangeText?.(value);
-            }}
-            dropdownIconColor={colors.darkGray}
-            dropdownIconRippleColor={colors.darkGray}
-            style={[
-              styles.picker,
-              {
-                textAlign: 'left',
-                textAlignVertical: 'center',
-                marginHorizontal: -10,
-              },
-            ]}
-            itemStyle={{textAlign: 'left'}}>
-            <Picker.Item label="Gender" value="" />
-            <Picker.Item label="Male" value="Male" />
-            <Picker.Item label="Female" value="Female" />
-          </Picker>
+           <View style={styles.container2}>
+           <RNPickerSelect
+             onValueChange={(value) => setSelectedGender(value)}
+             value={selectedGender}
+             placeholder={{ label: 'Select Gender', value: null }}
+             items={[
+               { label: 'Male', value: 'Male' },
+               { label: 'Female', value: 'Female' },
+             ]}
+             useNativeAndroidPickerStyle={false} // Important for custom styles
+             style={{
+               inputIOS: styles.inputIOS,
+               inputAndroid: styles.inputAndroid,
+               iconContainer: styles.iconContainer,
+             }}
+             Icon={() => null} // Hide default icon if you want
+           />
+         </View>
         ) : placeholder === 'Date of Birth' ? (
           <TouchableOpacity
             style={[styles.inputField, {height: 50, paddingTop: 12}]}
@@ -234,6 +232,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // marginTop: 4,
     marginVertical: 10,
+  },
+  container2: {
+    width: '80%',
+    alignSelf: 'center',
+  },
+  inputIOS: {
+    height: 45,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    color: 'black',
+    fontSize: 16,
+    justifyContent: 'center',
+  },
+  inputAndroid: {
+    height: 45,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    color: 'black',
+    fontSize: 16,
+  },
+  iconContainer: {
+    top: 12,
+    right: 10,
   },
 });
 
