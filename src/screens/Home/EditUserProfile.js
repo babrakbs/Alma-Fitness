@@ -35,7 +35,7 @@ const [error, setError] = useState('');
   
 
   const handleNavigation = () => {
-    if (!name.trim() || !gender.trim() || !dob.trim()) {
+    if (!name?.trim() || !gender?.trim() || !dob?.trim()) {
       setError('All fields are required.');
       return;
     }
@@ -78,9 +78,9 @@ const [error, setError] = useState('');
             setError={setError}
           />
         </View>
-        {error ? (
+        {/* {error ? (
           <Text style={{ color: 'red', textAlign: 'center', marginTop: 10 }}>{error}</Text>
-        ) : null}
+        ) : null} */}
       </ScrollView>
       <View style={styles.buttonView}>
         <Button handleClick={handleNavigation} text="Save & Continue" />

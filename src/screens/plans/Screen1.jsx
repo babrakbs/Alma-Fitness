@@ -8,13 +8,14 @@ import {
 import React from 'react';
 import Button from '../../components/Button';
 import Plan1IconPlanIcon1 from '../../assets/icons/PlanIcon1';
-import {PlanIconOne, TickIcon} from '../../constants/svgs';
+import { PlanIconOne, TickIcon } from '../../constants/svgs';
 import PlanIcon1 from '../../assets/icons/PlanIcon1';
 import PlanIcon2 from '../../assets/icons/PlanIcon2';
 import PlanIcon3 from '../../assets/icons/PlanIcon3';
 import PlanIcon4 from '../../assets/icons/PlanIcon4';
-import {useNavigation} from '@react-navigation/native';
-import {colors, fontFamily} from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { colors, fontFamily } from '../../constants';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const plansData = {
   Monthly: {
@@ -143,10 +144,17 @@ const plansData = {
   // },
 };
 
-const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
+const conditions = [
+  'Activate your membership and save on workouts.',
+  'Book any workout and pay as you go.',
+  'You can cancel your membership anytime.',
+  'Price includes VAT.',
+]
+
+const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
   const navigation = useNavigation();
   console.log('her is the selected plans ===>', selectedSpan, item);
-  const {height} = useWindowDimensions();
+  const { height } = useWindowDimensions();
   console.log(
     'ISSCROLLING',
     isScrolling,
@@ -210,17 +218,17 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
           }}>
           {plansData[selectedSpan][`${carouselIndex}`]['planName']}
         </Text> */}
-        <View style={styles.memberShipView}>
-        <Text
-            style={{
-              ...styles.memberShip,
-              // color:
-              //   plansData[selectedSpan][`${carouselIndex}`]['memberShipColor'],
-            }}>
-            Membership
-          </Text>
-        </View>
-          
+          <View style={styles.memberShipView}>
+            <Text
+              style={{
+                ...styles.memberShip,
+                // color:
+                //   plansData[selectedSpan][`${carouselIndex}`]['memberShipColor'],
+              }}>
+              Membership
+            </Text>
+          </View>
+
           {/* <Text
           style={{
             ...styles.credit,
@@ -253,6 +261,7 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
               / {item?.recurring}
             </Text>
           </Text>
+          <View style={styles.divider} />
           {/* <Text
           style={{
             ...styles.credit,
@@ -269,15 +278,8 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
             color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
           }}>
           {plansData[selectedSpan][`${carouselIndex}`]['heading']}
-        </Text> */}
-          <View style={styles.divider} />
-
-          {[
-            'Activate your membership and save on workouts.',
-            'Book any workout and pay as you go.',
-            'You can cancel your membership anytime.',
-            'Price includes VAT.',
-          ].map((feature, idx) => (
+          </Text> */}
+          {conditions.map((feature, idx) => (
             <Text
               key={idx}
               style={{
@@ -291,14 +293,14 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
                   justifyContent: 'center',
                 }}>
                 <TickIcon />
-                <Text style={{...styles.planPara, marginLeft: 8}}>
+                <Text style={{ ...styles.planPara, marginLeft: 8 }}>
                   {feature}
                 </Text>
               </View>
             </Text>
           ))}
         </View>
-        <View style={{...styles.footer, marginTop: '5%'}}>
+        <View style={{ ...styles.footer, marginTop: '2%' }}>
           <Button
             fontSize={15}
             text="Continue"
@@ -307,7 +309,7 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
             // theme="whiteBlack"
             handleClick={() => {
               // navigation.navigate('StartMembership');
-              navigation.navigate('MembershipDetail', {planId: item?.id});
+              navigation.navigate('MembershipDetail', { planId: item?.id });
             }}
           />
           {/* <Text
@@ -355,30 +357,31 @@ const styles = StyleSheet.create({
   divider: {
     width: '100%',
     alignSelf: 'center',
-    marginTop: '10%',
+    // marginTop: '10%',
+    marginVertical: heightPercentageToDP(2),
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: 0.2,
+    borderWidth: 0.5,
   },
   planName: {
     fontSize: 22.28,
     // color: '#15161E', //Can be a prop
     fontWeight: '600',
   },
-  memberShipView:{
+  memberShipView: {
     width: '55%',
     height: '30%',
     backgroundColor: colors.lightWhite,
     borderRadius: 8,
-    justifyContent:"center",
-    alignItems:"center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   memberShip: {
     fontSize: 14.86,
     textAlign: 'center',
-    
+
     fontFamily: fontFamily.medium,
-   
+
     color: colors.black,
     fontWeight: '400',
   },
@@ -420,21 +423,22 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
   },
   planHeading: {
-    width: '80%',
-    margin: 'auto',
-    // borderWidth: 1,
-    // marginTop: 34,
+    alignSelf: 'center',
+    marginTop: heightPercentageToDP(2),
+    alignItems: 'flex-start',
+    justifyContent: 'center',
   },
   planType: {
     fontWeight: '700',
     fontSize: 24,
-    color: '#15161E',
+    color: colors.black,
   },
   planPara: {
     fontWeight: '400',
     color: colors.black, //can be a prop,
     fontSize: 13,
-    marginTop: '5%',
+    // marginTop: '5%',
+    paddingVertical: '1%'
   },
   footer: {
     // position: 'absolute',
