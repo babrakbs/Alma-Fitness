@@ -210,7 +210,8 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
           }}>
           {plansData[selectedSpan][`${carouselIndex}`]['planName']}
         </Text> */}
-          <Text
+        <View style={styles.memberShipView}>
+        <Text
             style={{
               ...styles.memberShip,
               // color:
@@ -218,6 +219,8 @@ const Screen1 = ({selectedSpan, carouselIndex, isScrolling, item}) => {
             }}>
             Membership
           </Text>
+        </View>
+          
           {/* <Text
           style={{
             ...styles.credit,
@@ -362,20 +365,21 @@ const styles = StyleSheet.create({
     // color: '#15161E', //Can be a prop
     fontWeight: '600',
   },
+  memberShipView:{
+    width: '55%',
+    height: '30%',
+    backgroundColor: colors.lightWhite,
+    borderRadius: 8,
+    justifyContent:"center",
+    alignItems:"center"
+  },
   memberShip: {
     fontSize: 14.86,
     textAlign: 'center',
-    width: '55%',
-    height: '35%',
+    
     fontFamily: fontFamily.medium,
-    // alignItems:'center',
-    // justifyContent:'center',
-    textAlignVertical: 'center',
-    borderRadius: 8,
+   
     color: colors.black,
-    // paddingHorizontal:3,
-    // color: '#46515A', //Can be a prop
-    backgroundColor: colors.lightWhite,
     fontWeight: '400',
   },
   credit: {
