@@ -4,16 +4,24 @@ import MapPinIcon from '../../assets/icons/MapPinIcon';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../constants';
+import moment from 'moment';
+
+const getDayFromDate = dateString => {
+  if (!dateString) return 'Monday';
+  // Handle date in format MM/DD/YYYY (from toLocaleDateString)
+  return moment(dateString, 'MM/DD/YYYY').format('dddd');
+};
 
 const ClassesCard = ({
   title = 'Full Body + Bands',
-  date = 'Mon 22 Jan',
+  date,
   time = '11:00 - 12:00',
   location = 'AREA, 500 m',
   price = '€8',
   id = 0,
 }) => {
   const navigation = useNavigation();
+  const day = date ? getDayFromDate(date) : 'Monday';
 
   return (
     <Pressable
@@ -24,7 +32,7 @@ const ClassesCard = ({
       style={styles.cardContainer}>
       <View style={styles.topRow}>
         <Text style={styles.dateText}>
-          {date} <Text style={styles.timeText}>{time}</Text>
+          {day} <Text style={styles.timeText}>{time}</Text>
         </Text>
 
         <ArrowIcon style={styles.arrowIcon} />
@@ -81,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#15161E',
+    fontFamily: fontFamily?.medium,
     marginBottom: 12,
   },
   bottomRow: {

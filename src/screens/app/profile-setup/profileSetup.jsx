@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import Header from '../../../components/header';
 import UploadPhoto from '../../../components/uploadPhoto';
 import Input from '../../../components/input';
 import {ProfileSetupInputs} from '../../../constants/staticData';
 import Button from '../../../components/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {fontFamily} from '../../../constants';
 
 const ProfileSetup = ({navigation, route}) => {
   const data = route?.params?.token;
@@ -47,12 +48,23 @@ const ProfileSetup = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={{...styles.container}}>
-      <Header
-        label={
-          data === 'Registration' ? 'Your Profile' : 'Your Profile        '
-        }
-        showArrow={data === 'Registration' ? false : true}
-      />
+      {/* <Header
+        label={data === 'Registration' ? 'Your Profile' : 'Your Profile'}
+        showArrow={data === 'Registration' || !data?.showArrow ? false : true}
+      /> */}
+      {!data?.showArrow && (
+        <Text
+          style={{
+            textAlign: 'center',
+            marginTop: 60,
+            marginBottom: 20,
+            fontSize: 20,
+            fontFamily: fontFamily.medium,
+            color: 'black',
+          }}>
+          Your Profile
+        </Text>
+      )}
       <UploadPhoto photo={photo} setPhoto={setPhoto} />
       <View style={styles.inputsView}>
         <Input

@@ -133,7 +133,7 @@ const ClassDetail = ({route}) => {
   const [publishableKey, setPublishableKey] = useState(
     process.env.Publishable_key,
   );
-  // console.log('publishableKey', publishableKey);
+  console.log('publishableKey', publishableKey);
   // const fetchPublishableKey = async () => {
   //   const key = await fetchKey(); // fetch key from your server here
   //   setPublishableKey(key);
@@ -195,7 +195,7 @@ const ClassDetail = ({route}) => {
         amount: classDetails?.price,
       });
       const secret = response?.data?.data?.clientSecret;
-      // console.log('clientSecret', secret);
+      console.log('clientSecret', secret);
       if (secret) {
         setClientSecret(secret);
         console.log('about to open ==========>');
@@ -512,7 +512,7 @@ const ClassDetail = ({route}) => {
                             fontWeight: '500',
                             fontSize: 15.88,
                             color: colors.black,
-                            fontFamily: fontFamily.semiBold,
+                            fontFamily: fontFamily.medium,
                           }}>
                           7/10
                         </Text>

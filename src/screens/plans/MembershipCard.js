@@ -37,7 +37,7 @@ const MembershipCard = ({plan}) => {
         <Text style={styles.tagText}>{'Membership'}</Text>
       </View>
       <Text style={styles.price}>
-        {currencySymbol}
+        {/* {currencySymbol} */}€
         <Text style={styles.wholeAmount}>{formattedPrice.whole}</Text>
         <Text style={styles.decimalAmount}>,{formattedPrice.decimal}</Text>
         <Text style={styles.perMonth}> / {plan.recurring || 'month'}</Text>
@@ -74,7 +74,6 @@ const MembershipCard = ({plan}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#f8f8f8',
   },
   card: {
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 3,
+    elevation: 5,
   },
   tag: {
     backgroundColor: colors.lightWhite,

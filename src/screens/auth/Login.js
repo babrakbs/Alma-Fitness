@@ -58,7 +58,7 @@ const Login = ({navigation}) => {
     setError(errors);
     return isError;
   };
-const isFocused = useIsFocused();
+  const isFocused = useIsFocused();
   useEffect(() => {
     setError('');
     setForm({
@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
     color: colors.darkGray,
     textDecorationLine: 'underline',
     fontFamily: fontFamily.regular,
-    fontWeight: '500',
+    // fontWeight: '500',
+    fontSize: 13,
   },
 });

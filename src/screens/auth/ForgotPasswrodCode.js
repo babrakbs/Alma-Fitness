@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import HeaderIconText from '../../components/HeaderIconText';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
@@ -7,19 +7,36 @@ import Header from '../../components/header';
 import {colors, fontFamily} from '../../constants';
 import {OtpInput} from 'react-native-otp-entry';
 import axiosInstance from '../../helper/axiosInstance';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const arrays = [1, 2, 3, 4];
 
-const ForgotPasswrodCode = () => {
+const ForgotPasswrodCode = ({route}) => {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState(''); // State for OTP error message
   const [loading, setLoading] = useState(false); // Add loading state
-
+  const [countdown, setCountdown] = useState(0);
+  const {email} = route?.params;
   const navigation = useNavigation();
 
-  const handleOtpChange = (text) => {
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [countdown]);
+
+  const handleOtpChange = text => {
     setOtp(text);
-    if (otpError) { // Clear error when user starts typing
+    if (otpError) {
+      // Clear error when user starts typing
       setOtpError('');
     }
   };
@@ -29,26 +46,48 @@ const ForgotPasswrodCode = () => {
       setOtpError('Please enter a valid 4-digit OTP.');
       return;
     }
+    // navigation.navigate('SetNewPassword', {
+    //   token: '12312321312',
+    // });
     setOtpError(''); // Clear previous errors
     setLoading(true); // Set loading to true
-   
-    try {
-      const response = await axiosInstance.post('/api/verifyOTP', { otp }); 
 
-      if (response.data && response.data.meta && response.data.meta.code !== 200) {
-        console.error('OTP verification failed (application-level):', response.data);
-        setOtpError(response.data.meta.message || 'Invalid OTP. Please try again.');
-        return; 
+    try {
+      const response = await axiosInstance.post('/api/verifyOTP', {otp});
+
+      if (
+        response.data &&
+        response.data.meta &&
+        response.data.meta.code !== 200
+      ) {
+        console.error(
+          'OTP verification failed (application-level):',
+          response.data,
+        );
+        setOtpError(
+          response.data.meta.message || 'Invalid OTP. Please try again.',
+        );
+        return;
       }
 
       console.log('OTP verification successful:', response?.data);
-      navigation.navigate('SetNewPassword',{token:response?.data?.data?.token}); 
-
+      navigation.navigate('SetNewPassword', {
+        token: response?.data?.data?.token,
+      });
     } catch (error) {
       console.error('Error during OTP verification (network/HTTP):', error);
-      if (error.response && error.response.data && error.response.data.meta && error.response.data.meta.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.meta &&
+        error.response.data.meta.message
+      ) {
         setOtpError(error.response.data.meta.message);
-      } else if (error.response && error.response.data && error.response.data.message) {
+      } else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         setOtpError(error.response.data.message);
       } else if (error.request) {
         setOtpError('No response from server. Please check your connection.');
@@ -57,6 +96,32 @@ const ForgotPasswrodCode = () => {
       }
     } finally {
       setLoading(false); // Set loading to false in finally block
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (countdown > 0) return; // Prevent resending if countdown is active
+
+    try {
+      setLoading(true);
+      const response = await axiosInstance.post('/api/resendOTP', {email});
+
+      if (
+        response.data &&
+        response.data.meta &&
+        response.data.meta.code === 200
+      ) {
+        setCountdown(60); // Start 60 second countdown
+      } else {
+        setOtpError(
+          response.data.meta.message ||
+            'Failed to resend code. Please try again.',
+        );
+      }
+    } catch (error) {
+      setOtpError('Failed to resend code. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,11 +134,11 @@ const ForgotPasswrodCode = () => {
           showArrow={true}
         />
         <HeaderIconText
-          text="Verification Code"
+          text="OTP Verification"
           size={116}
           iconMTop={20}
           headingMTop={30}
-          additionalText="Enter the one-time verification code we just sent to your email."
+          additionalText={`A code has been sent to ${email} `}
         />
 
         <OtpInput
@@ -112,7 +177,16 @@ const ForgotPasswrodCode = () => {
         ))}
       </View> */}
         <Text style={styles.text}>
-          Didn’t receive code? <Text style={styles.innerText}>Send again</Text>
+          {countdown > 0 ? (
+            `Resend code in ${countdown}s`
+          ) : (
+            <>
+              Didn't receive code?{' '}
+              <Text style={styles.innerText} onPress={handleResendCode}>
+                Send again
+              </Text>
+            </>
+          )}
         </Text>
       </ScrollView>
       <View style={styles.btnContainer}>
@@ -187,15 +261,16 @@ const styles = StyleSheet.create({
     // backgroundColor:'red'
   },
   otpBox: {
-    width: '15%',
-    // height: "30%",
-    borderRadius: 10,
-    // backgroundColor: colors.red,
+    width: widthPercentageToDP(16),
+    height: widthPercentageToDP(16),
+    borderRadius: widthPercentageToDP(50),
+    backgroundColor: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     borderWidth: 1,
-    borderColor: colors.black,
+    borderColor: colors.white,
+    elevation: 0.2,
   },
   otpBoxActive: {
     backgroundColor: colors.darkWhite, // Ensure this color is defined in your constants
@@ -207,7 +282,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
   },
-  errorText: { // Style for the error message
+  errorText: {
+    // Style for the error message
     color: 'red',
     fontSize: 12,
     textAlign: 'center',

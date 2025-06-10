@@ -98,6 +98,7 @@ const Signup = ({navigation}) => {
         setData(res?.data);
         navigation.navigate('ProfileSetup', {
           token: res?.data?.data.ACCESS_TOKEN,
+          showArrow: false,
         });
         setForm({email: '', password: ''});
       }
@@ -163,7 +164,7 @@ const Signup = ({navigation}) => {
           />
           <Input
             // onChange={onChange}
-            placeholder="Confirm Password"
+            placeholder="Repeat Password"
             type={'password'}
             showRighIcon
             rightSVGIcon={hide2 ? EyeSvg : EyeOpenSvg}

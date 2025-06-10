@@ -5,8 +5,12 @@ import {colors, fontFamily} from '../../constants';
 import Button from '../../components/Button';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import axiosInstance from '../../helper/axiosInstance';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFiltersOfclasses, clearFiltersOfclasses } from '../../Redux/reducer';
+import {useSelector, useDispatch} from 'react-redux';
+import {setFiltersOfclasses, clearFiltersOfclasses} from '../../Redux/reducer';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 // const categories = [
 //   'All',
@@ -30,10 +34,12 @@ const FilterScreen = ({navigation}) => {
   const filtersOfclasses = useSelector(state => state.reducer.filtersOfclasses);
 
   const [selectedCategories, setSelectedCategories] = useState(
-    filtersOfclasses && filtersOfclasses.categories ? filtersOfclasses.categories : []
+    filtersOfclasses && filtersOfclasses.categories
+      ? filtersOfclasses.categories
+      : [],
   );
   const [price, setPrice] = useState(
-    filtersOfclasses && filtersOfclasses.price ? filtersOfclasses.price : 1
+    filtersOfclasses && filtersOfclasses.price ? filtersOfclasses.price : 1,
   );
   const [categories, setCategories] = useState([]);
   const fetchCategories = async () => {
@@ -52,7 +58,7 @@ const FilterScreen = ({navigation}) => {
     setSelectedCategories(prev =>
       prev.includes(categoryId)
         ? prev.filter(c => c !== categoryId)
-        : [...prev, categoryId]
+        : [...prev, categoryId],
     );
   };
 
@@ -61,10 +67,12 @@ const FilterScreen = ({navigation}) => {
     console.log('Selected Categories:', selectedCategories);
     console.log('Selected Price:', price);
     // Dispatch filters to Redux
-    dispatch(setFiltersOfclasses({
-      categories: selectedCategories,
-      price: price,
-    }));
+    dispatch(
+      setFiltersOfclasses({
+        categories: selectedCategories,
+        price: price,
+      }),
+    );
     navigation.goBack();
     // Optionally, you can navigate or close the filter screen here
   };
@@ -110,7 +118,7 @@ const FilterScreen = ({navigation}) => {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginVertical: 20,
+          marginVertical: 10,
         }}>
         <Text style={styles.sectionTitle}>Location</Text>
         <View style={styles.priceContainer}>
@@ -154,11 +162,7 @@ const FilterScreen = ({navigation}) => {
       </View>
       <View style={styles.divider} />
       <View style={{marginTop: 30}}>
-        <Button
-          handleClick={handleApply}
-          text="Apply"
-          textBold={false}
-        />
+        <Button handleClick={handleApply} text="Apply" textBold={false} />
         <View style={{marginTop: 10}}>
           <Button
             text="Reset"
@@ -203,7 +207,10 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   categoryButton: {
-    padding: 10,
+    // padding: 10,
+    height: heightPercentageToDP(5),
+    // width: widthPercentageToDP(30),
+    paddingHorizontal: '3%',
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.darkWhite,
@@ -215,9 +222,9 @@ const styles = StyleSheet.create({
     width: '120%',
     alignSelf: 'center',
     marginTop: 5,
-    height: 0.5,
-    backgroundColor: colors.lightGray,
-    borderWidth: 0.2,
+    height: 1,
+    backgroundColor: '#dbdbdb',
+    borderWidth: 0.1,
   },
   selectedCategory: {backgroundColor: colors.black},
   categoryText: {

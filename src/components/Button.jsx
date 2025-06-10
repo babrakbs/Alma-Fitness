@@ -175,6 +175,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   disabled: {
-    backgroundColor: '#DCDCDC',
+    // backgroundColor: '#DCDCDC',
   },
 });

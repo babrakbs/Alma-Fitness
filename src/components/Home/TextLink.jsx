@@ -1,8 +1,8 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import { colors, fontFamily } from '../../constants';
-import { DropDown } from '../../constants/svgs';
+import {colors, fontFamily} from '../../constants';
+import {DropDown} from '../../constants/svgs';
 
 const TextLink = ({
   firstText = 'Featured Venues',
@@ -10,8 +10,8 @@ const TextLink = ({
   navTo = '/',
   smallText = false,
   params = {},
-  size=12,
-  iconMTop=5,
+  size = 12,
+  iconMTop = 5,
 
   ...props
 }) => {
@@ -19,13 +19,19 @@ const TextLink = ({
   const navigation = useNavigation();
   return (
     <View style={styles.secondaryHeader}>
-      <Text style={{...styles.featured, fontSize: smallText ? 16 : 22, color:!smallText ?  colors.black:colors.darkWhite, fontFamily: !smallText ? fontFamily.medium : fontFamily.regular}}>
+      <Text
+        style={{
+          ...styles.featured,
+          fontSize: smallText ? 16 : 22,
+          color: !smallText ? colors.black : colors.darkWhite,
+          fontFamily: !smallText ? fontFamily.medium : fontFamily.regular,
+        }}>
         {firstText}
       </Text>
       <Pressable
-      style={{
-        flexDirection:secondText !== 'See All' ? 'row' :'column'
-      }}
+        style={{
+          flexDirection: secondText !== 'See All' ? 'row' : 'column',
+        }}
         onPress={() =>
           props?.handleClick
             ? props?.handleClick()
@@ -33,20 +39,26 @@ const TextLink = ({
             ? navigation.navigate(navTo)
             : navigation.navigate(navTo, {...params})
         }>
-        <Text style={[styles.viewAll,{color:secondText !== 'See All' ? colors.black:colors.darkWhite}]}>{secondText}</Text>
-           {
-           secondText !== 'See All' &&   
-           <DropDown 
-           style={{
-            marginTop: iconMTop,marginLeft:3, 
-            alignItems: 'center',
-            alignSelf:'center',
-            justifyContent: 'center',
-            }} 
-            width={size} 
-            height={size} />
-            }
-        
+        <Text
+          style={[
+            styles.viewAll,
+            {color: secondText !== 'See All' ? colors.black : colors.darkWhite},
+          ]}>
+          {secondText}
+        </Text>
+        {secondText !== 'See All' && (
+          <DropDown
+            style={{
+              marginTop: iconMTop,
+              marginLeft: 3,
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}
+            width={size}
+            height={size}
+          />
+        )}
       </Pressable>
     </View>
   );
@@ -67,14 +79,14 @@ const styles = StyleSheet.create({
   featured: {
     color: colors.darkWhite,
     fontWeight: '500',
-    fontFamily:fontFamily.regular,
+    fontFamily: fontFamily.regular,
     fontSize: 16,
   },
   viewAll: {
     color: '#818C81',
     fontSize: 14,
     fontWeight: '400',
-    fontFamily:fontFamily.regular,
+    fontFamily: fontFamily.regular,
     textDecorationLine: 'underline',
   },
 });
