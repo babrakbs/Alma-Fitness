@@ -23,6 +23,7 @@ import WelcomeImage from './WelcomeImage';
 import HomeCarouselHorizontal from './FitnessCategories';
 import FitnessCategories from './FitnessCategories';
 import axiosInstance from '../../helper/axiosInstance';
+import {useSelector} from 'react-redux';
 
 const workouts = [
   {
@@ -65,6 +66,9 @@ const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const [venues, setVenues] = useState([]);
   const [schedules, setSchedules] = useState([]);
+  const user = useSelector(state => state?.reducer?.user);
+  console.log('user', user);
+
   useFocusEffect(() => {
     setLoading(false);
     console.log('I am');
@@ -139,7 +143,7 @@ const HomeScreen = () => {
         {/* </View> */}
         <View style={{width: '95%', margin: 'auto'}}>
           <TextLink
-            firstText="Hi, Mark"
+            firstText={user?.name ? `Hi, ${user?.name}` : 'Hi, Mark'}
             navTo="Expore"
             secondText={'Athens, Greece'}
           />
@@ -152,7 +156,7 @@ const HomeScreen = () => {
         </View> */}
         {/* <VenueCard /> */}
         <FitnessCategories FlatListData={categories} />
-        <View style={{width: '95%', margin: 'auto'}}>
+        <View style={{width: '95%', margin: 'auto', marginTop: '2%'}}>
           <TextLink
             firstText="Venues For You"
             navTo="Explore"

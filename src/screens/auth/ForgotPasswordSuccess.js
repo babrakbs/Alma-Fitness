@@ -7,6 +7,8 @@ const ForgotPasswordSuccess = () => {
     <MessageIconScreen
       headingText="Password Reset"
       headingSize={20}
+      isIcon={false}
+      iconMTop={32}
       secondaryText="You can log in with your new password."
       btnText="Continue"
       navigateTo="TabNav"

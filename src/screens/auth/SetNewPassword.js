@@ -1,14 +1,14 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react'; // Import useState
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react'; // Import useState
 import HeaderIconText from '../../components/HeaderIconText';
 import Input from '../../components/input';
 // LockSvg import was commented out, assuming it's not needed for now
 // import LockSvg from '../../assets/icons/LockSvg';
 import Button from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
-import { colors, fontFamily } from '../../constants'; // Added colors for error text
+import {useNavigation} from '@react-navigation/native';
+import {colors, fontFamily} from '../../constants'; // Added colors for error text
 import EyeOpenSvg from '../../assets/icons/EyeOpen';
-import EyeSvg from '../../assets/icons/EyeSvg';
+import EyeSvg from '../../assets/icons/Password_Icon.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosInstance from '../../helper/axiosInstance';
 
@@ -21,15 +21,15 @@ const SetNewPassword = ({route}) => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [loading, setLoading] = useState(false); // Add loading state
-  const token = route.params.token; 
-  const handleNewPasswordChange = (text) => {
+  const token = route.params.token;
+  const handleNewPasswordChange = text => {
     setNewPassword(text);
     if (passwordError) {
       setPasswordError('');
     }
   };
 
-  const handleConfirmPasswordChange = (text) => {
+  const handleConfirmPasswordChange = text => {
     setConfirmPassword(text);
     if (confirmPasswordError) {
       setConfirmPasswordError('');
@@ -44,7 +44,8 @@ const SetNewPassword = ({route}) => {
     if (!newPassword.trim()) {
       setPasswordError('Password cannot be empty.');
       isValid = false;
-    } else if (newPassword.length < 6) { // Example: Minimum 6 characters
+    } else if (newPassword.length < 6) {
+      // Example: Minimum 6 characters
       setPasswordError('Password must be at least 6 characters long.');
       isValid = false;
     }
@@ -64,9 +65,10 @@ const SetNewPassword = ({route}) => {
       setLoading(true); // Set loading to true
       setPasswordError(''); // Clear previous errors
       setConfirmPasswordError(''); // Clear previous errors
+      // navigation.navigate('ForgotPasswordSuccess');
       try {
-        console.log('Passwords are valid:', { newPassword, confirmPassword });
-        
+        console.log('Passwords are valid:', {newPassword, confirmPassword});
+
         // Ensure token exists before proceeding
         // if (!token) {
         //   console.error('Token not found in AsyncStorage');
@@ -80,13 +82,23 @@ const SetNewPassword = ({route}) => {
         });
         console.log('Response:', response?.data);
 
-        if (response.data && response.data.meta && response.data.meta.code === 200) {
+        if (
+          response.data &&
+          response.data.meta &&
+          response.data.meta.code === 200
+        ) {
           navigation.navigate('ForgotPasswordSuccess');
         } else {
           // Handle API error response
-          const errorMessage = response.data?.meta?.message || response.data?.message || 'Failed to reset password. Please try again.';
+          const errorMessage =
+            response.data?.meta?.message ||
+            response.data?.message ||
+            'Failed to reset password. Please try again.';
           setPasswordError(errorMessage); // Display error message
-          console.error('Password reset failed (application-level):', response.data);
+          console.error(
+            'Password reset failed (application-level):',
+            response.data,
+          );
         }
       } catch (error) {
         console.error('Error during password reset (network/HTTP):', error);
@@ -94,16 +106,24 @@ const SetNewPassword = ({route}) => {
         if (error.response) {
           const data = error.response.data;
           if (data && typeof data === 'object') {
-            if (data.meta && typeof data.meta.message === 'string' && data.meta.message.trim() !== '') {
+            if (
+              data.meta &&
+              typeof data.meta.message === 'string' &&
+              data.meta.message.trim() !== ''
+            ) {
               errorMessage = data.meta.message;
-            } else if (typeof data.message === 'string' && data.message.trim() !== '') {
+            } else if (
+              typeof data.message === 'string' &&
+              data.message.trim() !== ''
+            ) {
               errorMessage = data.message;
             }
           } else if (typeof data === 'string' && data.trim() !== '') {
             errorMessage = data;
           }
         } else if (error.request) {
-          errorMessage = 'No response from server. Please check your connection.';
+          errorMessage =
+            'No response from server. Please check your connection.';
         } else if (error.message) {
           errorMessage = error.message;
         }
@@ -125,37 +145,42 @@ const SetNewPassword = ({route}) => {
           additionalText="Enter a new password to log in."
           fontFamily={fontFamily.medium}
         />
-        <View style={{ marginTop: 30 }}>
+        <View style={{marginTop: 30}}>
           <Input
             type={passwordVisible ? 'text' : 'password'}
-            placeholder="Password" 
+            placeholder="Password"
             // leftSVGIcon={<LockSvg />}
             // showLeftIcon={true}
-            showRightIcon={true} // Corrected typo: showRighIcon to showRightIcon
-            rightSVGIcon={passwordVisible ? <EyeOpenSvg /> : <EyeSvg />}
+            showRighIcon={true} // Corrected typo: showRighIcon to showRightIcon
+            rightSVGIcon={passwordVisible ? EyeOpenSvg : EyeSvg}
             rightIconPress={() => setPasswordVisible(!passwordVisible)}
             onChangeText={handleNewPasswordChange}
             onChange={handleNewPasswordChange} // Added onChange to mirror working example
             value={newPassword}
           />
-          {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
+          {passwordError ? (
+            <Text style={styles.errorText}>{passwordError}</Text>
+          ) : null}
         </View>
-        <View style={{ marginTop: 18 }}>
+        <View style={{marginTop: 18}}>
           <Input
             type={confirmPasswordVisible ? 'text' : 'password'}
-            placeholder="Confirm Password" 
+            placeholder="Repeat Password"
             // leftSVGIcon={<LockSvg />}
             // showLeftIcon={true}
-            showRightIcon={true} // Corrected typo: showRighIcon to showRightIcon
-            rightSVGIcon={confirmPasswordVisible ? <EyeOpenSvg /> : <EyeSvg />}
-            rightIconPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+            showRighIcon={true} // Corrected typo: showRighIcon to showRightIcon
+            rightSVGIcon={confirmPasswordVisible ? EyeOpenSvg : EyeSvg}
+            rightIconPress={() =>
+              setConfirmPasswordVisible(!confirmPasswordVisible)
+            }
             onChangeText={handleConfirmPasswordChange}
             onChange={handleConfirmPasswordChange} // Added onChange to mirror working example
             value={confirmPassword}
           />
-          {confirmPasswordError ? <Text style={styles.errorText}>{confirmPasswordError}</Text> : null}
+          {confirmPasswordError ? (
+            <Text style={styles.errorText}>{confirmPasswordError}</Text>
+          ) : null}
         </View>
-
       </ScrollView>
       <View style={styles.btnContainer}>
         <Button
@@ -180,10 +205,11 @@ const styles = StyleSheet.create({
   btnContainer: {
     width: '90%',
     marginHorizontal: '5%',
-    marginBottom: 20
+    marginBottom: 20,
   },
-  errorText: { // Style for the error message
-    color: colors.danger, // Or your preferred error color
+  errorText: {
+    // Style for the error message
+    color: colors.red, // Or your preferred error color
     fontSize: 12,
     marginTop: 5,
     marginLeft: 5, // Adjust as needed

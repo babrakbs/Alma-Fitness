@@ -7,20 +7,21 @@ import EmailSvg from '../../assets/icons/EmailSvg';
 import Button from '../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/header';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import axiosInstance from '../../helper/axiosInstance';
 
 const ForgotPassword = () => {
   const navigation = useNavigation();
   const user = useSelector(state => state.reducer.user);
- 
+
   const [email, setEmail] = useState(''); // State for email input
   const [emailError, setEmailError] = useState(''); // State for email error message
   const [loading, setLoading] = useState(false); // Add loading state
 
-  const handleEmailChange = (text) => {
+  const handleEmailChange = text => {
     setEmail(text);
-    if (emailError) { // Clear error when user starts typing
+    if (emailError) {
+      // Clear error when user starts typing
       setEmailError('');
     }
   };
@@ -34,35 +35,62 @@ const ForgotPassword = () => {
     setLoading(true); // Set loading to true
 
     try {
+      // navigation.navigate('ForgotPasswrodCode', {email: email});
+
       const response = await axiosInstance.post('/api/forgetPassword', {
         email: email,
       });
 
-      if (response.data && response.data.meta && response.data.meta.code !== 200 && response.data.meta.message) {
-        console.error('Forgot password request failed (application-level):', response.data);
+      console.log('here is hte repson ----<', response?.data);
+
+      if (
+        response.data &&
+        response.data.meta &&
+        response.data.meta.code !== 200 &&
+        response.data.meta.message
+      ) {
+        console.error(
+          'Forgot password request failed (application-level):',
+          response.data,
+        );
         setEmailError(response.data.meta.message);
         return;
-      } else if (response.data && response.data.message && (response.status >= 400 || (response.data.meta && response.data.meta.code >=400 ))) { // Fallback for other error structures
-        console.error('Forgot password request failed (application-level, other structure):', response.data);
+      } else if (
+        response.data &&
+        response.data.message &&
+        (response.status >= 400 ||
+          (response.data.meta && response.data.meta.code >= 400))
+      ) {
+        // Fallback for other error structures
+        console.error(
+          'Forgot password request failed (application-level, other structure):',
+          response.data,
+        );
         setEmailError(response.data.message);
-        return; 
+        return;
       }
-
 
       console.log('Forgot password request successful:', response.data);
       navigation.navigate('ForgotPasswrodCode');
-
     } catch (error) {
       // This block will catch network errors or if axiosInstance is configured to throw on HTTP errors
-      console.error('Error during forgot password request (network/HTTP):', error);
+      console.error(
+        'Error during forgot password request (network/HTTP):',
+        error,
+      );
       if (error.response && error.response.data) {
         // Attempt to get a nested message first, then a direct message
-        const message = (error.response.data.meta && error.response.data.meta.message)
-                        ? error.response.data.meta.message
-                        : error.response.data.message;
-        setEmailError(message || 'Failed to send reset instructions. Please try again.');
+        const message =
+          error.response.data.meta && error.response.data.meta.message
+            ? error.response.data.meta.message
+            : error.response.data.message;
+        setEmailError(
+          message || 'Failed to send reset instructions. Please try again.',
+        );
       } else if (error.request) {
-        setEmailError('No response from server. Please check your connection and try again.');
+        setEmailError(
+          'No response from server. Please check your connection and try again.',
+        );
       } else {
         setEmailError('An error occurred. Please try again.');
       }
@@ -80,7 +108,7 @@ const ForgotPassword = () => {
           showArrow={true}
         />
         <HeaderIconText
-          text="Forget Password"
+          text="Forgot Password"
           size={116}
           iconMTop={20}
           headingMTop={30}
@@ -96,7 +124,9 @@ const ForgotPassword = () => {
             keyboardType="email-address" // Set keyboard type for email
             autoCapitalize="none" // Prevent auto-capitalization
           />
-          {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+          {emailError ? (
+            <Text style={styles.errorText}>{emailError}</Text>
+          ) : null}
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
@@ -124,7 +154,8 @@ const styles = StyleSheet.create({
     marginHorizontal: '5%',
     marginBottom: 20,
   },
-  errorText: { // Style for the error message
+  errorText: {
+    // Style for the error message
     color: 'red',
     fontSize: 12,
     marginTop: 5,

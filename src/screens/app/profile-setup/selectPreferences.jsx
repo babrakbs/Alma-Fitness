@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.regular,
     lineHeight: 22,
     width: '70%',
+    fontSize: 14,
     // flex: 0.09
   },
   preferenceListContainer: {

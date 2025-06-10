@@ -25,6 +25,8 @@ const BlueBgComponent = ({
   size = 60,
   iconMTop = 52,
   isIcon = true,
+  bottomTextColor,
+  isbottomTextColor = false,
   icon = <TickCircleIcon />,
   bottomText,
   bottomButton,
@@ -43,6 +45,7 @@ const BlueBgComponent = ({
             alignItems: 'center',
           }}>
           {isIcon && icon}
+          <View style={{marginTop: 20}} />
           <Text style={headStyles ? headStyles : styles.heading}>
             {heading}
           </Text>
@@ -57,7 +60,15 @@ const BlueBgComponent = ({
             alignSelf: 'center',
             marginBottom: '3%',
           }}>
-          {bottomText && <Text style={styles.bottomText}>{bottomText}</Text>}
+          {bottomText && (
+            <Text
+              style={[
+                styles.bottomText,
+                isbottomTextColor && {color: bottomTextColor},
+              ]}>
+              {bottomText}
+            </Text>
+          )}
           <Button
             text={btnText}
             handleClick={() => {
@@ -150,7 +161,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
     alignSelf: 'center',
-    fontFamily: fontFamily.bold,
+    fontFamily: fontFamily.semiBold,
     fontSize: 26,
     fontWeight: '600',
     paddingHorizontal: 20,

@@ -1,7 +1,8 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {AlmaLogoBlack} from '../constants/svgs';
-import { colors, fontFamily } from '../constants';
+import {colors, fontFamily} from '../constants';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const HeaderIconText = ({
   size = 60,
@@ -36,10 +37,9 @@ export default HeaderIconText;
 const styles = StyleSheet.create({
   textStyle: {
     fontWeight: '400',
-    fontSize: 24,
-    fontFamily:fontFamily.medium,
+    fontSize: 26,
+    fontFamily: fontFamily.regular,
     textAlign: 'center',
-    
   },
   container: {
     display: 'flex',
@@ -53,11 +53,12 @@ const styles = StyleSheet.create({
 
   additionalText: {
     color: colors.darkWhite,
-    fontFamily:fontFamily.regular,
+    fontFamily: fontFamily.regular,
     textAlign: 'center',
     fontWeight: '400',
     fontSize: 14,
     marginTop: 20,
+    width: widthPercentageToDP(50),
     justifyContent: 'center',
   },
 });

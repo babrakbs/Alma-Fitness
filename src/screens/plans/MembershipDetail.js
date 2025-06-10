@@ -19,6 +19,7 @@ import {useStripe} from '@stripe/stripe-react-native';
 import BlueBgComponent from '../../components/BlueBgComponent';
 import {useNavigation} from '@react-navigation/native';
 import CrossCircleIcon from '../../assets/icons/crossCircle';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const MembershipDetail = ({route}) => {
   const planId = route?.params?.planId;
@@ -181,11 +182,17 @@ const MembershipDetail = ({route}) => {
             ? `Renews on ${renewDate}`
             : 'Your membership is now active.'
         }
+        bottomText={
+          'Automatically renews every month,  you can cancel your membership at any time.'
+        }
+        isbottomTextColor={true}
+        bottomTextColor="#D3D3D3"
         btnText="Continue"
         onPressBtn={() => {
           setShowResult(null);
           navigation.navigate('TabNav');
         }}
+        isIcon={false}
         theme="blackWhite"
       />
     );
@@ -281,7 +288,7 @@ const MembershipDetail = ({route}) => {
           <View style={styles.billingRow}>
             <Text style={styles.billingText}>Membership</Text>
             <Text style={styles.billingText}>
-              {getCurrencySymbol(planDetails?.currency)}
+              {/* {getCurrencySymbol(planDetails?.currency)} */}€
               <Text style={styles.wholeAmount}>{formattedAmount.whole}</Text>
               <Text style={styles.decimalAmount}>
                 ,{formattedAmount.decimal}
@@ -299,9 +306,11 @@ const MembershipDetail = ({route}) => {
           <View style={styles.totalRow}>
             <Text style={styles.totalText}>Total</Text>
             <Text style={styles.totalText}>
-              {getCurrencySymbol(planDetails?.currency)}
-              <Text style={styles.wholeAmount}>{formattedTotal.whole}</Text>
-              <Text style={styles.decimalAmount}>
+              €
+              <Text style={[styles.wholeAmount, {color: colors.black}]}>
+                {formattedTotal.whole}
+              </Text>
+              <Text style={[styles.decimalAmount, {color: colors.black}]}>
                 ,{formattedTotal.decimal}
               </Text>
             </Text>
@@ -309,15 +318,25 @@ const MembershipDetail = ({route}) => {
           <View style={[styles.divider, {marginTop: '5%'}]} />
         </View>
         <View style={styles.terms}>
+          <Text
+            style={[
+              styles.billingTitle,
+              {
+                fontSize: 18,
+                fontFamily: fontFamily.medium,
+                paddingHorizontal: widthPercentageToDP(2),
+              },
+            ]}>
+            Terms
+          </Text>
           <Text style={styles.termsText}>
             By proceeding, you agree to our{' '}
             <Text style={styles.link}>Terms of Service</Text> and{' '}
             <Text style={styles.link}>Privacy Policy</Text>. Your card will be
-            charged {getCurrencySymbol(planDetails?.currency)}
-            {formattedAmount.whole},{formattedAmount.decimal} today, and your
-            membership will automatically renew every month until canceled. You
-            can cancel anytime in the app settings before your next billing date
-            to avoid further charges.
+            charged €{formattedAmount.whole},{formattedAmount.decimal} today,
+            and your membership will automatically renew every month until
+            canceled. You can cancel anytime in the app settings before your
+            next billing date to avoid further charges.
           </Text>
         </View>
 
@@ -343,6 +362,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+
     backgroundColor: '#f8f8f8',
   },
   card: {
@@ -469,7 +489,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   decimalAmount: {
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: fontFamily.semiBold,
     color: colors.darkWhite,
     fontWeight: '600',
@@ -480,24 +500,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
   },
   sheetLoadingContent: {
-    backgroundColor: 'white',
+    backgroundColor: 'transparent',
     padding: 20,
     borderRadius: 15,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   sheetLoadingText: {
     marginTop: 10,

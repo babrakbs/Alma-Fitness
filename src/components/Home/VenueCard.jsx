@@ -126,7 +126,7 @@ const VenueCard = ({
         {/* New Text Row - Name & Time */}
         <View style={styles.textRow}>
           <Text style={styles.venueName}>{name}</Text>
-          <Text style={styles.venueTime}>{km}</Text>
+          <Text style={styles.venueTime}>{km ? km : '300km'}</Text>
         </View>
       </Pressable>
       {favouriteError ? (

@@ -57,7 +57,7 @@ const OnBoardingBG = ({navigation}) => {
               }
             }}
             fontSize={16}
-            text={page === OnBoardingData.length - 1 ? 'Get Started' : 'Next'}
+            text={page === OnBoardingData.length - 1 ? 'Next' : 'Next'}
             theme="whiteBlack"
             widthSize="large2"
             textBold={false}

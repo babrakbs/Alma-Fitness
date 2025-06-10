@@ -1,12 +1,12 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 import HeaderIconText from '../../components/HeaderIconText';
 import Input from '../../components/input';
 import LockSvg from '../../assets/icons/LockSvg';
 import EyeSvg from '../../assets/icons/Password_Icon.svg';
 import Button from '../../components/Button';
-import { useNavigation } from '@react-navigation/native';
-import { colors, fontFamily } from '../../constants';
+import {useNavigation} from '@react-navigation/native';
+import {colors, fontFamily} from '../../constants';
 import axiosInstance from '../../helper/axiosInstance';
 import Header from '../../components/header';
 
@@ -55,17 +55,17 @@ const ChangePassword = () => {
 
     setLoading(true);
     try {
-     const response = await axiosInstance.post('/api/changePassword', {
-       current_password: oldPassword,
-        new_password:newPassword,
-        confirm_new_password:confirmPassword,
+      const response = await axiosInstance.post('/api/changePassword', {
+        current_password: oldPassword,
+        new_password: newPassword,
+        confirm_new_password: confirmPassword,
       });
       console.log('Change Password Response:', response?.data);
       navigation.navigate('ForgotPasswordSuccess');
     } catch (error) {
       setApiError(
         error?.response?.data?.message ||
-        'Failed to change password. Please try again.'
+          'Failed to change password. Please try again.',
       );
     } finally {
       setLoading(false);
@@ -83,17 +83,20 @@ const ChangePassword = () => {
           additionalText="Enter a new password to log in."
           fontFamily={fontFamily.medium}
         /> */}
-         <Header label={'Change Password      '} showArrow={true} />
-         <Text style={{
-          fontSize: 16,
-          fontFamily: fontFamily.medium,
-          color: colors.black,
-          textAlign: 'center',
-          marginTop: 4
-          ,width: '70%',
-          alignSelf: 'center',
-        }}>Enter your current password and create a new one below.</Text>
-        <View style={{ marginTop: 20 }}>
+        <Header label={'Change Password      '} showArrow={true} />
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: fontFamily.regular,
+            color: colors.black,
+            textAlign: 'center',
+            marginTop: 4,
+            width: '70%',
+            alignSelf: 'center',
+          }}>
+          Enter your current password and create a new one below.
+        </Text>
+        <View style={{marginTop: 20}}>
           <Input
             type={'password'}
             placeholder="Old Password"
@@ -108,7 +111,7 @@ const ChangePassword = () => {
             <Text style={styles.errorText}>{oldPasswordError}</Text>
           ) : null}
         </View>
-        <View style={{ marginTop: 10 }}>
+        <View style={{marginTop: 10}}>
           <Input
             type={'password'}
             placeholder="New Password"
@@ -123,7 +126,7 @@ const ChangePassword = () => {
             <Text style={styles.errorText}>{newPasswordError}</Text>
           ) : null}
         </View>
-        <View style={{ marginTop: 10 }}>
+        <View style={{marginTop: 10}}>
           <Input
             type={'password'}
             placeholder="Confirm Password"
@@ -139,12 +142,15 @@ const ChangePassword = () => {
           ) : null}
         </View>
         {apiError ? (
-          <Text style={[styles.errorText, { textAlign: 'center', marginTop: 16 }]}>{apiError}</Text>
+          <Text
+            style={[styles.errorText, {textAlign: 'center', marginTop: 16}]}>
+            {apiError}
+          </Text>
         ) : null}
       </ScrollView>
       <View style={styles.btnContainer}>
         <Button
-          text={loading ? "Submitting..." : "Submit"}
+          text={loading ? 'Submitting...' : 'Submit'}
           textBold={false}
           handleClick={handleSubmit}
           disabled={loading}
@@ -164,12 +170,12 @@ const styles = StyleSheet.create({
   btnContainer: {
     width: '90%',
     marginHorizontal: '5%',
-    marginBottom: 20
+    marginBottom: 20,
   },
   errorText: {
     color: 'red',
     fontSize: 13,
     marginTop: 6,
     marginLeft: 4,
-  }
+  },
 });
