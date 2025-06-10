@@ -145,7 +145,7 @@ const Input: React.FC<InputProps> = ({
             style={
               customStyles
                 ? customStyles
-                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
+                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 0}]
             }
             secureTextEntry={secureTextEntry ? secureTextEntry : false}
             onChangeText={onChangeText}
@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.regular,
     fontSize: 16,
+    height: 45
   },
   inputText: {
     color: colors.black,

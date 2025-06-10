@@ -1,0 +1,18 @@
+# BASE_URL="http://3.216.211.131/api/"
+BASE_URL="https://alma-api.edxconnect.com"
+
+# Test keys:
+
+Publishable_key: 'pk_test_51MPNmZAmjpmKiIpxOPgBvB8pRZR0KoE6KFdEyOCGY6F4R6KwHPiWG4z6B0vZdkFn6DN1Z1x9UsXtDX2njOTaNGkI00fmuLeg5J'
+
+
+# Secret_Key: "sk_test_51QjH7dJ4bkbY3lw53ys2MD5RIv9oqkzeXoZLaos6RycoXqljAitNVXySxPV2v4DDylKFlhMR3Qh7mBqfSDL66L1t00pAMdYQpu"
+
+
+# STRIPE
+
+# Publishable Key:
+# "pk_live_51QjH7dJ4bkbY3lw5AdAKGkpfOJDm0LsTnFceuDnSEeVaTu5LFV19BJrQUeODAgzuzi4axmL1LHUbdd2NVRZnohf900CQ5VUA4P"
+
+# Secret Key:
+# "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"
