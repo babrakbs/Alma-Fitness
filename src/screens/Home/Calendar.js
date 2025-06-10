@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import FilterIcon from '../../assets/icons/filterBlack.svg';
@@ -41,7 +42,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import moment from 'moment';
 import DoubleThumbSlider from '../../components/DoubleThumbSlider';
 import {ActivityIndicator} from 'react-native';
-import CustomBottomSheet from '../../components/CustomBottomSheet';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const filters = [
   'Yoga',
@@ -55,8 +56,8 @@ const filters = [
 const Calendar = () => {
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef();
-  // Track multiple selected categories
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  // Track multiple selected categories with 'all' as default for UI
+  const [selectedCategories, setSelectedCategories] = useState(['all']);
   const [preferenceList, setPreferenceList] = useState(
     PreeferenceListItemsData,
   );
@@ -66,10 +67,10 @@ const Calendar = () => {
   const [filtersOfclasses, setFiltersOfclasses] = useState({
     page: 1,
     limit: 10,
-    categories: [],
+    categories: [], // Empty array initially for API
     date: new Date().toISOString().split('T')[0],
     start_time: '00:00:00',
-    end_time: '00:00:00',
+    end_time: '24:00:00',
   });
   const [loading, setLoading] = useState(false);
 
@@ -112,8 +113,6 @@ const Calendar = () => {
     fetchCategories();
   }, [selectedCategories]);
 
-  // ... existing code ...
-
   // Handler for date change (e.g., from CalendarComponent)
   const handleDateChange = date => {
     // If date is a moment object, convert to JS Date
@@ -152,19 +151,34 @@ const Calendar = () => {
 
   // Handler for category selection
   const handleCategoryPress = item => {
-    setSelectedCategories(prev => {
-      let updated;
-      if (prev.includes(item.id)) {
-        updated = prev.filter(id => id !== item.id);
-      } else {
-        updated = [...prev, item.id];
-      }
-      setFiltersOfclasses(filters => ({
-        ...filters,
-        categories: updated,
-      }));
-      return updated;
-    });
+    if (item.id === 'all') {
+      // Toggle 'all' selection - if it's selected, remove it; if not, select it
+      setSelectedCategories(prev => {
+        const updated = prev.includes('all') ? [] : ['all'];
+        setFiltersOfclasses(filters => ({
+          ...filters,
+          categories: [], // Empty array when 'all' is selected
+        }));
+        return updated;
+      });
+    } else {
+      setSelectedCategories(prev => {
+        // If 'all' was previously selected, remove it
+        let updated = prev.filter(id => id !== 'all');
+
+        if (updated.includes(item.id)) {
+          updated = updated.filter(id => id !== item.id);
+        } else {
+          updated = [...updated, item.id];
+        }
+
+        setFiltersOfclasses(filters => ({
+          ...filters,
+          categories: updated, // Send actual category IDs when specific categories are selected
+        }));
+        return updated;
+      });
+    }
   };
 
   // Example: set default filters on mount (date, time, etc.)
@@ -172,13 +186,10 @@ const Calendar = () => {
     setFiltersOfclasses({
       page: 1,
       limit: 10,
-      // venue_id: 5, // set if you have a default venue
-      // search: "Yoga", // set if you have a default search
-      categories: [],
-      // price: { min: 50, max: 150 }, // set if you have default price
-      date: currentDate.toISOString().split('T')[0], // "YYYY-MM-DD"
-      // start_time: "10:00:00", // set if you have default time
-      // end_time: "18:00:00"
+      categories: [], // Empty array initially for API
+      date: currentDate.toISOString().split('T')[0],
+      start_time: '00:00:00',
+      end_time: '24:00:00',
     });
   }, []);
 
@@ -218,33 +229,14 @@ const Calendar = () => {
   const mainSheetSnapPoints = useMemo(() => ['90%'], []);
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{flex: 1}}>
       <BottomSheetModalProvider>
         <ImageBackground
           source={require('../../assets/images/OnB1.png')}
           style={styles.backgroundImage}
           resizeMode="cover">
-          <CustomBottomSheet
-            snapPoints={mainSheetSnapPoints}
-            index={0}
-            enablePanDownToClose={false}
-            hasPadding={false}
-            hasThumb={false}>
+          <View style={styles.mainContainer}>
             <ScrollView style={styles.container}>
-              {/* <View style={styles.headerContainer}> */}
-              {/* <View></View> */}
-              {/* <Pressable onPress={() => navigation.navigate('VenuProfile')}> */}
-              {/* <Text style={styles.headingText}>Calendar</Text> */}
-              {/* </Pressable> */}
-              {/* <Pressable
-          onPress={() => {
-            // navigation.navigate('ActionSheetTest');
-            // handlePresentModalPress();
-            handlePresentModalPress();
-          }}> */}
-              {/* <FilterIcon /> */}
-              {/* </Pressable> */}
-              {/* </View> */}
               <View style={styles.dateContainerMain}>
                 <View style={styles.dateContainer}>
                   <Text style={styles.dateNumber}>
@@ -259,7 +251,6 @@ const Calendar = () => {
                     </Text>
                   </View>
                 </View>
-                {/* Today/Yesterday/Tomorrow Button */}
                 <TouchableOpacity style={styles.todayButton}>
                   <Text style={styles.todayText}>{getDateLabel()}</Text>
                 </TouchableOpacity>
@@ -271,53 +262,8 @@ const Calendar = () => {
                   onDateChange={handleDateChange}
                 />
               </View>
-              {/* <View style={styles.timeRange}>
-        <Text style={styles.textColor}>12 AM</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '70%',
-            // borderWidth: 1,
-            // borderColor: 'red',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              // borderWidth: 1,
-              // borderColor: 'red',
-              // width: '5%',
-              width: 15,
-              height: 15,
-              borderRadius: 100,
-              backgroundColor: '#373A36',
-              //   marginRight: -2,
-            }}></View>
-          <View
-            style={{
-              borderWidth: 1,
-              width: '90%',
-              height: 1,
-              backgroundColor: '#373A36',
-            }}></View>
-          <View
-            style={{
-              // borderWidth: 1,
-              // borderColor: 'red',
-              // width: '5%',
-              width: 15,
-              height: 15,
-              borderRadius: 100,
-              backgroundColor: '#373A36',
-              //   marginRight: -2,
-            }}></View>
-        </View>
-        <Text style={styles.textColor}>12 AM</Text>
-      </View> */}
 
               <View style={styles.container2}>
-                {/* Dots and Line */}
-
                 <DoubleThumbSlider onValueChange={handleTimeChange} />
               </View>
               <View style={styles.filtersContainer}>
@@ -329,23 +275,28 @@ const Calendar = () => {
 
                 <FlatList
                   scrollEnabled={true}
-                  data={categories}
+                  data={[{id: 'all', name: 'All'}, ...categories]}
                   renderItem={({item}) => (
                     <Pressable
                       onPress={() => handleCategoryPress(item)}
                       style={[
                         {
                           marginRight: 8,
-                          padding: 10,
+                          paddingHorizontal: 16,
+                          paddingVertical: 5,
                           borderRadius: 20,
                           borderWidth: 1,
                           borderColor: colors.darkWhite,
                           alignItems: 'center',
                           justifyContent: 'center',
                         },
-                        selectedCategories.includes(item.id) && {
-                          backgroundColor: colors.black,
-                        },
+                        item.id === 'all'
+                          ? selectedCategories.includes('all') && {
+                              backgroundColor: colors.black,
+                            }
+                          : selectedCategories.includes(item.id) && {
+                              backgroundColor: colors.black,
+                            },
                       ]}>
                       <Text
                         style={[
@@ -355,28 +306,25 @@ const Calendar = () => {
                             fontWeight: '600',
                             fontSize: 14.3,
                           },
-                          selectedCategories.includes(item.id) && {
-                            color: colors.white,
-                          },
+                          item.id === 'all'
+                            ? selectedCategories.includes('all') && {
+                                color: colors.white,
+                              }
+                            : selectedCategories.includes(item.id) && {
+                                color: colors.white,
+                              },
                         ]}>
                         {item?.name}
                       </Text>
                     </Pressable>
                   )}
-                  keyExtractor={(item, index) => item.id.toString()}
+                  keyExtractor={item => item.id.toString()}
                   horizontal
                   showsHorizontalScrollIndicator={false}
                 />
-
-                {/* <FilterPillText /> */}
               </View>
               <View style={styles.divider} />
 
-              {/* <View style={{ width: '95%', margin: 'auto', marginTop: 10 }}>
-        <Text style={{ color: '#373A36', fontWeight: '400', fontSize: 12 }}>
-          Tuesday, 17. July
-        </Text>
-      </View> */}
               <View style={{marginTop: 15, marginBottom: 25}}>
                 {loading ? (
                   <View style={{alignItems: 'center', marginVertical: 20}}>
@@ -436,7 +384,6 @@ const Calendar = () => {
 
               <BottomSheetModal
                 enableDismissOnClose
-                // style={{zIndex: 999, elevation: 99}}
                 backgroundStyle={{backgroundColor: '#F5F5F5'}}
                 backdropComponent={props => (
                   <BottomSheetBackdrop
@@ -518,10 +465,7 @@ const Calendar = () => {
                           display: 'flex',
                           flexDirection: 'row',
                           marginTop: 10,
-                          // height: 60,
                           alignItems: 'center',
-
-                          // alignItems:"center"
                         }}>
                         <View style={{width: '20%'}}>
                           <ClockIcon />
@@ -529,7 +473,6 @@ const Calendar = () => {
                         <View
                           style={{
                             width: '80%',
-                            // borderWidth: 1,
                             display: 'flex',
                             flexDirection: 'row',
                           }}>
@@ -554,14 +497,12 @@ const Calendar = () => {
                                 borderRadius: 20,
                                 marginRight: -10,
                                 zIndex: 10,
-                                // marginLeft: 22,
                               }}></View>
                             <View
                               style={{
                                 backgroundColor: '#15161E',
                                 width: '65%',
                                 height: 22,
-                                // zIndex: 10,
                               }}></View>
                             <View
                               style={{
@@ -571,7 +512,6 @@ const Calendar = () => {
                                 borderRadius: 20,
                                 marginLeft: -10,
                                 zIndex: 10,
-                                // marginLeft: 22,
                               }}></View>
                           </View>
                         </View>
@@ -585,20 +525,6 @@ const Calendar = () => {
                         />
                       </View>
                     </View>
-                    {/* {Array(50)
-              .fill(0)
-              .map(() => {
-                return (
-                  <BottomSheetView
-                    style={{
-                      borderWidth: 1,
-                      borderColor: 'green',
-                      height: 30,
-                    }}>
-                    <Text style={{color: 'red'}}>Helo tjhere</Text>
-                  </BottomSheetView>
-                );
-              })} */}
                   </ScrollView>
                 </BottomSheetView>
 
@@ -678,35 +604,17 @@ const Calendar = () => {
                             rounded={10}
                             textBold={false}
                             handleClick={() => {
-                              dismissAll();
-
-                              // allResultsSheet.current?.close();
-                              // bottomSheetModalRef.current.close();
+                              allResultsSheet.current.close();
                             }}
                           />
                         </View>
                       </View>
-                      {/* {Array(50)
-              .fill(0)
-              .map(() => {
-                return (
-                  <BottomSheetView
-                    style={{
-                      borderWidth: 1,
-                      borderColor: 'green',
-                      height: 30,
-                    }}>
-                    <Text style={{color: 'red'}}>Helo tjhere</Text>
-                  </BottomSheetView>
-                );
-              })} */}
                     </ScrollView>
                   </BottomSheetView>
                 </BottomSheetModal>
               </BottomSheetModal>
-              {/* </BottomSheetModalProvider> */}
             </ScrollView>
-          </CustomBottomSheet>
+          </View>
         </ImageBackground>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
@@ -739,12 +647,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '95%',
     margin: 'auto',
-    // justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: 10,
   },
   timeRange: {
-    // borderWidth: 1,
     marginTop: 30,
     marginBottom: 10,
     display: 'flex',
@@ -772,7 +678,6 @@ const styles = StyleSheet.create({
     color: '#15161E',
     fontWeight: '600',
     fontSize: 16,
-    // fontFamily: 'Inter Tight',
   },
   dateContainerMain: {
     flexDirection: 'row',
@@ -829,7 +734,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     justifyContent: 'center',
-    marginBottom: 5, // Space for text below
+    marginBottom: 5,
   },
   dot: {
     width: 15,
@@ -861,8 +766,20 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  bottomSheet: {
-    backgroundColor: 'transparent',
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    marginTop: heightPercentageToDP(10),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 5,
   },
   contentContainer: {
     flex: 1,
