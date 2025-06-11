@@ -5,12 +5,13 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {
   ArrowBackIcon,
   ArrowBackWhiteIcon,
-  HeartIconWhite,
-  HeartIconWhites,
+  
 } from '../constants/svgs';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../constants';
 import axiosInstance from '../helper/axiosInstance';
+import HeartIconBlack from '../assets/icons/HeartIconBlack';
+import HeartIconWhite from '../assets/icons/HeartIconWhite';
 
 const Header = ({
   label,
@@ -20,6 +21,7 @@ const Header = ({
   theme = 'light',
   removeFlex,
   marginTop,
+  paddingVertical,
   isClass = false,
   classId,
   venueId,
@@ -96,7 +98,7 @@ const Header = ({
   return (
     <>
       {theme == 'light' ? (
-        <View style={[styles.container, {marginTop: marginTop}]}>
+        <View style={[styles.container, {marginTop: marginTop,paddingVertical: paddingVertical? paddingVertical :20}]}>
           {showArrow ? (
             <Pressable
               onPress={
@@ -111,13 +113,13 @@ const Header = ({
           {showFavourite && venueId ? (
             <Pressable onPress={handleFavouritePress} style={styles.heartIcon}>
               {isFavourite ? (
-                <HeartIconWhite width={24} height={24} />
+                <HeartIconBlack />
               ) : (
-                <HeartIconWhites width={24} height={24} />
+                <HeartIconWhite  />
               )}
             </Pressable>
           ) : (
-            <View />
+            <View  />
           )}
         </View>
       ) : (
@@ -136,9 +138,10 @@ const Header = ({
           {showFavourite && venueId ? (
             <Pressable onPress={handleFavouritePress} style={styles.heartIcon}>
               {isFavourite ? (
-                <HeartIconWhite width={24} height={24} />
+                <HeartIconBlack />
               ) : (
-                <HeartIconWhites width={24} height={24} />
+                <HeartIconWhite />
+                // <HeartIconWhites width={24} height={24} />
               )}
             </Pressable>
           ) : (

@@ -126,14 +126,14 @@ const NewCarousel = ({selectedSpan}) => {
           }}
           onSnapToItem={index => console.log('current index:', index)}
           renderItem={({item, index}) => (
-            <View style={{height: '110%'}}>
+            // <View style={{height: '110%'}}>
               <Screen1
                 carouselIndex={index}
                 selectedSpan={selectedSpan}
                 isScrolling={isScrolling}
                 item={item}
               />
-            </View>
+            // </View>
           )}
         />
       </View>

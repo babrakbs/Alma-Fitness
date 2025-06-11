@@ -1,8 +1,8 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MapPinIcon from '../../assets/icons/MapIcon.svg';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
-import { colors, fontFamily } from '../../constants';
+import {colors, fontFamily} from '../../constants';
 
 const ClassesCard = ({
   heading = 'Full Body + Bands',
@@ -10,17 +10,17 @@ const ClassesCard = ({
   timeText = '11:00 - 12:00',
   location = 'AREA, 500 m',
   price = '€8',
-  id='1',
+  id = '1',
   onPressTap = () => {},
 }) => {
-
   return (
-    <Pressable onPress={() => onPressTap(id)} style={{ ...styles.cardContainer, ...styles.shadow }}>
+    <Pressable
+      onPress={() => onPressTap(id)}
+      style={{...styles.cardContainer, ...styles.shadow}}>
       <View style={styles.leftContainer}>
-        
         <View style={styles.dateRow}>
           <Text style={styles.dateText}>
-            {dateText}     <Text style={styles.timeText}>{timeText}</Text>
+            {dateText} <Text style={styles.timeText}>{timeText}</Text>
           </Text>
           <ArrowIcon />
         </View>
@@ -33,7 +33,7 @@ const ClassesCard = ({
             <Text style={styles.locationText}>{location}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>{price}</Text>
+            <Text style={styles.priceText}>€{price}</Text>
           </View>
         </View>
       </View>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 12,
-    backgroundColor: colors.white,
+    backgroundColor: '#FAFAFA',
     padding: 14,
     marginHorizontal: 10,
     marginVertical: 10,
@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '400',
     color: colors.black,
-    fontFamily: fontFamily.regular,
+    fontFamily: fontFamily.medium,
   },
   shadow: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,

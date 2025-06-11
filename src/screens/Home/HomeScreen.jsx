@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -123,6 +124,7 @@ const HomeScreen = () => {
     />
   ) : (
     <GestureHandlerRootView>
+      <SafeAreaView/>
       <ScrollView
         style={{
           backgroundColor: colors.white,

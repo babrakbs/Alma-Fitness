@@ -9,7 +9,7 @@ import NewCarousel from './NewCarousel';
 const Plans = () => {
   const [selectedSpan, setSelectedSpan] = useState('Monthly');
   return (
-    <View style={{flex: 1}}>
+    // <View style={{flex: 1}}>
       <ImageBackground
           resizeMode='cover'
         source={require('../../assets/images/OnB1.png')}
@@ -42,12 +42,12 @@ const Plans = () => {
           </View> */}
           {/* <WhiteClose /> */}
         </SafeAreaView>
-        <View style={styles.carouselContainer}>
+        {/* <View style={styles.carouselContainer}> */}
           {/* <Carousel selectedSpan={selectedSpan} /> */}
           <NewCarousel selectedSpan={selectedSpan}/>
-        </View>
+        {/* </View> */}
       </ImageBackground>
-    </View>
+    // </View>
   );
 };
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // marginTop: 20,
   },
-  carouselContainer: {flex: 0.9},
+  carouselContainer: {flex: 1},
   span: {
     width: 198,
     flexDirection: 'row',

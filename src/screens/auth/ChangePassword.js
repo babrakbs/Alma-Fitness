@@ -1,12 +1,12 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 import HeaderIconText from '../../components/HeaderIconText';
 import Input from '../../components/input';
 import LockSvg from '../../assets/icons/LockSvg';
 import EyeSvg from '../../assets/icons/Password_Icon.svg';
 import Button from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
-import {colors, fontFamily} from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { colors, fontFamily } from '../../constants';
 import axiosInstance from '../../helper/axiosInstance';
 import Header from '../../components/header';
 
@@ -65,7 +65,7 @@ const ChangePassword = () => {
     } catch (error) {
       setApiError(
         error?.response?.data?.message ||
-          'Failed to change password. Please try again.',
+        'Failed to change password. Please try again.',
       );
     } finally {
       setLoading(false);
@@ -75,6 +75,7 @@ const ChangePassword = () => {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        <SafeAreaView />
         {/* <HeaderIconText
           text="Set New Password"
           size={116}
@@ -96,7 +97,7 @@ const ChangePassword = () => {
           }}>
           Enter your current password and create a new one below.
         </Text>
-        <View style={{marginTop: 20}}>
+        <View style={{ marginTop: 20 }}>
           <Input
             type={'password'}
             placeholder="Old Password"
@@ -111,7 +112,7 @@ const ChangePassword = () => {
             <Text style={styles.errorText}>{oldPasswordError}</Text>
           ) : null}
         </View>
-        <View style={{marginTop: 10}}>
+        <View style={{ marginTop: 10 }}>
           <Input
             type={'password'}
             placeholder="New Password"
@@ -126,7 +127,7 @@ const ChangePassword = () => {
             <Text style={styles.errorText}>{newPasswordError}</Text>
           ) : null}
         </View>
-        <View style={{marginTop: 10}}>
+        <View style={{ marginTop: 10 }}>
           <Input
             type={'password'}
             placeholder="Confirm Password"
@@ -143,7 +144,7 @@ const ChangePassword = () => {
         </View>
         {apiError ? (
           <Text
-            style={[styles.errorText, {textAlign: 'center', marginTop: 16}]}>
+            style={[styles.errorText, { textAlign: 'center', marginTop: 16 }]}>
             {apiError}
           </Text>
         ) : null}

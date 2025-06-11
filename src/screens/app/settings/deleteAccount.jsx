@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
 import React, { useState } from 'react';
 import {colors, fontFamily} from '../../../constants';
 import {WarningRed} from '../../../constants/svgs';
@@ -69,6 +69,8 @@ const DeleteAccount = ({navigation}) => {
 
   return (
     <View style={styles.mainConatiner}>
+            <SafeAreaView/>
+      
       <Header label={'Delete Account        '} showArrow={true} />
       <View style={styles.container}>
         <WarningRed height={18} width={18} />

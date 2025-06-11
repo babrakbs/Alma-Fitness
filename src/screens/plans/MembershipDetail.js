@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {colors, fontFamily} from '../../constants';
 import {AppleIcon, AppleIconWhite, TickIcon} from '../../constants/svgs';
@@ -110,6 +111,7 @@ const MembershipDetail = ({route}) => {
             email: 'never',
             phone: 'never',
           },
+          returnURL: 'almafitness',
           defaultBillingDetails: {
             email: user?.email,
           },
@@ -183,7 +185,7 @@ const MembershipDetail = ({route}) => {
             : 'Your membership is now active.'
         }
         bottomText={
-          'Automatically renews every month,  you can cancel your membership at any time.'
+          'Automatically renews every month, you can cancel your membership at any time.'
         }
         isbottomTextColor={true}
         bottomTextColor="#D3D3D3"
@@ -256,6 +258,7 @@ const MembershipDetail = ({route}) => {
         </View>
       )}
       <ScrollView style={styles.container}>
+        <SafeAreaView/>
         <Header label="Membership       " showArrow={true} />
         {/* <View style={styles.card}>
           <View style={styles.tag}>
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
     // marginTop: '3%',
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: 0.2,
+    borderWidth: 0.5,
   },
   tagText: {
     fontSize: 14,

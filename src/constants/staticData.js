@@ -244,15 +244,18 @@ export const aboutUsData = [
   },
   {
     title: '',
-    content: '• Cancel Early When You Can: If you’re unable to attend a workout, please cancel your booking as early as possible. This allows others to take advantage of the spot and helps our partner venues optimize their schedules.',
+    content:
+      '• Cancel Early When You Can: If you’re unable to attend a workout, please cancel your booking as early as possible. This allows others to take advantage of the spot and helps our partner venues optimize their schedules.',
   },
   {
     title: '',
-    content: '• Be Considerate: Fitness is about building a positive community. Let’s respect the time and effort of other users and our venue partners by being on time, adhering to bookings and avoiding last-minute changes whenever possible.',
+    content:
+      '• Be Considerate: Fitness is about building a positive community. Let’s respect the time and effort of other users and our venue partners by being on time, adhering to bookings and avoiding last-minute changes whenever possible.',
   },
   {
     title: '',
-    content: '• Keep Exploring: Almax is designed to give you the freedom to try new workouts and venues. Make the most of your credits by diversifying your fitness routine and finding what works best for you.'
+    content:
+      '• Keep Exploring: Almax is designed to give you the freedom to try new workouts and venues. Make the most of your credits by diversifying your fitness routine and finding what works best for you.',
   },
 ];
 

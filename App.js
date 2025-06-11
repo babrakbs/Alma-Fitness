@@ -6,10 +6,11 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {Store} from './src/Redux/store';
 import {Provider} from 'react-redux';424242
 import persistStore from 'redux-persist/es/persistStore';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
 import {PersistGate} from 'redux-persist/integration/react';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import {Publishable_key} from '@env'
+import { colors } from './src/constants';
 // export default function App() {
 //   let isSigned = false;
 //   let persistor = persistStore(Store);
@@ -37,7 +38,7 @@ const App = () => {
   
   return (
     <StripeProvider publishableKey={Publishable_key}>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         {/* <StatusBar backgroundColor={colors.primary} /> */}
         {/* <StatusBar hidden={true} /> */}
         <Provider store={Store}>
@@ -50,14 +51,14 @@ const App = () => {
             {/* <Notifications /> */}
           </PersistGate>
         </Provider>
-      </SafeAreaView>
+      </View>
     </StripeProvider>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: colors.primary,
+    backgroundColor: colors.primary,
   },
 });
 export default App;

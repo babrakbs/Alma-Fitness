@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import HeaderIconText from '../../../components/HeaderIconText';
 import Button from '../../../components/Button';
@@ -74,6 +74,7 @@ const OTPVerificationPayment = ({route}) => {
   return (
     <>
       <ScrollView style={styles.container}>
+        <SafeAreaView/>
         {Screen && <Header marginTop={20} showArrow={Screen ? true : false} label={Screen ? 'Delete Account       ' : ''}/>}
         <HeaderIconText
           text={Screen ? 'Delete Account' : 'OTP Verification'}

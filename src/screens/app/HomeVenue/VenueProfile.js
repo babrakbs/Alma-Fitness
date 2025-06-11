@@ -8,11 +8,13 @@ import {
   Linking,
   StyleSheet,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import Header from '../../../components/header';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
 import {useNavigation} from '@react-navigation/native';
-import {colors} from '../../../constants';
+import {colors, fontFamily} from '../../../constants';
+import ExternalLinkIcon from '../../../assets/icons/External_Link';
 
 const VenueProfile = () => {
   const handleWebsitePress = () => {
@@ -22,6 +24,8 @@ const VenueProfile = () => {
 
   return (
     <ScrollView style={styles.container}>
+            <SafeAreaView/>
+      
       {/* Header */}
       {/* <View style={styles.header}>
         
@@ -62,7 +66,12 @@ const VenueProfile = () => {
               uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
             }}
           />
-          <Text style={styles.visitText}>🔗 Visit Website</Text>
+          <Text style={styles.visitText}>
+            <View style={styles.visitContainer}>
+              <ExternalLinkIcon />
+              <Text style={styles.visitTextContent}>Visit Website</Text>
+            </View>
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -140,6 +149,7 @@ const VenueProfile = () => {
               color: '#8A8A8A',
               fontWeight: '400',
               fontSize: 16,
+              fontFamily: fontFamily.regular,
               marginHorizontal: 10,
             }}>
             Lorem ipsum dolor sit amet. Et voluptatibus reprehenderit est dolor
@@ -260,12 +270,14 @@ const styles = StyleSheet.create({
   visitText: {
     position: 'absolute',
     top: 10,
-    left: 10,
+    left: 2,
     color: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 4,
     fontSize: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   scheduleContainer: {
     flexDirection: 'row',
@@ -297,6 +309,7 @@ const styles = StyleSheet.create({
   tag: {
     backgroundColor: '#fff',
     borderColor: colors.darkGray,
+
     borderWidth: 0.5,
     borderRadius: 16,
     paddingHorizontal: 12,
@@ -307,6 +320,7 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: 12,
     color: '#333',
+    fontFamily: fontFamily.bold,
   },
   locationText: {
     color: '#888',
@@ -322,6 +336,7 @@ const styles = StyleSheet.create({
 
   hoursRow: {
     fontSize: 14,
+    fontFamily: fontFamily.medium,
     marginBottom: 6,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -332,6 +347,19 @@ const styles = StyleSheet.create({
   time: {
     color: '#666',
     fontWeight: '400',
+  },
+  visitContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 5, // Adds space between icon and text
+  },
+  visitTextContent: {
+    color: colors.white,
+    fontFamily: fontFamily.medium,
+    textDecorationLine: 'underline',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
 

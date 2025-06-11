@@ -13,7 +13,7 @@ const toast = (text, properties = {}, onPress = () => { }) => {
         action: {
             text: '',
             onPress: onPress,
-            textColor: backgroundColor === colors.error ? colors.white : colors.black,
+            textColor: backgroundColor === colors.red ? colors.white : colors.black,
         },
     });
 }

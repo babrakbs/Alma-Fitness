@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import { FaqData } from '../../../constants/staticData';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
 import { ArrowDownBlackIcon } from '../../../constants/svgs';
@@ -16,6 +16,8 @@ const CustomerSupport = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+            <SafeAreaView/>
+      
                             <Header label={'Support           '} showArrow={true} />
 
       <Text style={styles.header}>Frequently Asked Questions</Text>

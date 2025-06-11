@@ -43,7 +43,7 @@ const ClassesCard = ({
           <MapPinIcon />
           <Text style={styles.locationText}>{location}</Text>
         </View>
-        <Text style={styles.price}>{price}</Text>
+        <Text style={styles.price}>€{price}</Text>
       </View>
     </Pressable>
   );
@@ -53,7 +53,7 @@ export default ClassesCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FAFAFA',
     padding: 16,
     borderRadius: 12,
     shadowColor: '#000',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   price: {
     borderColor: colors.darkWhite,
-    borderWidth: 1,
+    borderWidth: 0.7,
     paddingVertical: 4,
     paddingHorizontal: 5,
     borderRadius: 6,

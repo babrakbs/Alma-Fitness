@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView, Text, StatusBar} from 'react-native';
+import {StyleSheet, View, ScrollView, Text, StatusBar, SafeAreaView} from 'react-native';
 import Header from '../../../components/header';
 import { TermsData } from '../../../constants/staticData';
 import TermSection from '../../../components/termSection';
@@ -8,6 +8,8 @@ import { fontFamily } from '../../../constants';
 const TermsCondition = () => {
     return (
         <ScrollView style={[styles.container]}>
+                <SafeAreaView/>
+          
             <View style={styles.content}>
                 <Header label={'Terms & Conditions        '} showArrow={true} />
                 {TermsData.map((section, index) => (

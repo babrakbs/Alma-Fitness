@@ -9,14 +9,12 @@ import {
 import React, {useState} from 'react'; // Import useState
 import MapPinIcon from '../../assets/icons/MapPinIcon';
 import {useNavigation} from '@react-navigation/native';
-import {
-  HeartIconWhite,
-  HeartIconWhites,
-  HeartIconFilled,
-} from '../../constants/svgs'; // Assuming HeartIconFilled exists
 import {colors, fontFamily} from '../../constants';
 import TextLink from './TextLink';
 import axiosInstance from '../../helper/axiosInstance'; // Import axiosInstance
+import HeartIconBlack from '../../assets/icons/HeartIconBlack';
+import HeartIconWhite from '../../assets/icons/HeartIconWhite';
+import { toast } from '../../helper/toast';
 
 const VenueCard = ({
   imageUrl,
@@ -63,7 +61,8 @@ const VenueCard = ({
         setFavouriteError(
           response.data.meta.message || `Could not ${actionText} favourite.`,
         );
-        setIsFavourite(!newFavouriteState);
+        // setIsFavourite(!newFavouriteState);
+        toast( response.data.meta.message || `Could not ${actionText} favourite.`)
         return;
       }
       if (!newFavouriteState && typeof onFavouriteChanged === 'function') {
@@ -94,7 +93,8 @@ const VenueCard = ({
       } else if (error.message) {
         errorMessage = error.message;
       }
-      setFavouriteError(errorMessage);
+      // setFavouriteError(errorMessage);
+      toast(errorMessage)
       setIsFavourite(!newFavouriteState); // Revert UI on error
     }
   };
@@ -104,7 +104,7 @@ const VenueCard = ({
       <Pressable
         onPress={() => {
           console.log('VenueCard pressed asd as', id);
-          navigate('ClassDetails', {id: id});
+          navigate('VenueProfile', {id: id});
         }}>
         <View style={styles.imageContainer}>
           <Image
@@ -113,9 +113,9 @@ const VenueCard = ({
           />
           <Pressable onPress={handleFavouritePress} style={styles.heartIcon}>
             {isFavourite ? (
-              <HeartIconWhite width={24} height={24} />
+              <HeartIconBlack />
             ) : (
-              <HeartIconWhites width={24} height={24} />
+              <HeartIconWhite/>
             )}
           </Pressable>
           <View style={styles.pillContainer}>
@@ -129,9 +129,7 @@ const VenueCard = ({
           <Text style={styles.venueTime}>{km ? km : '300km'}</Text>
         </View>
       </Pressable>
-      {favouriteError ? (
-        <Text style={styles.errorText}>{favouriteError}</Text>
-      ) : null}
+      
     </View>
   );
 };
