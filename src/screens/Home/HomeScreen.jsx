@@ -124,10 +124,10 @@ const HomeScreen = () => {
     />
   ) : (
     <GestureHandlerRootView>
-      <SafeAreaView/>
+      <SafeAreaView style={{backgroundColor:"white"}}>
       <ScrollView
         style={{
-          backgroundColor: colors.white,
+          backgroundColor: 'white',
           // marginBottom: 50,
           // flex: 1,
         }}>
@@ -217,6 +217,7 @@ const HomeScreen = () => {
           )}
         </View>
       </ScrollView>
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 };
