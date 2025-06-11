@@ -13,6 +13,7 @@ import {AlmaLogoImage, Checkcircle} from '../constants/svgs';
 import {colors, fontFamily} from '../constants';
 import {OnBoardingData} from '../constants/staticData';
 import TickCircleIcon from '../assets/icons/tickCircle';
+import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const BlueBgComponent = ({
   heading = 'Account created!',
@@ -30,6 +31,7 @@ const BlueBgComponent = ({
   icon = <TickCircleIcon />,
   bottomText,
   bottomButton,
+  onPressBtn,
 }) => {
   const nav = useNavigation();
   return (
@@ -72,7 +74,11 @@ const BlueBgComponent = ({
           <Button
             text={btnText}
             handleClick={() => {
-              nav.navigate('Login');
+              if (onPressBtn) {
+                onPressBtn();
+              } else {
+                nav.navigate('Login');
+              }
             }}
             textBold={false}
             theme={theme}
@@ -80,7 +86,7 @@ const BlueBgComponent = ({
             transparent={true}
           />
           {bottomButton && (
-            <View style={{marginTop: 16, width: '100%'}}>{bottomButton}</View>
+            <View style={{marginTop: 16, width: '100%',marginBottom:5}}>{bottomButton}</View>
           )}
         </View>
       </View>
@@ -164,7 +170,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.semiBold,
     fontSize: 26,
     fontWeight: '600',
-    paddingHorizontal: 20,
+    paddingHorizontal: widthPercentageToDP(10),
     // marginVertical: '2%',
   },
 });

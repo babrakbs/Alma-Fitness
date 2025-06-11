@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react'; // Import useState
 import HeaderIconText from '../../components/HeaderIconText';
 import Input from '../../components/input';
@@ -137,6 +137,8 @@ const SetNewPassword = ({route}) => {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+                <SafeAreaView/>
+        
         <HeaderIconText
           text="Set New Password"
           size={116}

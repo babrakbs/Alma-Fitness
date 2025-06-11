@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -25,25 +25,8 @@ const MembershipDetails = ({navigation}) => {
   const [PausemembershipModal, setPausemembershipModal] = useState(false);
   const [pauseMembership, setPauseMembership] = useState(false);
   const [selectedOption, setSelectedOption] = useState('1_month');
-  const [initailPauseMembership, setInitialPauseMembership] = useState(false);
   const [userPlan, setUserPlan] = useState(null);
   const [loading, setLoading] = useState(false); // <-- Add loading state
-
-  const fetchUserPlan = async () => {
-    setLoading(true); // Start loading
-    try {
-      const response = await axiosInstance.get('/api/getUserPlan');
-      const {plan} = response.data?.data;
-      setUserPlan(plan);
-
-      console.log(formatRenewalDate(userPlan[0]?.current_period_end));
-      console.log('User Plan:', plan);
-    } catch (error) {
-      console.error('Error fetching user plan:', error);
-    } finally {
-      setLoading(false); // End loading
-    }
-  };
 
   // Options for the radio buttons
   const options = [
@@ -56,13 +39,28 @@ const MembershipDetails = ({navigation}) => {
     {id: 'until_manual', label: 'Until I turn it back on'},
   ];
 
+  const fetchUserPlan = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get('/api/getUserPlan');
+      const {plan} = response.data?.data;
+      setUserPlan(plan);
+
+      console.log(formatRenewalDate(userPlan[0]?.current_period_end));
+      console.log('User Plan:', plan);
+    } catch (error) {
+      console.error('Error fetching user plan:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [userPlan]);
+
   useEffect(() => {
     fetchUserPlan();
   }, []);
   const warningSheetRef = useRef();
   const pauseMembershipSheetRef = useRef();
   const pauseConfirmSheetRef = useRef();
-  const initialPauseSheetRef = useRef();
   const formatRenewalDate = isoString => {
     if (!isoString) return '';
     const date = new Date(isoString);
@@ -142,6 +140,18 @@ const MembershipDetails = ({navigation}) => {
     }
   };
 
+  const handleCancelMembership = () => {
+    console.log('Cancelling membership...');
+    warningSheetRef.current?.close();
+  };
+
+  const handlePauseFromWarning = () => {
+    warningSheetRef.current?.close();
+    setTimeout(() => {
+      pauseMembershipSheetRef.current?.open();
+    }, 200);
+  };
+
   return (
     <>
       {loading ? (
@@ -149,65 +159,43 @@ const MembershipDetails = ({navigation}) => {
           <ActivityIndicator size="large" color={colors.black} />
         </View>
       ) : (
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={[styles.container]}>
-          {/* 0.1 */}
-          <Header showArrow={true} label={'Membership       '} />
-          {/* 0.2 */}
-          <View style={styles.proMemDetailsContainer}>
-            {/* <MembershipDetailsHeading text={'Current Membership'} /> */}
-            <MembershipCard plan={userPlan} />
-            {/* <View style={styles.plusMembershipContainer}>
-          <Text style={styles.memText}>Plus Membership Plan</Text>
-          <Text style={styles.creditsText}>(65 Credits)</Text>
-        </View> */}
-            {/* <Text style={styles.unusedCrdText}>
-          Unused credits from your membership plan roll over to the next month.
-        </Text> */}
-          </View>
-          {/* 0.15 */}
-          <View style={styles.renewalDateCont}>
-            <MembershipDetailsHeading text={'Renewal Date'} />
-            {userPlan?.length > 0 ? (
+        <View style={styles.mainContainer}>   
+        
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.scrollContainer}
+            contentContainerStyle={styles.scrollContent}>
+        <SafeAreaView />
+            {/* 0.1 */}
+            <Header showArrow={true} label={'Membership       '} />
+            {/* 0.2 */}
+            <View style={styles.proMemDetailsContainer}>
+              <MembershipCard plan={userPlan} />
+            </View>
+            {/* 0.15 */}
+            <View style={styles.renewalDateCont}>
+              <MembershipDetailsHeading text={'Renewal Date'} />
+              {userPlan?.length > 0 ? (
+                <MembershipSpecificButton
+                  marginTop={'5%'}
+                  label={formatRenewalDate(userPlan[0]?.current_period_end)}
+                />
+              ) : (
+                ''
+              )}
+
               <MembershipSpecificButton
                 marginTop={'5%'}
-                label={formatRenewalDate(userPlan[0]?.current_period_end)}
+                label={'Change Payment Method'}
               />
-            ) : (
-              ''
-            )}
-
-            <MembershipSpecificButton
-              marginTop={'5%'}
-              label={'Change Payment Method'}
-            />
-          </View>
-          {/* 0.25 */}
-          {/* <View style={styles.upgradePlanCont}> */}
-          {/* <MembershipDetailsHeading text={'Upgrade Plan'} /> */}
-          {/* <MembershipSpecificButton
-          marginTop={'5%'}
-          label={'Choose Other Plans'}
-          handleClick={() => {
-            navigation.navigate('Plans');
-          }}
-        />
-        <MembershipSpecificButton
-          marginTop={'4%'}
-          label={'Buy Additional Credits'}
-          handleClick={() => {
-            navigation.navigate('Plans');
-          }}
-        /> */}
-          {/* </View> */}
-          {/* 0.3 */}
+            </View>
+          </ScrollView>
           <View style={styles.bottomBtnCont}>
             <Button
               text="Pause Membership"
               theme="grayWhite"
               textBold={false}
-              handleClick={() => initialPauseSheetRef.current?.open()}
+              handleClick={() => pauseMembershipSheetRef.current?.open()}
             />
             <Button
               marginTop={10}
@@ -218,7 +206,7 @@ const MembershipDetails = ({navigation}) => {
               handleClick={() => warningSheetRef.current?.open()}
             />
           </View>
-        </ScrollView>
+        </View>
       )}
       {/* Warning Bottom Sheet */}
       <CustomBottomSheet ref={warningSheetRef} snapPoints={['70']}>
@@ -271,7 +259,7 @@ const MembershipDetails = ({navigation}) => {
               width: '100%',
             }}>
             <Button
-              handleClick={() => pauseConfirmSheetRef.current?.close()}
+              handleClick={handlePauseFromWarning}
               text="Pause Membership"
               textBold={true}
               marginTop={15}
@@ -279,7 +267,7 @@ const MembershipDetails = ({navigation}) => {
               widthSize={'large'}
             />
             <Button
-              handleClick={() => pauseConfirmSheetRef.current?.close()}
+              handleClick={handleCancelMembership}
               text="Cancel Membership"
               textBold={true}
               marginTop={15}
@@ -453,7 +441,7 @@ const MembershipDetails = ({navigation}) => {
         </View>
       </CustomBottomSheet>
 
-      {/* Initial Pause Membership Bottom Sheet */}
+      {/* Initial Pause Membership Bottom Sheet - Commented out
       <CustomBottomSheet ref={initialPauseSheetRef} snapPoints={['80']}>
         <View style={[styles.modalContent]}>
           <View style={{justifyContent: 'flex-start', marginBottom: 20}}>
@@ -545,67 +533,37 @@ const MembershipDetails = ({navigation}) => {
           />
         </View>
       </CustomBottomSheet>
+      */}
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    backgroundColor: colors.lightWhite,
-    width: '90%',
-    marginHorizontal: '5%',
+    backgroundColor: '#F7F7F7',
+  },
+  scrollContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  scrollContent: {
+    paddingHorizontal: '5%',
+    paddingBottom: 20,
   },
   proMemDetailsContainer: {
-    // flex: 0.2,
-  },
-  plusMembershipContainer: {
-    width: '95%',
-    marginHorizontal: '2.5%',
-    backgroundColor: '#373A36',
-    alignSelf: 'center',
-    borderRadius: 100,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 15,
-    marginTop: '6%',
-  },
-  memText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#EFEFEB',
-  },
-  creditsText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#EFEFEB',
-    marginLeft: 3,
-  },
-  unusedCrdText: {
-    color: '#15161E',
-    textAlign: 'center',
-    width: '70%',
-    alignSelf: 'center',
-    fontSize: 12,
-    fontWeight: '400',
-    lineHeight: 12,
-    marginTop: 7,
-  },
-  renewalDateCont: {
-    // flex: 0.15,
     marginTop: 20,
   },
-  upgradePlanCont: {
-    // flex: 0.25,
-    marginTop: 30,
+  renewalDateCont: {
+    marginTop: 20,
   },
   bottomBtnCont: {
-    // flex: 0.35,
-    marginTop: '12%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '5%',
+    width: '100%',
+    paddingHorizontal: '5%',
+    paddingVertical: 20,
+    backgroundColor: '#F7F7F7',
+    // borderTopWidth: 1,
+    // // borderTopColor: 'rgba(0, 0, 0, 0.1)',
   },
   modalContent: {
     backgroundColor: 'white',

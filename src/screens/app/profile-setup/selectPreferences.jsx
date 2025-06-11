@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../../../components/header';
@@ -130,9 +131,10 @@ const SelectPreferences = ({navigation, route}) => {
     <LinearGradient
       colors={['#ffffff', '#ffffff']}
       style={styles.linearGradientContainer}>
-      <StatusBar barStyle={'light-content'} />
+        <SafeAreaView/>
+      {/* <StatusBar barStyle={'light-content'} /> */}
       <View style={{...styles.innerContainer}}>
-        <Header showArrow={true} label={'Preferences     '} />
+        <Header paddingVertical={10} showArrow={true} label={'Preferences     '} />
         <Text style={styles.workoutInterestText}>
           Tell us about your workout interests to personalize your fitness
           experience.
@@ -191,14 +193,15 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     // borderColor: 'red',
     // flex: 1,
-    marginHorizontal: '5%',
+    // marginHorizontal: '5%',
+    alignSelf:'center',
   },
   workoutInterestText: {
     color: colors.darkWhite,
     textAlign: 'center',
     alignSelf: 'center',
     fontFamily: fontFamily.regular,
-    lineHeight: 22,
+    // lineHeight: 22,
     width: '70%',
     fontSize: 14,
     // flex: 0.09
@@ -233,7 +236,7 @@ const styles = StyleSheet.create({
   },
   listItemContainer: {
     width: '86%',
-    marginHorizontal: '2%',
+    // marginHorizontal: '2%',
     marginTop: '2%',
     // flex: 0.92,
     overflow: 'scroll',

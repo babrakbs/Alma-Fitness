@@ -1,5 +1,6 @@
 import {
   Pressable,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -76,7 +77,9 @@ const Explore = () => {
 
   return (
     <ScrollView style={{...styles.container}}>
-      <View style={{elevation: 5, backgroundColor: 'white'}}>
+            <SafeAreaView/>
+      
+      <View style={{elevation: 5,paddingBottom:5, backgroundColor: 'white'}}>
         <View style={styles.header}>
           {/* <View></View> */}
           {/* <Text style={styles.exploreText}>Explore</Text> */}
@@ -103,15 +106,12 @@ const Explore = () => {
             </Pressable>
           </View>
           <Pressable
-            onPress={() => {
-              navigation.navigate('Profile', {
-                screen: 'Favorites',
-              });
-            }}>
+           
+            >
             <MapIcon />
           </Pressable>
         </View>
-        <View style={{marginVertical: 25}}>
+        <View style={{marginTop: '5%'}}>
           <SearchBarFilter
             value={search}
             leftIcon={<Search />}

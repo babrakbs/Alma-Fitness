@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/Home/HomeScreen';
@@ -25,7 +25,9 @@ const TabNavigation = () => {
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          tabBarStyle: styles.tabBar,
+          tabBarStyle: [styles.tabBar, {
+            marginVertical: Platform.OS === 'ios' ? 20 : 10
+          }],
           tabBarShowLabel: false,
           tabBarIcon: ({ focused }) => {
             let IconComponent;
@@ -54,7 +56,9 @@ const TabNavigation = () => {
         <Tab.Screen name="Profile" component={ProfileNav} options={{ headerShown: false }} />
       </Tab.Navigator>
 
-     <View style={styles.almaScanContainer}>
+      <View style={[styles.almaScanContainer, {
+        bottom: Platform.OS === 'ios' ? 20 : 10
+      }]}>
         <AlmaWhiteSIcon />
       </View>
     </View>
@@ -69,34 +73,34 @@ const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.black,
     borderRadius: 50,
-    justifyContent:'space-between',
-    marginVertical:10 ,
+    justifyContent: 'space-between',
+    marginVertical: 10,
     height: 60,
-    alignItems:'center',
+    alignItems: 'center',
     width: width * 0.8,
     paddingBottom: 5,
-    marginHorizontal:5
+    marginHorizontal: 5
   },
   iconWrapper: {
     flexDirection: 'row',
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 8,
     borderRadius: 25,
   },
   activeTab: {
     backgroundColor: colors.white,
-    marginTop:4,
+    marginTop: 4,
     borderRadius: 25,
   },
   activeLabel: {
     color: colors.black,
-    fontFamily:fontFamily.regular,
+    fontFamily: fontFamily.regular,
     fontSize: 10.61,
     fontWeight: "400",
-    marginLeft: 3, 
+    marginLeft: 3,
   },
   almaScanContainer: {
     position: "absolute",
@@ -114,7 +118,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 12,
     elevation: 20,
-    marginHorizontal:5
+    marginHorizontal: 5
   },
 });
 

@@ -1,6 +1,7 @@
 import {
   Image,
   Pressable,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -21,39 +22,86 @@ import Settings from '../app/settings/settings';
 import axiosInstance from '../../helper/axiosInstance';
 import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const Bookings = ({bookings, loading, navigation}) => {
-  if (loading) {
+  const filterBookings = () => {
+    const now = new Date();
+    const upcoming = [];
+    const history = [];
+
+    bookings?.forEach(booking => {
+      const bookingDate = new Date(booking.start_date);
+      if (bookingDate >= now) {
+        upcoming.push(booking);
+      } else {
+        history.push(booking);
+      }
+    });
+
+    return {upcoming, history};
+  };
+
+  const renderBookingSection = (sectionBookings, title) => {
+    if (loading) {
+      return (
+        <View style={{marginVertical: 20, alignItems: 'center'}}>
+          <ActivityIndicator size="large" color={colors.black} />
+        </View>
+      );
+    }
+
+    if (!sectionBookings || sectionBookings.length === 0) {
+      return (
+        <Text style={{textAlign: 'center', color: '#888', marginTop: 20}}>
+          No {title.toLowerCase()} bookings found.
+        </Text>
+      );
+    }
+
     return (
-      <View style={{marginVertical: 20, alignItems: 'center'}}>
-        <ActivityIndicator size="large" color={colors.black} />
+      <View style={{marginBottom: 10}}>
+        {sectionBookings.map((booking, index) => {
+          const dateText = moment(booking?.start_date).format('ddd D MMM');
+          const timeText = `${booking?.start_time?.slice(
+            0,
+            5,
+          )} - ${booking?.end_time?.slice(0, 5)}`;
+
+          return (
+            <ClassesCard
+              key={booking?.id || index}
+              heading={booking?.class_name}
+              dateText={dateText}
+              timeText={timeText}
+              location={booking?.venue_name}
+              price={booking?.price}
+              id={booking?.id}
+              onPressTap={() =>
+                navigation.navigate('ClassDetails', {id: booking?.id})
+              }
+            />
+          );
+        })}
       </View>
     );
-  }
-  return (
-    <View style={{marginVertical: 10}}>
-      {bookings.map((booking, index) => {
-        const dateText = moment(booking?.start_date).format('ddd D MMM');
-        const timeText = `${booking?.start_time?.slice(
-          0,
-          5,
-        )} - ${booking?.end_time?.slice(0, 5)}`;
+  };
 
-        return (
-          <ClassesCard
-            key={booking?.id || index}
-            heading={booking?.class_name}
-            dateText={dateText}
-            timeText={timeText}
-            location={booking?.venue_name}
-            price={booking?.price}
-            id={booking?.id}
-            onPressTap={() =>
-              navigation.navigate('ClassDetails', {id: booking?.id})
-            }
-          />
-        );
-      })}
+  const {upcoming, history} = filterBookings();
+
+  return (
+    <View style={{marginVertical: 10, marginHorizontal: 10}}>
+      {/* Upcoming Bookings Section */}
+      <View style={[styles.sectionContainer, {marginTop: 10}]}>
+        <Text style={styles.sectionTitle}>Upcoming</Text>
+      </View>
+      {renderBookingSection(history, 'Upcoming')}
+
+      {/* History Section */}
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>History</Text>
+      </View>
+      {renderBookingSection(history, 'History')}
     </View>
   );
 };
@@ -66,37 +114,62 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
       </View>
     );
   }
-  return (
-    <ScrollView style={{marginVertical: 20}}>
-      <Text style={styles.venueText}>Venues</Text>
+
+  const renderFavoritesContent = () => (
+    <>
+      <View style={[styles.sectionContainer, {marginTop: 10, marginLeft: 20}]}>
+        <Text style={styles.sectionTitle}>Venues</Text>
+      </View>
       <HomeCarousel
         venues={favourites?.venues}
         isProfile={true}
         onFavouriteChanged={refreshFavourites}
       />
-      <Text style={[styles.venueText, {marginTop: '18%'}]}>Classes</Text>
-      {favourites?.classes.map((classItem, index) => {
-        const dateText = moment(classItem?.start_date).format('ddd D MMM');
-        const timeText = `${classItem?.start_time?.slice(
-          0,
-          5,
-        )} - ${classItem?.end_time?.slice(0, 5)}`;
-        return (
-          <ClassesCard
-            key={classItem?.id || index}
-            heading={classItem?.class_name}
-            dateText={dateText}
-            timeText={timeText}
-            location={classItem?.venue_name}
-            price={classItem?.price}
-            id={classItem?.id}
-            onPressTap={() =>
-              navigation.navigate('ClassDetails', {id: classItem?.id})
-            }
-          />
-        );
-      })}
-    </ScrollView>
+
+      <Text style={[styles.venueText, {marginTop: '18%', marginLeft: 10}]}>
+        Classes
+      </Text>
+      <View style={{marginHorizontal: 10}}>
+        {favourites?.classes.map((classItem, index) => {
+          const dateText = moment(classItem?.start_date).format('ddd D MMM');
+          const timeText = `${classItem?.start_time?.slice(
+            0,
+            5,
+          )} - ${classItem?.end_time?.slice(0, 5)}`;
+          return (
+            <ClassesCard
+              key={classItem?.id || index}
+              heading={classItem?.class_name}
+              dateText={dateText}
+              timeText={timeText}
+              location={classItem?.venue_name}
+              price={classItem?.price}
+              id={classItem?.id}
+              onPressTap={() =>
+                navigation.navigate('ClassDetails', {id: classItem?.id})
+              }
+            />
+          );
+        })}
+      </View>
+    </>
+  );
+
+  return (
+    <View
+      style={
+        {
+          // marginVertical: 10,
+          // marginHorizontal: 10,
+        }
+      }>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        // contentContainerStyle={{paddingBottom: 20}}
+      >
+        {renderFavoritesContent()}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -150,42 +223,44 @@ const Profile = () => {
   const navigation = useNavigation();
   return (
     <ScrollView style={{...styles.container}}>
+            <SafeAreaView/>
+      
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.span}>
-            <Pressable onPress={() => setSelectedSpan('Settings')}>
-              <Text
-                style={
-                  selectedSpan == 'Settings'
-                    ? [styles.selectedText, {marginRight: 10}]
-                    : styles.text
-                }>
-                Settings
-              </Text>
-            </Pressable>
+          <View style={{}}>
+            <View style={styles.span}>
+              <Pressable onPress={() => setSelectedSpan('Settings')}>
+                <Text
+                  style={
+                    selectedSpan == 'Settings'
+                      ? [styles.selectedText, {marginRight: 10}]
+                      : styles.text
+                  }>
+                  Settings
+                </Text>
+              </Pressable>
 
-            <Pressable onPress={() => setSelectedSpan('Profile')}>
-              <Text
-                style={
-                  selectedSpan == 'Profile'
-                    ? [styles.selectedText, {marginLeft: 10}]
-                    : styles.text
-                }>
-                Profile
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-
-        <View style={styles.profileInfo}>
-          <View>
-            <Text style={styles.name}>{user?.name}</Text>
-            <Text style={styles.name}>#2528664</Text>
-            <View style={styles.priceTag}>
-              <Text style={styles.price}>€8</Text>
+              <Pressable onPress={() => setSelectedSpan('Profile')}>
+                <Text
+                  style={
+                    selectedSpan == 'Profile'
+                      ? [styles.selectedText, {marginLeft: 10}]
+                      : styles.text
+                  }>
+                  Profile
+                </Text>
+              </Pressable>
+            </View>
+            <View style={styles.profileInfo}>
+              <View>
+                <Text style={styles.name}>{user?.name}</Text>
+                <Text style={styles.name}>#2528664</Text>
+                <View style={styles.priceTag}>
+                  <Text style={styles.price}>€8</Text>
+                </View>
+              </View>
             </View>
           </View>
-
           <Image
             source={
               user?.profile_image
@@ -195,6 +270,7 @@ const Profile = () => {
             style={styles.profileImage}
           />
         </View>
+
         {selectedSpan === 'Settings' ? (
           <Settings />
         ) : (
@@ -290,12 +366,14 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: '#fff',
+    paddingTop: heightPercentageToDP(1),
   },
   header: {
     marginTop: 15,
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'baseline',
     justifyContent: 'space-between',
     width: '95%',
     margin: 'auto',
@@ -333,8 +411,12 @@ const styles = StyleSheet.create({
     marginTop: 43,
   },
   name: {
-    marginTop: 15,
-    margin: 'auto',
+    // marginTop: 15,
+    // margin: 'auto',
+    fontWeight: '500',
+    fontSize: 15,
+    fontFamily: fontFamily.regular,
+    color: '#8A8A8A',
   },
   text: {
     color: '#818C81',
@@ -349,10 +431,7 @@ const styles = StyleSheet.create({
     color: '#373A36',
     textAlign: 'center',
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+
   settingsContainer: {
     position: 'absolute',
     left: 20,
@@ -375,7 +454,7 @@ const styles = StyleSheet.create({
   profileInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
+    paddingVertical: 10,
   },
   name: {
     fontSize: 18,
@@ -388,15 +467,17 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   priceTag: {
-    width: '30%',
+    width: '25%',
+    height: '18%',
     marginTop: 5,
     // padding: 5,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: colors.darkWhite,
     borderRadius: 5,
-    flexDirection:"row",
-    alignItems:"center",
-    justifyContent:"center"
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FAFAFA',
   },
   price: {
     fontSize: 14,
@@ -448,7 +529,7 @@ const styles = StyleSheet.create({
   },
   span: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
   selectedText: {
@@ -467,9 +548,20 @@ const styles = StyleSheet.create({
   venueText: {
     fontFamily: fontFamily.regular,
     color: colors.darkWhite,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 10,
+  },
+  sectionContainer: {
+    width: '95%',
+    marginHorizontal: '2.5%',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#B6B6B6',
+    fontFamily: fontFamily.regular,
+    marginBottom: 15,
   },
 });

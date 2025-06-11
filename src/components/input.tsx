@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import CalendarIcon from '../assets/icons/CalendarIcon.svg';
-import {colors, fontFamily} from '../constants';
+import { colors, fontFamily } from '../constants';
 import RNPickerSelect from 'react-native-picker-select';
 // import DropdownIcon from '../assets/icons/DropDown_icon.svg';
 
@@ -86,32 +86,32 @@ const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.container,
-          {backgroundColor: inputBG, marginBottom: error ? 0 : 10},
+          { backgroundColor: inputBG, marginBottom: error ? 0 : 10 },
         ]}>
         {showLeftIcon && LeftSVGIcon}
 
         {placeholder === 'Gender' ? (
-           <View style={styles.container2}>
-           <RNPickerSelect
-             onValueChange={(value) => setSelectedGender(value)}
-             value={selectedGender}
-             placeholder={{ label: 'Select Gender', value: null }}
-             items={[
-               { label: 'Male', value: 'Male' },
-               { label: 'Female', value: 'Female' },
-             ]}
-             useNativeAndroidPickerStyle={false} // Important for custom styles
-             style={{
-               inputIOS: styles.inputIOS,
-               inputAndroid: styles.inputAndroid,
-               iconContainer: styles.iconContainer,
-             }}
-             Icon={() => null} // Hide default icon if you want
-           />
-         </View>
+          <View style={styles.container2}>
+            <RNPickerSelect
+              onValueChange={(value) => setSelectedGender(value)}
+              value={selectedGender}
+              placeholder={{ label: 'Select Gender', value: null, color: colors.darkWhite }}
+              items={[
+                { label: 'Male', value: 'Male' },
+                { label: 'Female', value: 'Female' },
+              ]}
+              useNativeAndroidPickerStyle={false} // Important for custom styles
+              style={{
+                inputIOS: styles.inputIOS,
+                inputAndroid: styles.inputAndroid,
+                iconContainer: styles.iconContainer,
+              }}
+              Icon={() => null} // Hide default icon if you want
+            />
+          </View>
         ) : placeholder === 'Date of Birth' ? (
           <TouchableOpacity
-            style={[styles.inputField, {height: 50, paddingTop: 12}]}
+            style={[styles.inputField, { height: 50, paddingTop: 12 }]}
             onPress={() => setDatePickerVisible(true)}>
             <Text style={dob ? styles.inputText : styles.placeholderText}>
               {dob || 'Date of Birth'}
@@ -124,7 +124,7 @@ const Input: React.FC<InputProps> = ({
             style={
               customStyles
                 ? customStyles
-                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
+                : [styles.inputField, { paddingTop: textalignvertical ? 20 : 10 }]
             }
             secureTextEntry={secureTextEntry ? secureTextEntry : false}
             onChangeText={text => {
@@ -143,7 +143,7 @@ const Input: React.FC<InputProps> = ({
             style={
               customStyles
                 ? customStyles
-                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 0}]
+                : [styles.inputField, { paddingTop: textalignvertical ? 20 : 0 }]
             }
             secureTextEntry={secureTextEntry ? secureTextEntry : false}
             onChangeText={onChangeText}
@@ -176,7 +176,7 @@ const Input: React.FC<InputProps> = ({
       {error ? (
         <Text
           allowFontScaling={false}
-          style={[styles.error, {color: errorColor || colors.error}]}>
+          style={[styles.error, { color: errorColor || colors.error }]}>
           {error}
         </Text>
       ) : null}
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     color: 'black',
     fontSize: 16,
+    justifyContent: 'center'
   },
   iconContainer: {
     top: 12,

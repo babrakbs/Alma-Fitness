@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import axios from 'axios'; // Import axios
 import HeaderIconText from '../../components/HeaderIconText';
@@ -102,9 +102,10 @@ const ForgotPassword = () => {
   return (
     <>
       <ScrollView style={styles.container}>
+                <SafeAreaView/>
+        
         <Header
           // theme="dark"
-          marginTop={20}
           showArrow={true}
         />
         <HeaderIconText

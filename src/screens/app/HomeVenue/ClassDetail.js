@@ -143,6 +143,7 @@ const ClassDetail = ({route}) => {
   //   fetchPublishableKey();
   // }, []);
   const [componentLoading, setComponentLoading] = useState(true);
+  const [sheetLoading, setSheetLoading] = useState(false);
   const fetchClassDetails = async classId => {
     try {
       setComponentLoading(true);
@@ -186,6 +187,7 @@ const ClassDetail = ({route}) => {
       return;
     }
     try {
+      setSheetLoading(true);
       const response = await axiosInstance.post(`/api/bookSchedule`, {
         product_name: classDetails?.class_title,
         class_schedule_id: classDetails?.schedule_id,
@@ -196,48 +198,89 @@ const ClassDetail = ({route}) => {
       });
       const secret = response?.data?.data?.clientSecret;
       console.log('clientSecret', secret);
-      if (secret) {
-        setClientSecret(secret);
-        console.log('about to open ==========>');
-        const {error: initError} = await initPaymentSheet({
-          paymentIntentClientSecret: secret,
-          merchantDisplayName: 'Alma Fitness',
-          billingDetailsCollectionConfiguration: {
-            address: 'never',
-            name: 'never',
-            email: 'never',
-            phone: 'never',
+
+      if (!secret) {
+        throw new Error('No client secret received');
+      }
+
+      setClientSecret(secret);
+      console.log('about to open ==========>');
+
+      // Initialize payment sheet with minimal configuration first
+      const {error: initError} = await initPaymentSheet({
+        paymentIntentClientSecret: secret,
+        merchantDisplayName: 'Alma Fitness',
+        billingDetailsCollectionConfiguration: {
+          address: 'never',
+          name: 'never',
+          email: 'never',
+          phone: 'never',
+        },
+        defaultBillingDetails: {
+          email: user?.email,
+        },
+        appearance: {
+          colors: {
+            primary: '#000000',
+            primaryText: '#000000',
           },
-          defaultBillingDetails: {
-            email: user?.email,
+          shapes: {
+            borderRadius: 32,
           },
-          appearance: {
-            colors: {
-              primary: '#000000',
-              primaryText: '#000000',
-            },
-            shapes: {
-              borderRadius: 32,
-            },
-          },
-        });
-        if (initError) {
-          setShowResult('fail');
-          setLoading(false);
-          return;
-        }
+        },
+        // Remove returnURL temporarily to test if it's causing the issue
+        returnURL: 'almafitness://stripe-redirect',
+
+        allowsDelayedPaymentMethods: true,
+      });
+
+      if (initError) {
+        console.log('Init Error:', initError);
+        Alert.alert('Error', 'Failed to initialize payment. Please try again.');
+        setShowResult('fail');
+        return;
+      }
+
+      // Clear loading state before presenting sheet
+      setSheetLoading(false);
+
+      try {
         const {error: presentError} = await presentPaymentSheet();
-        setLoading(false);
+
         if (presentError) {
-          setShowResult('fail');
+          console.log('Present Error:', presentError);
+          if (presentError.code === 'Canceled') {
+            // User dismissed the sheet, just return to normal state
+            setShowResult(null);
+          } else {
+            Alert.alert(
+              'Payment Error',
+              presentError.message || 'Payment failed. Please try again.',
+            );
+            setShowResult('fail');
+          }
+          setClientSecret('');
         } else {
+          console.log('Payment Success');
           setShowResult('success');
           setStatusBooked(true);
         }
+      } catch (presentError) {
+        console.error('Present Sheet Error:', presentError);
+        Alert.alert(
+          'Error',
+          'Failed to present payment sheet. Please try again.',
+        );
+        setShowResult('fail');
       }
     } catch (error) {
       console.error('Booking error:', error);
+      Alert.alert('Error', 'Failed to process payment. Please try again.');
       setShowResult('fail');
+      setClientSecret('');
+    } finally {
+      // Ensure loading state is cleared in all cases
+      setSheetLoading(false);
     }
   };
 
@@ -249,6 +292,13 @@ const ClassDetail = ({route}) => {
 
   return (
     <>
+      {sheetLoading && (
+        <View style={styles.sheetLoadingContainer}>
+          <View style={styles.sheetLoadingContent}>
+            <ActivityIndicator size="large" color={colors.black} />
+          </View>
+        </View>
+      )}
       {/* Stripe Payment Sheet Modal */}
       {/* <Modal
       isVisible={showStripeOverlay}
@@ -333,7 +383,7 @@ const ClassDetail = ({route}) => {
             heading="Booking Failed"
             description="Review your payment method and try again."
             btnText="Change Payment Method"
-            isIcon={false}
+            isIcon={true}
             onPressBtn={() => {
               setShowResult(null);
             }}
@@ -367,43 +417,47 @@ const ClassDetail = ({route}) => {
         )
       ) : (
         <>
+              <SafeAreaView/>
+        
           <View style={{flex: 1}}>
-            <View>
+            {/* <View> */}
+            <View
+              id="image"
+              style={{
+                overflow: 'hidden',
+                // backgroundColor: 'black',
+              }}>
               <View
-                id="image"
                 style={{
-                  overflow: 'hidden',
-                  backgroundColor: 'black',
+                  width: '100%',
+                  margin: 'auto',
+                  position: 'absolute',
+                  // elevation: 10,
+                  zIndex: 10,
+                  paddingHorizontal: '2%',
+                  // // left: 10,
+                  // backgroundColor: 'rgba(0,0,0,0.2)',
                 }}>
-                <View
-                  style={{
-                    width: '95%',
-                    margin: 'auto',
-                    position: 'absolute',
-                    elevation: 10,
-                    zIndex: 10,
-                    left: 10,
-                  }}>
-                  <Header
-                    label={classDetails?.class_title}
-                    showArrow
-                    theme="black"
-                    venueId={classDetails?.venue_id}
-                    classId={classDetails?.class_id}
-                    isClass={true}
-                    initialIsFavourite={classDetails?.is_favourite}
-                    onFavouriteChanged={() => {
-                      fetchClassDetails(classId);
-                    }}
-                    showFavourite={true}
-                  />
-                </View>
-                <Image
-                  style={{width: '100%', height: 400}}
-                  source={{uri: classDetails?.image}}
+                <Header
+                  label={classDetails?.class_title}
+                  showArrow
+                  theme="black"
+                  venueId={classDetails?.venue_id}
+                  classId={classDetails?.class_id}
+                  isClass={true}
+                  initialIsFavourite={classDetails?.is_favourite}
+                  onFavouriteChanged={() => {
+                    fetchClassDetails(classId);
+                  }}
+                  showFavourite={true}
                 />
               </View>
+              <Image
+                style={{width: '100%', height: 400}}
+                source={{uri: classDetails?.image}}
+              />
             </View>
+            {/* </View> */}
           </View>
           <CustomBottomSheet
             ref={classDetailRef}
@@ -1134,5 +1188,22 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
+  },
+  sheetLoadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  sheetLoadingContent: {
+    backgroundColor: 'transparent',
+    padding: 20,
+    borderRadius: 15,
+    alignItems: 'center',
   },
 });

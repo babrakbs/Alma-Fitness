@@ -3,14 +3,14 @@ import React, {useRef} from 'react';
 import VenueCard from '../../components/Home/VenueCard';
 import Carousel from 'react-native-reanimated-carousel';
 
-const HomeCarousel = (props) => {
+const HomeCarousel = props => {
   const {width} = useWindowDimensions();
   const ref = useRef(null);
   // console.log('Refffff', ref.current.getCurrentIndex());
   console.log('Props', props?.venues);
 
   return (
-    <View style={{height: 180, backgroundColor: '#F5F5F5'}}>
+    <View style={{height: 180}}>
       <Carousel
         ref={ref}
         snapEnabled={true}
@@ -35,11 +35,13 @@ const HomeCarousel = (props) => {
         onSnapToItem={index => console.log('current index:', index)}
         renderItem={({item}) => (
           <VenueCard
-          imageUrl={typeof(item.image) === 'string' ? item.image : ''}
+            imageUrl={typeof item.image === 'string' ? item.image : ''}
             name={item.name}
-            id={props?.isProfile ? item?.venue_id:item.id}
-            initialIsFavourite={item?.favourite === 0 ? false: true}
-            onFavouriteChanged={ props?.isProfile ? props.onFavouriteChanged: ''}
+            id={props?.isProfile ? item?.venue_id : item.id}
+            initialIsFavourite={item?.favourite === 0 ? false : true}
+            onFavouriteChanged={
+              props?.isProfile ? props.onFavouriteChanged : ''
+            }
           />
         )}
       />

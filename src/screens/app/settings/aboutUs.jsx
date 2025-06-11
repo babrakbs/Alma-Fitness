@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView, Text, StatusBar} from 'react-native';
+import {StyleSheet, View, ScrollView, Text, StatusBar, SafeAreaView} from 'react-native';
 import Header from '../../../components/header';
 import { aboutUsData } from '../../../constants/staticData';
 import TermSection from '../../../components/termSection';
@@ -8,6 +8,8 @@ import { fontFamily } from '../../../constants';
 const AboutUs = () => {
     return (
         <ScrollView style={[styles.container]}>
+                <SafeAreaView/>
+          
             <View style={styles.content}>
                 <Header label={'About Us        '} showArrow={true} />
                 {aboutUsData.map((section, index) => (

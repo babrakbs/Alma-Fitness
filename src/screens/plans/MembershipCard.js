@@ -1,20 +1,20 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import {TickIcon} from '../../constants/svgs';
-import {colors, fontFamily} from '../../constants';
-import {DollarIcon, PoundIcon, EuroIcon} from '../../constants/svgs'; // <-- Add your icons here
+import { TickIcon } from '../../constants/svgs';
+import { colors, fontFamily } from '../../constants';
+import { DollarIcon, PoundIcon, EuroIcon } from '../../constants/svgs'; // <-- Add your icons here
 
-const MembershipCard = ({plan}) => {
+const MembershipCard = ({ plan }) => {
   if (!plan) {
     return null;
   }
 
   const formatAmount = amount => {
-    if (!amount) return {whole: '0', decimal: '00'};
+    if (!amount) return { whole: '0', decimal: '00' };
     const total = Number(amount);
     const whole = Math.floor(total / 100);
     const decimal = (total % 100).toString().padStart(2, '0');
-    return {whole, decimal};
+    return { whole, decimal };
   };
 
   const formattedPrice = formatAmount(plan.amount);
@@ -47,8 +47,7 @@ const MembershipCard = ({plan}) => {
         <View style={styles.benefitRow}>
           <TickIcon />
           <Text style={styles.benefitText}>
-            {plan.description ||
-              'Activate your membership and save on workouts.'}
+            {'Activate your membership and save on workouts.'}
           </Text>
         </View>
         <View style={styles.benefitRow}>
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     // marginTop: '3%',
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: 0.2,
+    borderWidth: 0.5,
   },
   tagText: {
     fontSize: 14,
