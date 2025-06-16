@@ -223,8 +223,8 @@ const Profile = () => {
   const navigation = useNavigation();
   return (
     <ScrollView style={{...styles.container}}>
-            <SafeAreaView/>
-      
+      <SafeAreaView />
+
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={{}}>
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
   },
   priceTag: {
     width: '25%',
-    height: '18%',
+    // height: '22%',
     marginTop: 5,
     // padding: 5,
     borderWidth: 0.5,

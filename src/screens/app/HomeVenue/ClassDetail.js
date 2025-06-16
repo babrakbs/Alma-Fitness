@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   View,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import moment from 'moment';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -417,26 +418,23 @@ const ClassDetail = ({route}) => {
         )
       ) : (
         <>
-              <SafeAreaView/>
-        
+          <SafeAreaView />
+
           <View style={{flex: 1}}>
             {/* <View> */}
             <View
               id="image"
               style={{
                 overflow: 'hidden',
-                // backgroundColor: 'black',
+                position: 'relative',
               }}>
               <View
                 style={{
                   width: '100%',
                   margin: 'auto',
                   position: 'absolute',
-                  // elevation: 10,
                   zIndex: 10,
                   paddingHorizontal: '2%',
-                  // // left: 10,
-                  // backgroundColor: 'rgba(0,0,0,0.2)',
                 }}>
                 <Header
                   label={classDetails?.class_title}
@@ -452,10 +450,22 @@ const ClassDetail = ({route}) => {
                   showFavourite={true}
                 />
               </View>
-              <Image
-                style={{width: '100%', height: 400}}
-                source={{uri: classDetails?.image}}
-              />
+              <View style={{position: 'relative'}}>
+                <Image
+                  style={{width: '100%', height: 400}}
+                  source={{uri: classDetails?.image}}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0,0,0,0.3)',
+                  }}
+                />
+              </View>
             </View>
             {/* </View> */}
           </View>
