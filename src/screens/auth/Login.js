@@ -113,7 +113,7 @@ const Login = ({navigation}) => {
   };
   return (
     <ScrollView style={styles.container}>
-      <StatusBar animated={true} barStyle={'dark-content'} />
+      {/* <StatusBar animated={true} /> */}
       {/* <HeaderIconText text="Welcome" headingMTop={20} size={120} /> */}
       <Text style={styles.headingText}>Welcome</Text>
       <Text style={styles.bodyText}>Log in to your account</Text>
