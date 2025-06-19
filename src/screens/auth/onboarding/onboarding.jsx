@@ -5,9 +5,9 @@ import {OnBoardingData} from '../../../constants/staticData';
 
 const OnBoarding = ({navigation}) => {
   return (
-    <SafeAreaView>
+    // <SafeAreaView>
       <OnBoardingBG navigation={navigation} />
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 

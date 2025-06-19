@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import Header from '../../components/header';
-import {colors, fontFamily} from '../../constants';
+import { colors, fontFamily } from '../../constants';
 import Button from '../../components/Button';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import axiosInstance from '../../helper/axiosInstance';
-import {useSelector, useDispatch} from 'react-redux';
-import {setFiltersOfclasses, clearFiltersOfclasses} from '../../Redux/reducer';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFiltersOfclasses, clearFiltersOfclasses } from '../../Redux/reducer';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -30,7 +30,7 @@ import {
 //   'Other',
 // ];
 
-const FilterScreen = ({navigation}) => {
+const FilterScreen = ({ navigation }) => {
   const filtersOfclasses = useSelector(state => state.reducer.filtersOfclasses);
 
   const [selectedCategories, setSelectedCategories] = useState(
@@ -86,43 +86,44 @@ const FilterScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.header}>Filters</Text> */}
-      <Header label={'Filters    '} showArrow={true} />
+      <SafeAreaView>
+        {/* <Text style={styles.header}>Filters</Text> */}
+        <Header label={'Filters       '} showArrow={true} />
 
-      <Text style={styles.sectionTitle}>Category</Text>
-      <FlatList
-        data={categories}
-        keyExtractor={item => item.id.toString()}
-        numColumns={3}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={[
-              styles.categoryButton,
-              selectedCategories.includes(item.id) && styles.selectedCategory,
-            ]}
-            onPress={() => toggleCategory(item.id)}>
-            <Text
+        <Text style={styles.sectionTitle}>Category</Text>
+        <FlatList
+          data={categories}
+          keyExtractor={item => item.id.toString()}
+          numColumns={3}
+          renderItem={({ item }) => (
+            <TouchableOpacity
               style={[
-                styles.categoryText,
-                selectedCategories.includes(item.id) && styles.selectedText,
-              ]}>
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+                styles.categoryButton,
+                selectedCategories.includes(item.id) && styles.selectedCategory,
+              ]}
+              onPress={() => toggleCategory(item.id)}>
+              <Text
+                style={[
+                  styles.categoryText,
+                  selectedCategories.includes(item.id) && styles.selectedText,
+                ]}>
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
 
-      <View style={styles.divider} />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginVertical: 10,
-        }}>
-        <Text style={styles.sectionTitle}>Location</Text>
-        <View style={styles.priceContainer}>
-          {/* <TouchableOpacity
+        <View style={styles.divider} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginVertical: 10,
+          }}>
+          <Text style={styles.sectionTitle}>Location</Text>
+          <View style={styles.priceContainer}>
+            {/* <TouchableOpacity
             style={styles.priceButton}
             onPress={() => setPrice(Math.max(1, price - 1))}>
             <Text style={styles.priceText}>-</Text>
@@ -133,37 +134,50 @@ const FilterScreen = ({navigation}) => {
             onPress={() => setPrice(price + 1)}>
             <Text style={styles.priceText}>+</Text>
           </TouchableOpacity> */}
-          <ArrowIcon />
+            <ArrowIcon />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.divider} />
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginVertical: 10,
-        }}>
-        <Text style={styles.sectionTitle}>Price</Text>
-        <View style={styles.priceContainer}>
-          <TouchableOpacity
-            style={styles.priceButton}
-            onPress={() => setPrice(Math.max(1, price - 1))}>
-            <Text style={styles.priceText}>-</Text>
-          </TouchableOpacity>
-          <Text style={styles.priceValue}>€{price}</Text>
-          <TouchableOpacity
-            style={styles.priceButton}
-            onPress={() => setPrice(price + 1)}>
-            <Text style={styles.priceText}>+</Text>
-          </TouchableOpacity>
+        <View style={styles.divider} />
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginVertical: 10,
+          }}>
+          <Text style={styles.sectionTitle}>Price</Text>
+          <View style={styles.priceContainer}>
+            <TouchableOpacity
+              style={styles.priceButton}
+              onPress={() => setPrice(Math.max(1, price - 1))}>
+              <Text style={styles.priceText}>-</Text>
+            </TouchableOpacity>
+            <Text style={styles.priceValue}>€{price}</Text>
+            <TouchableOpacity
+              style={styles.priceButton}
+              onPress={() => setPrice(price + 1)}>
+              <Text style={styles.priceText}>+</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <View style={styles.divider} />
-      <View style={{marginTop: 30}}>
+        <View style={styles.divider} />
+
+
+        {/* <TouchableOpacity style={styles.applyButton}>
+        <Text style={styles.applyText}>Apply</Text>
+      </TouchableOpacity>
+       */}
+        {/* <TouchableOpacity style={styles.resetButton} onPress={() => {
+        setSelectedCategory(null);
+        setPrice(1);
+      }}>
+        <Text style={styles.resetText}>Reset</Text>
+      </TouchableOpacity> */}
+      </SafeAreaView>
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <Button handleClick={handleApply} text="Apply" textBold={false} />
-        <View style={{marginTop: 10}}>
+        <View style={{ marginVertical: heightPercentageToDP(1) }}>
           <Button
             text="Reset"
             theme="whiteBlack"
@@ -174,23 +188,12 @@ const FilterScreen = ({navigation}) => {
           />
         </View>
       </View>
-
-      {/* <TouchableOpacity style={styles.applyButton}>
-        <Text style={styles.applyText}>Apply</Text>
-      </TouchableOpacity>
-       */}
-      {/* <TouchableOpacity style={styles.resetButton} onPress={() => {
-        setSelectedCategory(null);
-        setPrice(1);
-      }}>
-        <Text style={styles.resetText}>Reset</Text>
-      </TouchableOpacity> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 20, backgroundColor: colors.white},
+  container: { flex: 1, padding: 20, backgroundColor: colors.white },
   header: {
     fontSize: 24,
     fontWeight: '500',
@@ -226,14 +229,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#dbdbdb',
     borderWidth: 0.1,
   },
-  selectedCategory: {backgroundColor: colors.black},
+  selectedCategory: { backgroundColor: colors.black },
   categoryText: {
     color: colors.black,
     fontFamily: fontFamily.semiBold,
     fontWeight: '600',
     fontSize: 14.3,
   },
-  selectedText: {color: colors.white},
+  selectedText: { color: colors.white },
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -267,7 +270,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  applyText: {color: '#fff', fontSize: 16, fontWeight: '600'},
+  applyText: { color: '#fff', fontSize: 16, fontWeight: '600' },
   resetButton: {
     borderColor: '#000',
     borderWidth: 1,
@@ -276,7 +279,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  resetText: {color: '#000', fontSize: 16, fontWeight: 'bold'},
+  resetText: { color: '#000', fontSize: 16, fontWeight: 'bold' },
 });
 
 export default FilterScreen;

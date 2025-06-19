@@ -1,7 +1,9 @@
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -202,7 +204,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
-          flexGrow: 0.75,
+          flexGrow: Platform.OS === 'ios' ? 0.85 : 0.90,
         }}>
         {/* <Text>{props.data}</Text> */}
         <View
@@ -327,7 +329,15 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
           {/* {!isScrolling &&
           plansData[selectedSpan][`${carouselIndex}`]['stepperIcon']} */}
         </View>
+
       </ScrollView>
+      <View style={styles.skipButtonContainer}>
+        <TouchableOpacity
+          style={styles.skipButton}
+          onPress={() => navigation.navigate('TabNav')}>
+          <Text style={styles.skipButtonText}>Skip</Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
@@ -339,10 +349,11 @@ const styles = StyleSheet.create({
     // flex:1,
     // borderWidth: 1,
     // borderColor: 'green',
-    width:'95%',
-    alignSelf:"center",
+    width: '95%',
+    alignSelf: "center",
     backgroundColor: colors.white,
     borderRadius: 44,
+    marginTop: heightPercentageToDP(10),
     // height: 600,
     // height: 600,
   },
@@ -453,5 +464,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     // margin: 'auto',
+  },
+  skipButtonContainer: {
+    marginTop: heightPercentageToDP(10),
+    width: '100%',
+    paddingBottom: 20,
+    alignItems: 'center',
+  },
+  skipButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: colors.white,
+    paddingHorizontal: 18,
+    paddingVertical: 4,
+    textAlign: 'center',
+    borderRadius: 100,
+  },
+  skipButtonText: {
+    color: colors.white,
+    fontSize: 12,
+    fontWeight: '400',
+    textAlign: 'center',
   },
 });

@@ -14,7 +14,7 @@ const Plans = () => {
           resizeMode='cover'
         source={require('../../assets/images/OnB1.png')}
         style={styles.container}>
-        <SafeAreaView style={styles.header}>
+        <View style={styles.header}>
           {/* <AlmaWhite /> */}
           {/* <View style={styles.span}>
             <Pressable
@@ -41,7 +41,7 @@ const Plans = () => {
             </Pressable>
           </View> */}
           {/* <WhiteClose /> */}
-        </SafeAreaView>
+        </View>
         {/* <View style={styles.carouselContainer}> */}
           {/* <Carousel selectedSpan={selectedSpan} /> */}
           <NewCarousel selectedSpan={selectedSpan}/>

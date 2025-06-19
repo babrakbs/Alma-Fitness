@@ -137,13 +137,7 @@ const NewCarousel = ({selectedSpan}) => {
           )}
         />
       </View>
-      <View style={styles.skipButtonContainer}>
-        <TouchableOpacity
-          style={styles.skipButton}
-          onPress={() => navigation.navigate('TabNav')}>
-          <Text style={styles.skipButtonText}>Skip</Text>
-        </TouchableOpacity>
-      </View>
+     
     </View>
   );
 };
