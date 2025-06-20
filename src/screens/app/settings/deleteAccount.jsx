@@ -1,15 +1,16 @@
-import {View, Text, StyleSheet, SafeAreaView} from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Platform } from 'react-native';
 import React, { useState } from 'react';
-import {colors, fontFamily} from '../../../constants';
-import {WarningRed} from '../../../constants/svgs';
+import { colors, fontFamily } from '../../../constants';
+import { WarningRed } from '../../../constants/svgs';
 import Header from '../../../components/header';
 import Input from '../../../components/input';
 import EyeSvg from '../../../assets/icons/Password_Icon.svg';
 import Button from '../../../components/Button';
 import EyeOpenSvg from '../../../assets/icons/EyeOpen';
 import axiosInstance from '../../../helper/axiosInstance'; // Import axiosInstance
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
-const DeleteAccount = ({navigation}) => {
+const DeleteAccount = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hide, setVisible] = useState(true);
@@ -54,8 +55,8 @@ const DeleteAccount = ({navigation}) => {
       console.error('Error during delete account request:', error);
       if (error.response && error.response.data) {
         const message = (error.response.data.meta && error.response.data.meta.message)
-                        ? error.response.data.meta.message
-                        : error.response.data.message;
+          ? error.response.data.meta.message
+          : error.response.data.message;
         setPasswordError(message || 'Failed to initiate account deletion. Please try again.');
       } else if (error.request) {
         setPasswordError('No response from server. Please check your connection.');
@@ -69,8 +70,8 @@ const DeleteAccount = ({navigation}) => {
 
   return (
     <View style={styles.mainConatiner}>
-            <SafeAreaView/>
-      
+      <SafeAreaView />
+
       <Header label={'Delete Account        '} showArrow={true} />
       <View style={styles.container}>
         <WarningRed height={18} width={18} />
@@ -81,28 +82,28 @@ const DeleteAccount = ({navigation}) => {
         be undone. This will remove all your personal information, memberships,
         and settings.
       </Text>
-      <Text style={[styles.description, {marginTop: 10}]}>
+      <Text style={[styles.description, { marginTop: 10 }]}>
         If you’re experiencing any issues or need assistance, please contact us
-        at <Text style={{color: colors.blue}}>support@almaxcollective.com</Text>{' '}
+        at <Text style={{ color: colors.blue }}>support@almaxcollective.com</Text>{' '}
         or visit our help center. We’d love to help resolve any concerns and
         keep you as a valued Almax user.
       </Text>
-      <View style={{width: '90%', alignSelf: 'center', marginVertical: 20}}>
+      <View style={{ width: '90%', alignSelf: 'center', marginVertical: 20 }}>
         <Input
           onChangeText={handlePasswordChange}
           value={password}
           placeholder="Password"
           secureTextEntry={hide} // Use secureTextEntry for passwords
-          rightSVGIcon={  hide ? EyeSvg : EyeOpenSvg}
+          rightSVGIcon={hide ? EyeSvg : EyeOpenSvg}
           rightIconPress={() => setVisible(!hide)}
           showRighIcon
         />
         {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
       </View>
 
-      <Text style={[styles.description, {marginTop: 0}]}>
+      <Text style={[styles.description, { marginTop: 0 }]}>
         To delete your account, please enter your password above and click the{' '}
-        <Text style={{fontFamily: fontFamily.semiBold}}>Delete Account</Text>{' '}
+        <Text style={{ fontFamily: fontFamily.bold, fontWeight: Platform.OS === 'ios' ? '700' : '100' }}>Delete Account</Text>{' '}
         button to confirm.
       </Text>
       <View style={styles.footer}>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal: widthPercentageToDP(5),
     marginBottom: 10,
     alignItems: 'center',
     // width:'90%',
@@ -153,8 +154,8 @@ const styles = StyleSheet.create({
   footer: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems:'center',
-    marginBottom:30
+    alignItems: 'center',
+    marginVertical: Platform.OS === 'ios' ? heightPercentageToDP(6) : heightPercentageToDP(4)
   },
   errorText: { // Style for the error message
     color: colors.red, // Assuming you have a red color in your constants

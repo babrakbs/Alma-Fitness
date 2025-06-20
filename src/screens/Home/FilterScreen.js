@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import Header from '../../components/header';
 import { colors, fontFamily } from '../../constants';
 import Button from '../../components/Button';
@@ -92,20 +99,32 @@ const FilterScreen = ({ navigation }) => {
 
         <Text style={styles.sectionTitle}>Category</Text>
         <FlatList
-          data={categories}
+          data={[{ id: 'all', name: 'All' }, ...categories]}
           keyExtractor={item => item.id.toString()}
           numColumns={3}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[
                 styles.categoryButton,
-                selectedCategories.includes(item.id) && styles.selectedCategory,
+                (item.id === 'all'
+                  ? selectedCategories.length === 0
+                  : selectedCategories.includes(item.id)) &&
+                styles.selectedCategory,
               ]}
-              onPress={() => toggleCategory(item.id)}>
+              onPress={() => {
+                if (item.id === 'all') {
+                  setSelectedCategories([]);
+                } else {
+                  toggleCategory(item.id);
+                }
+              }}>
               <Text
                 style={[
                   styles.categoryText,
-                  selectedCategories.includes(item.id) && styles.selectedText,
+                  (item.id === 'all'
+                    ? selectedCategories.length === 0
+                    : selectedCategories.includes(item.id)) &&
+                  [styles.selectedText, { paddingHorizontal: item.id === 'all' ? widthPercentageToDP(4) : 0 }],
                 ]}>
                 {item.name}
               </Text>
@@ -163,7 +182,6 @@ const FilterScreen = ({ navigation }) => {
         </View>
         <View style={styles.divider} />
 
-
         {/* <TouchableOpacity style={styles.applyButton}>
         <Text style={styles.applyText}>Apply</Text>
       </TouchableOpacity>
@@ -211,7 +229,7 @@ const styles = StyleSheet.create({
   },
   categoryButton: {
     // padding: 10,
-    height: heightPercentageToDP(5),
+   height: heightPercentageToDP(4.2),
     // width: widthPercentageToDP(30),
     paddingHorizontal: '3%',
     borderRadius: 20,
@@ -229,7 +247,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#dbdbdb',
     borderWidth: 0.1,
   },
-  selectedCategory: { backgroundColor: colors.black },
+  selectedCategory: { height: heightPercentageToDP(4.2),backgroundColor: colors.black },
   categoryText: {
     color: colors.black,
     fontFamily: fontFamily.semiBold,

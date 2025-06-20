@@ -204,7 +204,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
-          flexGrow: Platform.OS === 'ios' ? 0.85 : 0.90,
+          flexGrow: Platform.OS === 'ios' ? 0.90 : 0.95,
         }}>
         {/* <Text>{props.data}</Text> */}
         <View
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     width: '95%',
     alignSelf: "center",
     backgroundColor: colors.white,
-    borderRadius: 44,
+    borderRadius: 34,
     marginTop: heightPercentageToDP(10),
     // height: 600,
     // height: 600,

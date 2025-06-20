@@ -99,8 +99,8 @@ const VenueSchedule = () => {
         style={styles.backgroundImage}
         
         resizeMode="cover"> */}
-              <SafeAreaView/>
-        
+      <SafeAreaView />
+
       <View style={{paddingHorizontal: '2%'}}>
         <Header
           label={'Venue Schedule'}
@@ -229,7 +229,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 12,
   },
   dateContainerMain: {
     flexDirection: 'row',

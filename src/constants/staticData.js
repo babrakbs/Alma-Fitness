@@ -263,7 +263,7 @@ export const FaqData = [
   {
     question: 'How does Alma work?',
     answer:
-      'Sign up, explore locations, book classes, and check in with the app. Enjoy seamless management of your fitness activities',
+      'Almax allows you to book workouts at partner gyms and fitness studios using credits. Simply browse the app, choose your workout, and book a class with your available credits.',
     expanded: true,
   },
   {

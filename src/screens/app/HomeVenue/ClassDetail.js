@@ -11,21 +11,21 @@ import {
   SafeAreaView,
 } from 'react-native';
 import moment from 'moment';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../../../components/header';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import AlmaIconSm from '../../../assets/icons/AlmaIconSm';
 import AlmaXSIcon from '../../../assets/icons/AlmaXSIcon';
 import TiltRectangleIcon from '../../../assets/icons/PersonGray.svg';
 import ProfileAvatarImage from '../../../assets/icons/ProfileCoverAvatar';
 import MapSvgImage from '../../../assets/images/MapImageIcon';
-import MapPinIcon from '../../../assets/icons/MapIcon.svg';
+import MapPinIcon from '../../../assets/icons/NewMapIcon.svg';
 import Button from '../../../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
-import {DangerwarningIcon, TickSuccessIcon} from '../../../constants/svgs';
-import {set} from 'date-fns';
-import {colors, fontFamily} from '../../../constants';
+import { DangerwarningIcon, TickSuccessIcon } from '../../../constants/svgs';
+import { set } from 'date-fns';
+import { colors, fontFamily } from '../../../constants';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
 import BottomSheet from '@gorhom/bottom-sheet';
 import MessageIconScreen from '../../../components/MessageIconScreen';
@@ -37,12 +37,13 @@ import {
   useConfirmPayment,
   useStripe,
 } from '@stripe/stripe-react-native';
-import {useSelector} from 'react-redux';
-import {ToastAndroid, Platform, Alert, ActivityIndicator} from 'react-native'; // Add this import for toast
+import { useSelector } from 'react-redux';
+import { ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'; // Add this import for toast
 import CustomBottomSheet from '../../../components/CustomBottomSheet';
 import StripePaymentSheet from '../../../components/StripePaymentSheet';
 import BlueBgComponent from '../../../components/BlueBgComponent';
 import CrossCircleIcon from '../../../assets/icons/crossCircle';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 // const StipePayment = ({clientSecret, onSuccess}) =>{
 //   console.log('clientSecret', clientSecret);
@@ -108,9 +109,9 @@ import CrossCircleIcon from '../../../assets/icons/crossCircle';
 //   );
 // }
 
-const ClassDetail = ({route}) => {
+const ClassDetail = ({ route }) => {
   //   const screenWidth = Dimensions.get('window').width;
-  const {width: screenWidth, height} = useWindowDimensions();
+  const { width: screenWidth, height } = useWindowDimensions();
   // Remove all modal state variables
   // const [cancelBookingModal, setCancelBookingModal] = useState(false);
   // const [successBookingModal, setSuccessBookingModal] = useState(false);
@@ -174,7 +175,7 @@ const ClassDetail = ({route}) => {
   const [clientSecret, setClientSecret] = useState('');
   const [showResult, setShowResult] = useState(null); // "success" | "fail" | null
   const [loading, setLoading] = useState(false);
-  const {initPaymentSheet, presentPaymentSheet} = useStripe();
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [showStripeOverlay, setShowStripeOverlay] = useState(false);
 
   const bookSubscription = async () => {
@@ -208,7 +209,7 @@ const ClassDetail = ({route}) => {
       console.log('about to open ==========>');
 
       // Initialize payment sheet with minimal configuration first
-      const {error: initError} = await initPaymentSheet({
+      const { error: initError } = await initPaymentSheet({
         paymentIntentClientSecret: secret,
         merchantDisplayName: 'Alma Fitness',
         billingDetailsCollectionConfiguration: {
@@ -246,7 +247,7 @@ const ClassDetail = ({route}) => {
       setSheetLoading(false);
 
       try {
-        const {error: presentError} = await presentPaymentSheet();
+        const { error: presentError } = await presentPaymentSheet();
 
         if (presentError) {
           console.log('Present Error:', presentError);
@@ -325,7 +326,7 @@ const ClassDetail = ({route}) => {
       {/* Bottom Sheet for Stripe Payment */}
       {componentLoading ? (
         <ActivityIndicator
-          style={{height: '100%', justifyContent: 'center'}}
+          style={{ height: '100%', justifyContent: 'center' }}
           size="large"
           color="#000"
         />
@@ -418,9 +419,9 @@ const ClassDetail = ({route}) => {
         )
       ) : (
         <>
-          <SafeAreaView />
+          {Platform.OS === 'ios' ? null : <SafeAreaView />}
 
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             {/* <View> */}
             <View
               id="image"
@@ -434,6 +435,7 @@ const ClassDetail = ({route}) => {
                   margin: 'auto',
                   position: 'absolute',
                   zIndex: 10,
+                  top: Platform.OS === 'ios' ? heightPercentageToDP(5) : 0,
                   paddingHorizontal: '2%',
                 }}>
                 <Header
@@ -450,10 +452,10 @@ const ClassDetail = ({route}) => {
                   showFavourite={true}
                 />
               </View>
-              <View style={{position: 'relative'}}>
+              <View style={{ position: 'relative' }}>
                 <Image
-                  style={{width: '100%', height: 400}}
-                  source={{uri: classDetails?.image}}
+                  style={{ width: '100%', height: 400 }}
+                  source={{ uri: classDetails?.image }}
                 />
                 <View
                   style={{
@@ -476,7 +478,7 @@ const ClassDetail = ({route}) => {
             index={0}
             hasPadding={false}
             hasThumb={false}>
-            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
               <View
                 id="details"
                 style={{
@@ -490,7 +492,7 @@ const ClassDetail = ({route}) => {
                     width: '90%',
                     margin: 'auto',
                   }}>
-                  <View style={{flexDirection: 'row', gap: 10}}>
+                  <View style={{ flexDirection: 'row', gap: 10 }}>
                     <Text
                       style={{
                         color: colors.black,
@@ -501,14 +503,14 @@ const ClassDetail = ({route}) => {
                       }}>
                       {classDetails?.start_date
                         ? `${moment(classDetails.start_date).format(
-                            'ddd D MMM',
-                          )}     ${moment(
-                            classDetails.start_time,
-                            'HH:mm:ss',
-                          ).format('HH:mm')} - ${moment(
-                            classDetails.end_time,
-                            'HH:mm:ss',
-                          ).format('HH:mm')}`
+                          'ddd D MMM',
+                        )}     ${moment(
+                          classDetails.start_time,
+                          'HH:mm:ss',
+                        ).format('HH:mm')} - ${moment(
+                          classDetails.end_time,
+                          'HH:mm:ss',
+                        ).format('HH:mm')}`
                         : ''}
                     </Text>
                   </View>
@@ -534,12 +536,12 @@ const ClassDetail = ({route}) => {
                         alignItems: 'center',
                       }}></View>
                   </View>
-                  <View style={[styles.locationContainer, {marginTop: 20}]}>
+                  <View style={[styles.locationContainer, { marginTop: 20 }]}>
                     <MapPinIcon />
                     <Text
                       style={[
                         styles.locationText,
-                        {marginLeft: 11, fontSize: 15.88},
+                        { marginLeft: 11, fontSize: 15.88 },
                       ]}>
                       AREA Athens, 500m
                     </Text>
@@ -561,7 +563,7 @@ const ClassDetail = ({route}) => {
                         alignItems: 'center',
                       }}>
                       <TiltRectangleIcon />
-                      <View style={{marginHorizontal: 7}}>
+                      <View style={{ marginHorizontal: 7 }}>
                         <Text
                           style={{
                             color: colors.darkWhite,
@@ -601,7 +603,7 @@ const ClassDetail = ({route}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.locationText, {fontSize: 16}]}>
+                  <Text style={[styles.locationText, { fontSize: 16 }]}>
                     {classDetails?.description}
                   </Text>
                 </View>
@@ -675,16 +677,16 @@ const ClassDetail = ({route}) => {
                     paddingVertical: 10,
                     display: 'flex',
                   }}>
-                  <View style={{width: '100%'}}>
+                  <View style={{ width: '100%' }}>
                     <View
                       style={[
                         styles.locationContainer,
-                        {justifyContent: 'space-between'},
+                        { justifyContent: 'space-between' },
                       ]}>
                       <Text
                         style={[
                           styles.locationText,
-                          {textDecorationLine: 'underline', marginLeft: 10},
+                          { textDecorationLine: 'underline', marginLeft: 10 },
                         ]}>
                         Ieros Kazika 6, 10331 Athens, Greece
                       </Text>
@@ -700,7 +702,7 @@ const ClassDetail = ({route}) => {
                       </Text>
                     </View>
                     <Image
-                      style={[styles.image, {width: '100%'}]}
+                      style={[styles.image, { width: '100%' }]}
                       resizeMode="contain"
                       source={require('../../../assets/icons/Map.png')}
                     />
@@ -725,7 +727,7 @@ const ClassDetail = ({route}) => {
                   <Text
                     style={[
                       styles.modalTextTitle,
-                      {textAlign: 'left', fontSize: 18, fontWeight: 500},
+                      { textAlign: 'left', fontSize: 18, fontWeight: 500 },
                     ]}>
                     Cancellation Policy
                   </Text>
@@ -755,7 +757,7 @@ const ClassDetail = ({route}) => {
                       refunded to your account for future use.
                     </Text>
                   </View>
-                  <View style={[styles.sectionClass, {marginBottom: 30}]}>
+                  <View style={[styles.sectionClass, { marginBottom: 30 }]}>
                     <Text
                       style={{
                         fontWeight: '600',
@@ -820,7 +822,7 @@ const ClassDetail = ({route}) => {
                 </Text>
               </Text>
               <Text
-                style={{fontWeight: 600, fontSize: 18, color: colors?.black}}>
+                style={{ fontWeight: 600, fontSize: 18, color: colors?.black }}>
                 {classDetails?.price === 0
                   ? 'Free'
                   : '$' + classDetails?.price + '.00'}
@@ -864,7 +866,7 @@ const ClassDetail = ({route}) => {
       {/* Bottom sheets are now outside the ScrollView */}
       <CustomBottomSheet ref={successBookingSheetRef} snapPoints={['50']}>
         <View style={[styles.modalContent]}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TickSuccessIcon />
           </View>
           <Text style={styles.modalTextTitle}>Booking Successfull</Text>
@@ -883,10 +885,10 @@ const ClassDetail = ({route}) => {
               : ''}
             {classDetails?.start_time && classDetails?.end_time
               ? ` from ${moment(classDetails.start_time, 'HH:mm:ss').format(
-                  'h:mm A',
-                )} to ${moment(classDetails.end_time, 'HH:mm:ss').format(
-                  'h:mm A',
-                )}`
+                'h:mm A',
+              )} to ${moment(classDetails.end_time, 'HH:mm:ss').format(
+                'h:mm A',
+              )}`
               : ''}
             {classDetails?.start_date !== classDetails?.end_date
               ? classDetails?.end_date
@@ -915,7 +917,7 @@ const ClassDetail = ({route}) => {
               10
             </Text>
           </View>
-          <View style={{marginLeft: 80}}>
+          <View style={{ marginLeft: 80 }}>
             <Button
               handleClick={() => {
                 successBookingSheetRef.current?.close();
@@ -942,7 +944,7 @@ const ClassDetail = ({route}) => {
           <Text
             style={[
               styles.modalTextTitle,
-              {textAlign: 'center', fontSize: 18, fontWeight: 500},
+              { textAlign: 'center', fontSize: 18, fontWeight: 500 },
             ]}>
             Cancellation Policy
           </Text>
@@ -996,7 +998,7 @@ const ClassDetail = ({route}) => {
             </Text>
           </View>
         </View>
-        <View style={{marginTop: 20}}>
+        <View style={{ marginTop: 20 }}>
           <Button
             handleClick={async () => {
               cancelBookingSheetRef.current?.close();
@@ -1009,7 +1011,7 @@ const ClassDetail = ({route}) => {
             widthSize={'large'}
           />
         </View>
-        <View style={{marginBottom: 20}}>
+        <View style={{ marginBottom: 20 }}>
           <Button
             handleClick={async () => {
               cancelBookingSheetRef.current?.close();
@@ -1026,7 +1028,7 @@ const ClassDetail = ({route}) => {
       {/* Warning Bottom Sheet */}
       <CustomBottomSheet ref={warningSheetRef} snapPoints={['40']}>
         <View style={[styles.modalContent]}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <DangerwarningIcon />
           </View>
           <Text style={styles.modalTextTitle}>Warning</Text>
@@ -1072,7 +1074,7 @@ const ClassDetail = ({route}) => {
       {/* Success Cancel Bottom Sheet */}
       <CustomBottomSheet ref={successCancelSheetRef} snapPoints={['50']}>
         <View style={[styles.modalContent]}>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <TickSuccessIcon />
           </View>
           <Text style={styles.modalTextTitle}>Booking Cancelled</Text>
@@ -1087,7 +1089,7 @@ const ClassDetail = ({route}) => {
             }}>
             Your booking has been cancelled successfully.
           </Text>
-          <View style={{marginLeft: 80}}>
+          <View style={{ marginLeft: 80 }}>
             <Button
               handleClick={() => successCancelSheetRef.current?.close()}
               text="Done"
@@ -1115,7 +1117,7 @@ const ClassDetail = ({route}) => {
             }}>
             This class has been added to your calendar.
           </Text>
-          <View style={{marginLeft: 80}}>
+          <View style={{ marginLeft: 80 }}>
             <Button
               handleClick={() => addedCalendarSheetRef.current?.close()}
               text="Done"

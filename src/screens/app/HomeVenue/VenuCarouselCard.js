@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import React from 'react';
-import MapPinIcon from '../../../assets/icons/MapPinIcon';
+import MapPinIcon from '../../../assets/icons/NewMapIcon.svg';
 import AlmaXSIcon from '../../../assets/icons/AlmaXSIcon';
 // import MapPinIcon from '../../assets/icons/MapPinIcon';
 
