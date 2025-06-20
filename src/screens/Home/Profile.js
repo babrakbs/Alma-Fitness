@@ -75,7 +75,7 @@ const Bookings = ({bookings, loading, navigation}) => {
               dateText={dateText}
               timeText={timeText}
               location={booking?.venue_name}
-              price={booking?.price}
+              price={booking?.price === 0 ? 'Free' : `€${booking?.price}`}
               id={booking?.id}
               onPressTap={() =>
                 navigation.navigate('ClassDetails', {id: booking?.id})

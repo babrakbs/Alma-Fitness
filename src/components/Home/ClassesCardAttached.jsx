@@ -1,6 +1,6 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import MapPinIcon from '../../assets/icons/MapPinIcon';
+import MapPinIcon from '../../assets/icons/NewMapIcon.svg';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../constants';
