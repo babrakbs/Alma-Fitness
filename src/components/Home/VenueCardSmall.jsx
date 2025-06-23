@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Image,
   Pressable,
@@ -5,54 +7,69 @@ import {
   Text,
   useWindowDimensions,
   View,
-} from 'react-native';
-import React from 'react';
-import MapPinIcon from '../../assets/icons/MapPinIcon';
-import {useNavigation} from '@react-navigation/native';
-import {HeartIconWhite, HeartIconWhites} from '../../constants/svgs';
-import { colors, fontFamily } from '../../constants';
+} from "react-native";
+import React from "react";
+import MapPinIcon from "../../assets/icons/MapPinIcon";
+import { useNavigation } from "@react-navigation/native";
+import { HeartIconWhite, HeartIconWhites } from "../../constants/svgs";
+import { colors, fontFamily } from "../../constants";
+import { heightPercentageToDP } from "react-native-responsive-screen";
 
 const VenueCardSmall = ({
-  imageUrl = require('../../assets/images/practiceimage.jpg'),
-  pill = 'What are you up for today?',
-  name = 'SoulBase',
-  time = 'Opening hours: 9:00 - 22:00',
-  location = 'Sekeri 8 10674 Athens, Greece',
+  imageUrl = require("../../assets/images/practiceimage.jpg"),
+  pill = "What are you up for today?",
+  name = "SoulBase",
+  time = "Opening hours: 9:00 - 22:00",
+  location = "Sekeri 8 10674 Athens, Greece",
 }) => {
-  const {width} = useWindowDimensions();
-  const {navigate} = useNavigation();
+  const { width } = useWindowDimensions();
+  const { navigate } = useNavigation();
   return (
     <Pressable
       onPress={() => {
         // navigate('ClassDetails');
-      }}>
+      }}
+    >
       <View style={styles.imageContainer}>
         <Image
-          style={{height: 196, width: width * 0.95, borderRadius: 20}}
+          style={{ height: 150, width: width * 0.95, borderRadius: 20 }}
           source={imageUrl}
         />
-        <View
+        {/* <View
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 10,
             right: 16,
-          }}>
-          {/* <HeartIconWhites width={24} height={24} /> */}
-        </View>
+          }}
+        > */}
+        {/* <HeartIconWhites width={24} height={24} /> */}
+        {/* </View> */}
         <View
           style={{
-            // backgroundColor: '#EFEFEB',
+            // backgroundColor: 'red',
             borderRadius: 21,
-            width: 307,
-            height: 37,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            bottom: 80,
-            left: 35,
-          }}>
-          <Text style={{color: colors.white,fontFamily:fontFamily.medium, fontWeight: '400', fontSize: 20}}>
+            // width: 307,
+            width: width / 1.05,
+            // height: 37,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: heightPercentageToDP(7),
+            // bottom: 80,
+            // left: 35,
+          }}
+        >
+          <Text
+            style={{
+              color: colors.white,
+              textAlign: 'center',
+              alignSelf: 'center',
+              fontFamily: fontFamily.medium,
+              fontWeight: "400",
+              fontSize: 20,
+            }}
+          >
             {pill}
           </Text>
         </View>
@@ -60,7 +77,7 @@ const VenueCardSmall = ({
           style={{
             height: 95,
           }}> */}
-          {/* <View
+        {/* <View
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -83,7 +100,7 @@ const VenueCardSmall = ({
               {time}
             </Text>
           </View> */}
-          {/* <View
+        {/* <View
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -116,9 +133,9 @@ const styles = StyleSheet.create({
     // borderTopLeftRadius: 20,
     // /paddingBottom: 10,
     borderRadius: 20,
-    margin: 'auto',
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
+    margin: "auto",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000",
     // shadowOffset: {
     //   width: 0,
     //   height: 5,

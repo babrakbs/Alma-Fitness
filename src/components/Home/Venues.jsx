@@ -26,6 +26,7 @@ const Venues = ({classVenues}) => {
               workoutType={venue.workout_type}
               price={venue.price}
               id={venue.class_id}
+              right={10}
               // Add any other props you need
             />
           ))

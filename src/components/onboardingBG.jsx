@@ -1,3 +1,5 @@
+/** @format */
+
 import React, {useState, useRef} from 'react';
 import {
   ImageBackground,
@@ -13,6 +15,10 @@ import Button from './Button';
 import {OnBoardingData} from '../constants/staticData';
 import {colors, fontFamily} from '../constants';
 import OnBoardingProgress from './onBoardingProgress';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 const {width, height} = Dimensions.get('window');
 
@@ -104,9 +110,12 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'flex-start',
     fontFamily: fontFamily.medium,
-    fontSize: 30,
+    fontSize: 38,
     fontWeight: '600',
-    paddingHorizontal: 20,
+    // paddingHorizontal: widthPercentageToDP(10),
+    width: widthPercentageToDP(96),
+    // alignSelf: 'center',
+    marginLeft: widthPercentageToDP(5),
     marginTop: 6,
     marginBottom: 32,
   },
@@ -133,7 +142,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'flex-end',
-    marginBottom: 50,
+    marginBottom: heightPercentageToDP(12),
     alignItems: 'center',
   },
   skipButton: {

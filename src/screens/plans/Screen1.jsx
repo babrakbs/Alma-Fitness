@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Platform,
   ScrollView,
@@ -6,35 +8,38 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
-} from 'react-native';
-import React from 'react';
-import Button from '../../components/Button';
-import Plan1IconPlanIcon1 from '../../assets/icons/PlanIcon1';
-import { PlanIconOne, TickIcon } from '../../constants/svgs';
-import PlanIcon1 from '../../assets/icons/PlanIcon1';
-import PlanIcon2 from '../../assets/icons/PlanIcon2';
-import PlanIcon3 from '../../assets/icons/PlanIcon3';
-import PlanIcon4 from '../../assets/icons/PlanIcon4';
-import { useNavigation } from '@react-navigation/native';
-import { colors, fontFamily } from '../../constants';
-import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+} from "react-native";
+import React from "react";
+import Button from "../../components/Button";
+import Plan1IconPlanIcon1 from "../../assets/icons/PlanIcon1";
+import { PlanIconOne, TickIcon } from "../../constants/svgs";
+import PlanIcon1 from "../../assets/icons/PlanIcon1";
+import PlanIcon2 from "../../assets/icons/PlanIcon2";
+import PlanIcon3 from "../../assets/icons/PlanIcon3";
+import PlanIcon4 from "../../assets/icons/PlanIcon4";
+import { useNavigation } from "@react-navigation/native";
+import { colors, fontFamily } from "../../constants";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "react-native-responsive-screen";
 
 const plansData = {
   Monthly: {
     0: {
-      bgColor: '#DBDCDB',
-      primaryColor: '#15161E',
-      planName: 'Basic Plan',
-      memberShipColor: '#46515A',
-      credits: '25 credits',
-      price: '€29',
-      perSpan: '/month',
-      heading: 'Get Started',
+      bgColor: "#DBDCDB",
+      primaryColor: "#15161E",
+      planName: "Basic Plan",
+      memberShipColor: "#46515A",
+      credits: "25 credits",
+      price: "€29",
+      perSpan: "/month",
+      heading: "Get Started",
       descreption:
-        'Perfect for those who want flexibility without overcommitting. Start small, explore your options.',
-      workouts: 'Approximately 2-4 workouts.',
+        "Perfect for those who want flexibility without overcommitting. Start small, explore your options.",
+      workouts: "Approximately 2-4 workouts.",
       stepperIcon: <PlanIcon1 />,
-      button: 'Continue',
+      button: "Continue",
     },
     // 1: {
     //   bgColor: '#818C81',
@@ -147,35 +152,35 @@ const plansData = {
 };
 
 const conditions = [
-  'Activate your membership and save on workouts.',
-  'Book any workout and pay as you go.',
-  'You can cancel your membership anytime.',
-  'Price includes VAT.',
-]
+  "Activate your membership and save on workouts.",
+  "Book any workout and pay as you go.",
+  "You can cancel your membership anytime.",
+  "Price includes VAT.",
+];
 
 const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
   const navigation = useNavigation();
-  console.log('her is the selected plans ===>', selectedSpan, item);
+  console.log("her is the selected plans ===>", selectedSpan, item);
   const { height } = useWindowDimensions();
   console.log(
-    'ISSCROLLING',
+    "ISSCROLLING",
     isScrolling,
     carouselIndex,
     selectedSpan,
-    item?.id,
+    item?.id
   );
   // console.log('HEIGHT', height);
 
-  const getCurrencySymbol = currency => {
+  const getCurrencySymbol = (currency) => {
     switch (currency?.toUpperCase()) {
-      case 'USD':
-        return '$';
-      case 'EUR':
-        return '€';
-      case 'GBP':
-        return '£';
+      case "USD":
+        return "$";
+      case "EUR":
+        return "€";
+      case "GBP":
+        return "£";
       default:
-        return '$'; // Default to dollar sign if currency is not recognized
+        return "$"; // Default to dollar sign if currency is not recognized
     }
   };
 
@@ -186,33 +191,37 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
           ...styles.getStarted,
 
           // color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-        }}>
+        }}
+      >
         Get Started
       </Text>
       <Text
         style={{
           ...styles.getStarted,
           fontSize: 14,
-          width: '60%',
+          width: "60%",
           marginBottom: 40,
           marginTop: 20,
           // color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-        }}>
+        }}
+      >
         Activate your monthly membership and save on workouts.
       </Text>
       <ScrollView
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
-          flexGrow: Platform.OS === 'ios' ? 0.90 : 0.95,
-        }}>
+          flexGrow: Platform.OS === "ios" ? 0.78 : 0.85,
+        }}
+      >
         {/* <Text>{props.data}</Text> */}
         <View
           style={{
             ...styles.heading,
             // borderBottomColor:
             //   plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-          }}>
+          }}
+        >
           {/* <Text
           style={{
             ...styles.planName,
@@ -226,7 +235,8 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
                 ...styles.memberShip,
                 // color:
                 //   plansData[selectedSpan][`${carouselIndex}`]['memberShipColor'],
-              }}>
+              }}
+            >
               Membership
             </Text>
           </View>
@@ -242,24 +252,26 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
             style={{
               ...styles.price,
               // color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-            }}>
+            }}
+          >
             {/* {plansData[selectedSpan][`${carouselIndex}`]['price']} */}
             {/* {getCurrencySymbol(item?.currency)} */}€
             <Text style={styles.price}>
-              {item?.amount ? Math.floor(item.amount / 100) : '0'}
+              {item?.amount ? Math.floor(item.amount / 100) : "0"}
             </Text>
             <Text style={[styles.price, styles.decimalPart]}>
               {item?.amount
-                ? ',' + (item.amount % 100).toString().padStart(2, '0')
-                : ',00'}
+                ? "," + (item.amount % 100).toString().padStart(2, "0")
+                : ",00"}
             </Text>
             <Text
               style={{
                 ...styles.time,
                 // color:
                 //   plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-              }}>
-              {' '}
+              }}
+            >
+              {" "}
               / {item?.recurring}
             </Text>
           </Text>
@@ -287,22 +299,29 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
               style={{
                 ...styles.planPara,
                 // color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
-              }}>
+              }}
+            >
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <TickIcon />
-                <Text style={{ ...styles.planPara, marginLeft: 8 }}>
+                <Text
+                  style={{
+                    ...styles.planPara,
+                    marginLeft: widthPercentageToDP(2),
+                  }}
+                >
                   {feature}
                 </Text>
               </View>
             </Text>
           ))}
         </View>
-        <View style={{ ...styles.footer, marginTop: '2%' }}>
+        <View style={{ ...styles.footer, marginTop: "2%" }}>
           <Button
             fontSize={15}
             text="Continue"
@@ -311,7 +330,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
             // theme="whiteBlack"
             handleClick={() => {
               // navigation.navigate('StartMembership');
-              navigation.navigate('MembershipDetail', { planId: item?.id });
+              navigation.navigate("MembershipDetail", { planId: item?.id });
             }}
           />
           {/* <Text
@@ -329,12 +348,12 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
           {/* {!isScrolling &&
           plansData[selectedSpan][`${carouselIndex}`]['stepperIcon']} */}
         </View>
-
       </ScrollView>
       <View style={styles.skipButtonContainer}>
         <TouchableOpacity
           style={styles.skipButton}
-          onPress={() => navigation.navigate('TabNav')}>
+          onPress={() => navigation.navigate("TabNav")}
+        >
           <Text style={styles.skipButtonText}>Skip</Text>
         </TouchableOpacity>
       </View>
@@ -349,59 +368,59 @@ const styles = StyleSheet.create({
     // flex:1,
     // borderWidth: 1,
     // borderColor: 'green',
-    width: '95%',
+    width: "95%",
     alignSelf: "center",
     backgroundColor: colors.white,
-    borderRadius: 34,
-    marginTop: heightPercentageToDP(10),
+    borderRadius: 24,
+    // marginTop: heightPercentageToDP(10),
     // height: 600,
     // height: 600,
   },
   heading: {
-    marginTop: '10%',
+    marginTop: "10%",
     // borderWidth: 1,
-    height: '30%',
-    width: '80%',
+    height: "30%",
+    width: "80%",
     // paddingBottom: '15%',
     // backgroundColor:'red',
-    margin: 'auto',
+    margin: "auto",
     // borderBottomWidth: 1.24,
   },
   divider: {
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
     // marginTop: '10%',
     marginVertical: heightPercentageToDP(2),
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: 0.5,
+    borderWidth: Platform.OS === "ios" ? 0.5 : 0.2,
   },
   planName: {
     fontSize: 22.28,
     // color: '#15161E', //Can be a prop
-    fontWeight: '600',
+    fontWeight: "600",
   },
   memberShipView: {
-    width: '55%',
-    height: '30%',
+    width: "55%",
+    height: "30%",
     backgroundColor: colors.lightWhite,
     borderRadius: 8,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   memberShip: {
     fontSize: 14.86,
-    textAlign: 'center',
+    textAlign: "center",
 
     fontFamily: fontFamily.medium,
 
     color: colors.black,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   credit: {
     color: colors.black,
     fontSize: 22,
-    fontWeight: '600',
+    fontWeight: "600",
     marginTop: 8,
     lineHeight: 26,
   },
@@ -409,49 +428,54 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 26,
     fontFamily: fontFamily.medium,
-    fontWeight: '600',
-    textAlign: 'center',
-    alignSelf: 'center',
-    // marginTop: 8,
+    fontWeight: "600",
+    textAlign: "center",
+    alignSelf: "center",
+    paddingTop: heightPercentageToDP(1),
     // lineHeight: 26,
   },
   price: {
     fontSize: 58,
-    fontWeight: '600',
+    fontWeight: "600",
     color: colors.black,
     fontFamily: fontFamily.bold,
     marginTop: 8,
-    textAlign: 'left',
+    textAlign: "left",
   },
   decimalPart: {
     fontSize: 32,
     fontFamily: fontFamily.semiBold,
     color: colors.black,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   time: {
     fontSize: 22,
-    fontWeight: '400',
+    fontWeight: "400",
     color: colors.black,
     fontFamily: fontFamily.medium,
   },
   planHeading: {
-    alignSelf: 'center',
-    marginTop: heightPercentageToDP(2),
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    // alignSelf: '',
+    paddingHorizontal: heightPercentageToDP(4),
+
+    marginVertical: heightPercentageToDP(2),
+    alignItems: "flex-start",
+    // justifyContent: 'center',
   },
   planType: {
-    fontWeight: '700',
+    fontWeight: "700",
     fontSize: 24,
     color: colors.black,
   },
   planPara: {
-    fontWeight: '400',
+    fontWeight: "400",
+    // backgroundColor: 'red',
     color: colors.black, //can be a prop,
     fontSize: 13,
+    width: "100%",
+    fontFamily: fontFamily.medium,
     // marginTop: '5%',
-    paddingVertical: '1%'
+    paddingVertical: "1%",
   },
   footer: {
     // position: 'absolute',
@@ -459,31 +483,32 @@ const styles = StyleSheet.create({
 
     // paddingBottom: 40,
     // borderWidth: 1,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    alignItems: 'center',
-    width: '90%',
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    width: "90%",
     // margin: 'auto',
   },
   skipButtonContainer: {
     marginTop: heightPercentageToDP(10),
-    width: '100%',
+    width: "100%",
     paddingBottom: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   skipButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "#261F63",
     borderWidth: 1,
-    borderColor: colors.white,
+    borderColor: colors.darkGray,
     paddingHorizontal: 18,
     paddingVertical: 4,
-    textAlign: 'center',
+    textAlign: "center",
     borderRadius: 100,
   },
   skipButtonText: {
     color: colors.white,
     fontSize: 12,
-    fontWeight: '400',
-    textAlign: 'center',
+    fontWeight: "400",
+    fontFamily: fontFamily.regular,
+    textAlign: "center",
   },
 });

@@ -9,12 +9,17 @@ import {
   StyleSheet,
   Pressable,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import Header from '../../../components/header';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../../constants';
 import ExternalLinkIcon from '../../../assets/icons/External_Link';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 const VenueProfile = () => {
   const handleWebsitePress = () => {
@@ -23,11 +28,12 @@ const VenueProfile = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView style={styles.container}>
-            <SafeAreaView/>
-      
-      {/* Header */}
-      {/* <View style={styles.header}>
+    <>
+      <ScrollView style={styles.container}>
+        <SafeAreaView />
+
+        {/* Header */}
+        {/* <View style={styles.header}>
         
         <TouchableOpacity>
           <Text style={styles.backArrow}>{'←'}</Text>
@@ -37,67 +43,65 @@ const VenueProfile = () => {
           <Text style={styles.heart}>♡</Text>
         </TouchableOpacity>
       </View> */}
-      <View
-        style={{
-          width: '100%',
-          margin: 'auto',
-          backgroundColor: 'white',
-          paddingHorizontal: 10,
-          paddingBottom: 20,
-          //   top: 20,
-        }}>
-        <Header
-          label={'AREA Athens'}
-          showArrow
-          theme="light"
-          venueId={1}
-          initialIsFavourite={1}
-          onFavouriteChanged={() => {
-            console.log('favourite changed');
-          }}
-          showFavourite={true}
-        />
-
-        {/* Main Image */}
-        <TouchableOpacity onPress={handleWebsitePress}>
-          <Image
-            style={styles.mainImage}
-            source={{
-              uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
+        <View
+          style={{
+            width: '100%',
+            margin: 'auto',
+            backgroundColor: 'white',
+            paddingHorizontal: 10,
+            paddingBottom: 20,
+            //   top: 20,
+          }}>
+          <Header
+            label={'AREA Athens'}
+            showArrow
+            theme="light"
+            venueId={1}
+            initialIsFavourite={1}
+            onFavouriteChanged={() => {
+              console.log('favourite changed');
             }}
+            showFavourite={true}
           />
-          <Text style={styles.visitText}>
-            <View style={styles.visitContainer}>
-              <ExternalLinkIcon />
-              <Text style={styles.visitTextContent}>Visit Website</Text>
-            </View>
-          </Text>
-        </TouchableOpacity>
-      </View>
 
-      {/* View Schedule */}
-      {/* <View style={styles.scheduleContainer}>
+          {/* Main Image */}
+          <TouchableOpacity onPress={handleWebsitePress}>
+            <Image
+              style={styles.mainImage}
+              source={{
+                uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
+              }}
+            />
+            <Text style={styles.visitText}>
+              <View style={styles.visitContainer}>
+                <ExternalLinkIcon />
+                <Text style={styles.visitTextContent}>Visit Website</Text>
+              </View>
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* View Schedule */}
+        {/* <View style={styles.scheduleContainer}>
         <Text style={styles.viewSchedule}>View Schedule</Text>
         <Text style={styles.arrow}>›</Text>
       </View> */}
-      <View
-        style={{
-          // borderWidth: 1,
-          marginTop: 10,
-          width: '100%',
-          margin: 'auto',
-          padding: 10,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          backgroundColor: '#FFFFFF',
-          alignItems: 'center',
-        }}>
-        <View
+        <Pressable
           style={{
+            // borderWidth: 1,
+            marginTop: 10,
+            width: '100%',
+            margin: 'auto',
+            paddingHorizontal: widthPercentageToDP(2),
+            paddingVertical: heightPercentageToDP(2),
             display: 'flex',
             flexDirection: 'row',
+            justifyContent: 'space-between',
+            backgroundColor: '#FFFFFF',
             alignItems: 'center',
+          }}
+          onPress={() => {
+            navigation.navigate('VenueSchedule');
           }}>
           <Text
             style={{
@@ -108,137 +112,139 @@ const VenueProfile = () => {
             }}>
             View Schedule
           </Text>
-        </View>
-        <Pressable
-          onPress={() => {
-            navigation.navigate('VenueSchedule');
-          }}
-          style={{
-            width: 30,
-            height: 37,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 22,
-          }}>
-          <ArrowIcon />
+          <Pressable
+            onPress={() => {
+              navigation.navigate('VenueSchedule');
+            }}
+            style={{
+              width: 30,
+              height: 37,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 22,
+            }}>
+            <ArrowIcon />
+          </Pressable>
         </Pressable>
-      </View>
 
-      <View
-        style={{
-          // borderWidth: 1,
-          marginTop: 10,
-          width: '100%',
-          margin: 'auto',
-          paddingHorizontal: 10,
-          paddingVertical: 20,
-          display: 'flex',
-          // flexDirection: 'row',
-          justifyContent: 'start',
-          backgroundColor: '#FFFFFF',
-          alignItems: 'flex-start',
-        }}>
         <View
           style={{
+            // borderWidth: 1,
+            marginTop: 10,
+            width: '100%',
+            margin: 'auto',
+            paddingHorizontal: widthPercentageToDP(2),
+            paddingVertical: heightPercentageToDP(2),
             display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+            // flexDirection: 'row',
+            justifyContent: 'start',
+            backgroundColor: '#FFFFFF',
+            alignItems: 'flex-start',
           }}>
-          <Text
-            style={{
-              color: '#8A8A8A',
-              fontWeight: '400',
-              fontSize: 16,
-              fontFamily: fontFamily.regular,
-              marginHorizontal: 10,
-            }}>
-            Lorem ipsum dolor sit amet. Et voluptatibus reprehenderit est dolor
-            assumenda sit illum Quis ea minus iste et consequat fugiat.
-          </Text>
-        </View>
-        {/* Tags */}
-        <View style={styles.tagsContainer}>
-          {['Meditation', 'Aqua', 'Wellness'].map(tag => (
-            <View key={tag} style={styles.tag}>
-              <Text style={styles.tagText}>{tag}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-
-      <View
-        style={{
-          marginTop: 10,
-          width: '100%',
-          margin: 'auto',
-          // borderWidth: 1,
-          backgroundColor: '#FFFFFF',
-          paddingHorizontal: 10,
-          paddingVertical: 10,
-          display: 'flex',
-
-          borderBottomColor: '#EAEAEA',
-          borderBottomWidth: 1,
-        }}>
-        <View style={{width: '100%'}}>
           <View
-            style={[
-              styles.locationContainer,
-              {justifyContent: 'space-between'},
-            ]}>
-            {/* <MapPinIcon /> */}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
             <Text
-              style={[
-                styles.locationText,
-                {textDecorationLine: 'underline', marginLeft: 10},
-              ]}>
-              Ieros Kazika 6, 10331 Athens, Greece
+              style={{
+                color: '#8A8A8A',
+                fontWeight: '400',
+                fontSize: 16,
+                fontFamily: fontFamily.regular,
+                marginHorizontal: 10,
+              }}>
+              Lorem ipsum dolor sit amet. Et voluptatibus reprehenderit est
+              dolor assumenda sit illum Quis ea minus iste et consequatur
+              fugiat. Est eaque dolorem 33 quia doloribus aut rerum omnis ad
+              quia vitae.
             </Text>
           </View>
-          <Image
-            //   width={'100%'}
-            style={[
-              styles.image,
-              {width: '100%'},
-              // {marginTop: -15},
-              // {marginBottom: -17},
-            ]} // Adjust height to maintain aspect ratio
-            resizeMode="contain"
-            source={require('../../../assets/icons/Map.png')}
-          />
+          {/* Tags */}
+          <View style={styles.tagsContainer}>
+            {['Meditation', 'Aqua', 'Wellness'].map(tag => (
+              <View key={tag} style={styles.tag}>
+                <Text style={styles.tagText}>{tag}</Text>
+              </View>
+            ))}
+          </View>
         </View>
-      </View>
 
-      {/* Opening Hours */}
-      <View
-        style={{
-          marginTop: 10,
-          width: '100%',
-          margin: 'auto',
-          // borderWidth: 1,
-          backgroundColor: '#FFFFFF',
-          paddingHorizontal: 10,
-          paddingVertical: 10,
-          display: 'flex',
+        <View
+          style={{
+            marginTop: 10,
+            width: '100%',
+            margin: 'auto',
+            // borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            paddingHorizontal: widthPercentageToDP(2),
+            paddingVertical: heightPercentageToDP(2),
+            display: 'flex',
 
-          marginBottom: 40,
-          borderBottomColor: '#EAEAEA',
-          borderBottomWidth: 1,
-        }}>
-        <View style={styles.hoursRow}>
-          <Text>Mon - Fri</Text>
-          <Text style={styles.time}>10:00 - 22:00</Text>
+            borderBottomColor: '#EAEAEA',
+            borderBottomWidth: 1,
+          }}>
+          <View style={{width: '100%'}}>
+            <View
+              style={[
+                styles.locationContainer,
+                {justifyContent: 'space-between'},
+              ]}>
+              {/* <MapPinIcon /> */}
+              <Text
+                style={[
+                  styles.locationText,
+                  {textDecorationLine: 'underline', marginLeft: 10},
+                ]}>
+                Ieros Kazika 6, 10331 Athens, Greece
+              </Text>
+            </View>
+            <Image
+              //   width={'100%'}
+              style={[
+                styles.image,
+                {width: '100%'},
+                // {marginTop: -15},
+                // {marginBottom: -17},
+              ]} // Adjust height to maintain aspect ratio
+              resizeMode="contain"
+              source={require('../../../assets/icons/Map.png')}
+            />
+          </View>
         </View>
-        <View style={styles.hoursRow}>
-          <Text>Sat</Text>
-          <Text style={styles.time}>10:00 - 22:00</Text>
+
+        {/* Opening Hours */}
+        <View
+          style={{
+            marginTop: 10,
+            width: '100%',
+            margin: 'auto',
+            // borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            paddingHorizontal: widthPercentageToDP(2),
+            paddingVertical: heightPercentageToDP(2),
+            display: 'flex',
+
+            marginBottom: 40,
+            borderBottomColor: '#EAEAEA',
+            borderBottomWidth: 1,
+          }}>
+          <View style={styles.hoursRow}>
+            <Text>Mon - Fri</Text>
+            <Text style={styles.time}>10:00 - 22:00</Text>
+          </View>
+          <View style={styles.hoursRow}>
+            <Text>Sat</Text>
+            <Text style={styles.time}>10:00 - 22:00</Text>
+          </View>
+          <View style={styles.hoursRow}>
+            <Text>Sun</Text>
+            <Text style={styles.time}>10:00 - 22:00</Text>
+          </View>
         </View>
-        <View style={styles.hoursRow}>
-          <Text>Sun</Text>
-          <Text style={styles.time}>10:00 - 22:00</Text>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
@@ -262,7 +268,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   mainImage: {
-    height: 180,
+    height: 200,
     borderRadius: 10,
 
     width: '100%',

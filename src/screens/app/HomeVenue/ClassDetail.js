@@ -11,21 +11,20 @@ import {
   SafeAreaView,
 } from 'react-native';
 import moment from 'moment';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Header from '../../../components/header';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import AlmaIconSm from '../../../assets/icons/AlmaIconSm';
 import AlmaXSIcon from '../../../assets/icons/AlmaXSIcon';
 import TiltRectangleIcon from '../../../assets/icons/PersonGray.svg';
 import ProfileAvatarImage from '../../../assets/icons/ProfileCoverAvatar';
-import MapSvgImage from '../../../assets/images/MapImageIcon';
-import MapPinIcon from '../../../assets/icons/NewMapIcon.svg';
+
 import Button from '../../../components/Button';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Modal from 'react-native-modal';
-import { DangerwarningIcon, TickSuccessIcon } from '../../../constants/svgs';
-import { set } from 'date-fns';
-import { colors, fontFamily } from '../../../constants';
+import {DangerwarningIcon, TickSuccessIcon} from '../../../constants/svgs';
+import {set} from 'date-fns';
+import {colors, fontFamily} from '../../../constants';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
 import BottomSheet from '@gorhom/bottom-sheet';
 import MessageIconScreen from '../../../components/MessageIconScreen';
@@ -37,13 +36,14 @@ import {
   useConfirmPayment,
   useStripe,
 } from '@stripe/stripe-react-native';
-import { useSelector } from 'react-redux';
-import { ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'; // Add this import for toast
+import {useSelector} from 'react-redux';
+import {ToastAndroid, Platform, Alert, ActivityIndicator} from 'react-native'; // Add this import for toast
 import CustomBottomSheet from '../../../components/CustomBottomSheet';
 import StripePaymentSheet from '../../../components/StripePaymentSheet';
 import BlueBgComponent from '../../../components/BlueBgComponent';
 import CrossCircleIcon from '../../../assets/icons/crossCircle';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
+import MapPinClass from '../../../assets/icons/MapPinClass.jsx';
 
 // const StipePayment = ({clientSecret, onSuccess}) =>{
 //   console.log('clientSecret', clientSecret);
@@ -109,9 +109,9 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 //   );
 // }
 
-const ClassDetail = ({ route }) => {
+const ClassDetail = ({route}) => {
   //   const screenWidth = Dimensions.get('window').width;
-  const { width: screenWidth, height } = useWindowDimensions();
+  const {width: screenWidth, height} = useWindowDimensions();
   // Remove all modal state variables
   // const [cancelBookingModal, setCancelBookingModal] = useState(false);
   // const [successBookingModal, setSuccessBookingModal] = useState(false);
@@ -175,7 +175,7 @@ const ClassDetail = ({ route }) => {
   const [clientSecret, setClientSecret] = useState('');
   const [showResult, setShowResult] = useState(null); // "success" | "fail" | null
   const [loading, setLoading] = useState(false);
-  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+  const {initPaymentSheet, presentPaymentSheet} = useStripe();
   const [showStripeOverlay, setShowStripeOverlay] = useState(false);
 
   const bookSubscription = async () => {
@@ -209,7 +209,7 @@ const ClassDetail = ({ route }) => {
       console.log('about to open ==========>');
 
       // Initialize payment sheet with minimal configuration first
-      const { error: initError } = await initPaymentSheet({
+      const {error: initError} = await initPaymentSheet({
         paymentIntentClientSecret: secret,
         merchantDisplayName: 'Alma Fitness',
         billingDetailsCollectionConfiguration: {
@@ -247,7 +247,7 @@ const ClassDetail = ({ route }) => {
       setSheetLoading(false);
 
       try {
-        const { error: presentError } = await presentPaymentSheet();
+        const {error: presentError} = await presentPaymentSheet();
 
         if (presentError) {
           console.log('Present Error:', presentError);
@@ -326,7 +326,7 @@ const ClassDetail = ({ route }) => {
       {/* Bottom Sheet for Stripe Payment */}
       {componentLoading ? (
         <ActivityIndicator
-          style={{ height: '100%', justifyContent: 'center' }}
+          style={{height: '100%', justifyContent: 'center'}}
           size="large"
           color="#000"
         />
@@ -421,7 +421,7 @@ const ClassDetail = ({ route }) => {
         <>
           {Platform.OS === 'ios' ? null : <SafeAreaView />}
 
-          <View style={{ flex: 1 }}>
+          <View style={{flex: 1}}>
             {/* <View> */}
             <View
               id="image"
@@ -452,10 +452,10 @@ const ClassDetail = ({ route }) => {
                   showFavourite={true}
                 />
               </View>
-              <View style={{ position: 'relative' }}>
+              <View style={{position: 'relative'}}>
                 <Image
-                  style={{ width: '100%', height: 400 }}
-                  source={{ uri: classDetails?.image }}
+                  style={{width: '100%', height: 400}}
+                  source={{uri: classDetails?.image}}
                 />
                 <View
                   style={{
@@ -473,12 +473,12 @@ const ClassDetail = ({ route }) => {
           </View>
           <CustomBottomSheet
             ref={classDetailRef}
-            snapPoints={['70%']}
+            snapPoints={['60%']}
             enablePanDownToClose={false}
             index={0}
             hasPadding={false}
             hasThumb={false}>
-            <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
               <View
                 id="details"
                 style={{
@@ -492,25 +492,24 @@ const ClassDetail = ({ route }) => {
                     width: '90%',
                     margin: 'auto',
                   }}>
-                  <View style={{ flexDirection: 'row', gap: 10 }}>
+                  <View style={{flexDirection: 'row', gap: 10}}>
                     <Text
                       style={{
                         color: colors.black,
                         fontFamily: fontFamily.medium,
                         fontWeight: '500',
                         fontSize: 17,
-                        marginBottom: 5,
                       }}>
                       {classDetails?.start_date
-                        ? `${moment(classDetails.start_date).format(
-                          'ddd D MMM',
-                        )}     ${moment(
-                          classDetails.start_time,
-                          'HH:mm:ss',
-                        ).format('HH:mm')} - ${moment(
-                          classDetails.end_time,
-                          'HH:mm:ss',
-                        ).format('HH:mm')}`
+                        ? `${moment(classDetails.start_date)
+                            .locale('en')
+                            .format('ddd D MMM')}     ${moment(
+                            classDetails.start_time,
+                            'HH:mm:ss',
+                          ).format('HH:mm')} - ${moment(
+                            classDetails.end_time,
+                            'HH:mm:ss',
+                          ).format('HH:mm')}`
                         : ''}
                     </Text>
                   </View>
@@ -519,11 +518,13 @@ const ClassDetail = ({ route }) => {
                       display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+                      marginTop: heightPercentageToDP(1.4),
                     }}>
                     <Text
                       style={{
                         fontSize: 28,
                         fontWeight: '600',
+                        fontFamily: fontFamily.semiBold,
                         color: colors.black,
                       }}>
                       {classDetails?.class_title.trim()}
@@ -536,12 +537,13 @@ const ClassDetail = ({ route }) => {
                         alignItems: 'center',
                       }}></View>
                   </View>
-                  <View style={[styles.locationContainer, { marginTop: 20 }]}>
-                    <MapPinIcon />
+                  <View style={[styles.locationContainer, {marginTop: 20}]}>
+                    {/* <MapPinClass /> */}
+                    <MapPinClass />
                     <Text
                       style={[
                         styles.locationText,
-                        { marginLeft: 11, fontSize: 15.88 },
+                        {marginLeft: 11, fontSize: 15.88},
                       ]}>
                       AREA Athens, 500m
                     </Text>
@@ -560,13 +562,15 @@ const ClassDetail = ({ route }) => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        alignItems: 'center',
+                        // alignItems: 'flex-start',
                       }}>
-                      <TiltRectangleIcon />
-                      <View style={{ marginHorizontal: 7 }}>
+                      <View style={{marginTop: 5}}>
+                        <TiltRectangleIcon />
+                      </View>
+                      <View style={{marginHorizontal: 7}}>
                         <Text
                           style={{
-                            color: colors.darkWhite,
+                            color: '#8A8A8A',
                             fontWeight: '500',
                             fontSize: 15.88,
                             fontFamily: fontFamily.semiBold,
@@ -603,7 +607,7 @@ const ClassDetail = ({ route }) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
-                  <Text style={[styles.locationText, { fontSize: 16 }]}>
+                  <Text style={[styles.locationText, {fontSize: 16}]}>
                     {classDetails?.description}
                   </Text>
                 </View>
@@ -615,7 +619,10 @@ const ClassDetail = ({ route }) => {
                     marginTop: 10,
                   }}
                 />
-                <View
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('VenueProfile');
+                  }}
                   style={{
                     marginTop: 10,
                     width: '100%',
@@ -640,6 +647,7 @@ const ClassDetail = ({ route }) => {
                         color: '#15161E',
                         fontWeight: '500',
                         fontSize: 18,
+                        fontFamily: fontFamily.semiBold,
                         marginHorizontal: 10,
                       }}>
                       Fitness First
@@ -659,7 +667,7 @@ const ClassDetail = ({ route }) => {
                     }}>
                     <ArrowIcon />
                   </Pressable>
-                </View>
+                </Pressable>
                 <View
                   style={{
                     backgroundColor: '#F3F3F3',
@@ -677,16 +685,16 @@ const ClassDetail = ({ route }) => {
                     paddingVertical: 10,
                     display: 'flex',
                   }}>
-                  <View style={{ width: '100%' }}>
+                  <View style={{width: '100%'}}>
                     <View
                       style={[
                         styles.locationContainer,
-                        { justifyContent: 'space-between' },
+                        {justifyContent: 'space-between'},
                       ]}>
                       <Text
                         style={[
                           styles.locationText,
-                          { textDecorationLine: 'underline', marginLeft: 10 },
+                          {textDecorationLine: 'underline', marginLeft: 10},
                         ]}>
                         Ieros Kazika 6, 10331 Athens, Greece
                       </Text>
@@ -702,7 +710,7 @@ const ClassDetail = ({ route }) => {
                       </Text>
                     </View>
                     <Image
-                      style={[styles.image, { width: '100%' }]}
+                      style={[styles.image, {width: '100%'}]}
                       resizeMode="contain"
                       source={require('../../../assets/icons/Map.png')}
                     />
@@ -727,7 +735,7 @@ const ClassDetail = ({ route }) => {
                   <Text
                     style={[
                       styles.modalTextTitle,
-                      { textAlign: 'left', fontSize: 18, fontWeight: 500 },
+                      {textAlign: 'left', fontSize: 18, fontWeight: 500},
                     ]}>
                     Cancellation Policy
                   </Text>
@@ -757,7 +765,11 @@ const ClassDetail = ({ route }) => {
                       refunded to your account for future use.
                     </Text>
                   </View>
-                  <View style={[styles.sectionClass, { marginBottom: 30 }]}>
+                  <View
+                    style={[
+                      styles.sectionClass,
+                      {marginBottom: heightPercentageToDP(10)},
+                    ]}>
                     <Text
                       style={{
                         fontWeight: '600',
@@ -792,8 +804,8 @@ const ClassDetail = ({ route }) => {
               left: 0,
               right: 0,
               bottom: 0,
-
-              paddingVertical: 20,
+              height: heightPercentageToDP(20),
+              paddingVertical: heightPercentageToDP(3),
               backgroundColor: '#fff', // Optional: for visibility
             }}>
             <View
@@ -808,7 +820,8 @@ const ClassDetail = ({ route }) => {
                 style={{
                   fontWeight: 600,
                   fontSize: 18,
-                  color: colors?.darkGray,
+                  color: '#B6B6B6',
+                  fontFamily: fontFamily.medium,
                 }}>
                 Total
                 {'\n'}
@@ -816,13 +829,13 @@ const ClassDetail = ({ route }) => {
                   style={{
                     fontWeight: 600,
                     fontSize: 11,
-                    color: colors?.darkGray,
+                    color: '#B6B6B6',
                   }}>
                   excl VAT
                 </Text>
               </Text>
               <Text
-                style={{ fontWeight: 600, fontSize: 18, color: colors?.black }}>
+                style={{fontWeight: 600, fontSize: 18, color: colors?.black}}>
                 {classDetails?.price === 0
                   ? 'Free'
                   : '$' + classDetails?.price + '.00'}
@@ -834,18 +847,21 @@ const ClassDetail = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-around',
                 alignItems: 'center',
+                marginTop: heightPercentageToDP(2),
               }}>
               <Button
                 widthSize="small"
                 handleClick={() => {
                   addedCalendarSheetRef.current?.open();
                 }}
+                elevation={false}
                 text={'Add to Calendar'}
                 textBold={false}
                 borderLess={false}
-                theme="gray"
+                theme="transparentWhite"
               />
               <Button
+                elevation={false}
                 widthSize="small"
                 handleClick={() => {
                   if (statusBooked) {
@@ -854,7 +870,7 @@ const ClassDetail = ({ route }) => {
                     cancelBookingSheetRef.current?.open();
                   }
                 }}
-                text={statusBooked ? 'Cancel Booking' : 'Book Now'}
+                text={statusBooked ? 'Cancel Booking' : 'Book'}
                 textBold={false}
                 borderLess={false}
                 theme={statusBooked ? 'grayWhite' : 'blackWhite'}
@@ -866,7 +882,7 @@ const ClassDetail = ({ route }) => {
       {/* Bottom sheets are now outside the ScrollView */}
       <CustomBottomSheet ref={successBookingSheetRef} snapPoints={['50']}>
         <View style={[styles.modalContent]}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TickSuccessIcon />
           </View>
           <Text style={styles.modalTextTitle}>Booking Successfull</Text>
@@ -885,10 +901,10 @@ const ClassDetail = ({ route }) => {
               : ''}
             {classDetails?.start_time && classDetails?.end_time
               ? ` from ${moment(classDetails.start_time, 'HH:mm:ss').format(
-                'h:mm A',
-              )} to ${moment(classDetails.end_time, 'HH:mm:ss').format(
-                'h:mm A',
-              )}`
+                  'h:mm A',
+                )} to ${moment(classDetails.end_time, 'HH:mm:ss').format(
+                  'h:mm A',
+                )}`
               : ''}
             {classDetails?.start_date !== classDetails?.end_date
               ? classDetails?.end_date
@@ -917,7 +933,7 @@ const ClassDetail = ({ route }) => {
               10
             </Text>
           </View>
-          <View style={{ marginLeft: 80 }}>
+          <View style={{marginLeft: 80}}>
             <Button
               handleClick={() => {
                 successBookingSheetRef.current?.close();
@@ -933,7 +949,7 @@ const ClassDetail = ({ route }) => {
         </View>
       </CustomBottomSheet>
 
-      <CustomBottomSheet ref={cancelBookingSheetRef} snapPoints={['60']}>
+      <CustomBottomSheet ref={cancelBookingSheetRef} snapPoints={['56']}>
         <View
           style={{
             width: '100%',
@@ -944,7 +960,12 @@ const ClassDetail = ({ route }) => {
           <Text
             style={[
               styles.modalTextTitle,
-              { textAlign: 'center', fontSize: 18, fontWeight: 500 },
+              {
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: 500,
+                fontFamily: fontFamily.semiBold,
+              },
             ]}>
             Cancellation Policy
           </Text>
@@ -955,7 +976,9 @@ const ClassDetail = ({ route }) => {
                 fontWeight: '600',
                 fontSize: 16,
                 color: '#202226',
+                marginTop: heightPercentageToDP(1.2),
                 lineHeight: 24,
+                fontFamily: fontFamily.semiBold,
               }}>
               Late Cancellation
             </Text>
@@ -981,6 +1004,7 @@ const ClassDetail = ({ route }) => {
                 fontSize: 16,
                 color: '#202226',
                 lineHeight: 24,
+                fontFamily: fontFamily.semiBold,
               }}>
               No-Show
             </Text>
@@ -998,37 +1022,41 @@ const ClassDetail = ({ route }) => {
             </Text>
           </View>
         </View>
-        <View style={{ marginTop: 20 }}>
-          <Button
-            handleClick={async () => {
-              cancelBookingSheetRef.current?.close();
-              await bookSubscription();
-            }}
-            text="Book"
-            textBold={true}
-            marginTop={15}
-            borderLess={false}
-            widthSize={'large'}
-          />
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          <Button
-            handleClick={async () => {
-              cancelBookingSheetRef.current?.close();
-            }}
-            text="Cancel"
-            marginTop={10}
-            textBold={false}
-            theme="whiteBlack"
-            widthSize={'large'}
-          />
+        <View style={{marginBottom: heightPercentageToDP(4)}}>
+          <View style={{marginTop: 20}}>
+            <Button
+              handleClick={async () => {
+                cancelBookingSheetRef.current?.close();
+                await bookSubscription();
+              }}
+              text="Book"
+              elevation={false}
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'large'}
+            />
+          </View>
+          <View style={{marginBottom: 20}}>
+            <Button
+              handleClick={async () => {
+                cancelBookingSheetRef.current?.close();
+              }}
+              elevation={false}
+              text="Cancel"
+              marginTop={10}
+              textBold={false}
+              theme="transparentBlack"
+              widthSize={'large'}
+            />
+          </View>
         </View>
       </CustomBottomSheet>
 
       {/* Warning Bottom Sheet */}
       <CustomBottomSheet ref={warningSheetRef} snapPoints={['40']}>
         <View style={[styles.modalContent]}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <DangerwarningIcon />
           </View>
           <Text style={styles.modalTextTitle}>Warning</Text>
@@ -1074,7 +1102,7 @@ const ClassDetail = ({ route }) => {
       {/* Success Cancel Bottom Sheet */}
       <CustomBottomSheet ref={successCancelSheetRef} snapPoints={['50']}>
         <View style={[styles.modalContent]}>
-          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TickSuccessIcon />
           </View>
           <Text style={styles.modalTextTitle}>Booking Cancelled</Text>
@@ -1089,7 +1117,7 @@ const ClassDetail = ({ route }) => {
             }}>
             Your booking has been cancelled successfully.
           </Text>
-          <View style={{ marginLeft: 80 }}>
+          <View style={{marginLeft: 80}}>
             <Button
               handleClick={() => successCancelSheetRef.current?.close()}
               text="Done"
@@ -1117,7 +1145,7 @@ const ClassDetail = ({ route }) => {
             }}>
             This class has been added to your calendar.
           </Text>
-          <View style={{ marginLeft: 80 }}>
+          <View style={{marginLeft: 80}}>
             <Button
               handleClick={() => addedCalendarSheetRef.current?.close()}
               text="Done"
@@ -1144,7 +1172,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   locationText: {
-    color: colors.darkWhite,
+    color: '#8A8A8A',
     fontWeight: '500',
     fontFamily: fontFamily.medium,
     fontSize: 12,

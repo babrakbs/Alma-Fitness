@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/** @format */
+
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,12 +10,12 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Header from '../../components/header';
-import { colors, fontFamily } from '../../constants';
+import {colors, fontFamily} from '../../constants';
 import Button from '../../components/Button';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import axiosInstance from '../../helper/axiosInstance';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFiltersOfclasses, clearFiltersOfclasses } from '../../Redux/reducer';
+import {useSelector, useDispatch} from 'react-redux';
+import {setFiltersOfclasses, clearFiltersOfclasses} from '../../Redux/reducer';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
@@ -37,7 +39,7 @@ import {
 //   'Other',
 // ];
 
-const FilterScreen = ({ navigation }) => {
+const FilterScreen = ({navigation}) => {
   const filtersOfclasses = useSelector(state => state.reducer.filtersOfclasses);
 
   const [selectedCategories, setSelectedCategories] = useState(
@@ -98,39 +100,42 @@ const FilterScreen = ({ navigation }) => {
         <Header label={'Filters       '} showArrow={true} />
 
         <Text style={styles.sectionTitle}>Category</Text>
-        <FlatList
-          data={[{ id: 'all', name: 'All' }, ...categories]}
-          keyExtractor={item => item.id.toString()}
-          numColumns={3}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[
-                styles.categoryButton,
-                (item.id === 'all'
-                  ? selectedCategories.length === 0
-                  : selectedCategories.includes(item.id)) &&
-                styles.selectedCategory,
-              ]}
-              onPress={() => {
-                if (item.id === 'all') {
-                  setSelectedCategories([]);
-                } else {
-                  toggleCategory(item.id);
-                }
-              }}>
-              <Text
+        <View style={{height: heightPercentageToDP(32)}}>
+          <FlatList
+            data={[{id: 'all', name: 'All'}, ...categories]}
+            keyExtractor={item => item.id.toString()}
+            numColumns={3}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <TouchableOpacity
                 style={[
-                  styles.categoryText,
+                  styles.categoryButton,
                   (item.id === 'all'
                     ? selectedCategories.length === 0
                     : selectedCategories.includes(item.id)) &&
-                  [styles.selectedText, { paddingHorizontal: item.id === 'all' ? widthPercentageToDP(4) : 0 }],
-                ]}>
-                {item.name}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
+                    styles.selectedCategory,
+                ]}
+                onPress={() => {
+                  if (item.id === 'all') {
+                    setSelectedCategories([]);
+                  } else {
+                    toggleCategory(item.id);
+                  }
+                }}>
+                <Text
+                  style={[
+                    styles.categoryText,
+                    (item.id === 'all'
+                      ? selectedCategories.length === 0
+                      : selectedCategories.includes(item.id)) &&
+                      styles.selectedText,
+                  ]}>
+                  {item.name}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
 
         <View style={styles.divider} />
         <View
@@ -193,9 +198,9 @@ const FilterScreen = ({ navigation }) => {
         <Text style={styles.resetText}>Reset</Text>
       </TouchableOpacity> */}
       </SafeAreaView>
-      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
         <Button handleClick={handleApply} text="Apply" textBold={false} />
-        <View style={{ marginVertical: heightPercentageToDP(1) }}>
+        <View style={{marginVertical: heightPercentageToDP(1)}}>
           <Button
             text="Reset"
             theme="whiteBlack"
@@ -211,7 +216,7 @@ const FilterScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: colors.white },
+  container: {flex: 1, padding: 20, backgroundColor: colors.white},
   header: {
     fontSize: 24,
     fontWeight: '500',
@@ -229,9 +234,10 @@ const styles = StyleSheet.create({
   },
   categoryButton: {
     // padding: 10,
-   height: heightPercentageToDP(4.2),
+    height: heightPercentageToDP(3.5),
     // width: widthPercentageToDP(30),
-    paddingHorizontal: '3%',
+    paddingHorizontal: widthPercentageToDP(4),
+
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.darkWhite,
@@ -247,14 +253,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#dbdbdb',
     borderWidth: 0.1,
   },
-  selectedCategory: { height: heightPercentageToDP(4.2),backgroundColor: colors.black },
+  selectedCategory: {backgroundColor: colors.black},
   categoryText: {
     color: colors.black,
     fontFamily: fontFamily.semiBold,
     fontWeight: '600',
     fontSize: 14.3,
   },
-  selectedText: { color: colors.white },
+  selectedText: {color: colors.white},
   priceContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -288,7 +294,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  applyText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  applyText: {color: '#fff', fontSize: 16, fontWeight: '600'},
   resetButton: {
     borderColor: '#000',
     borderWidth: 1,
@@ -297,7 +303,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  resetText: { color: '#000', fontSize: 16, fontWeight: 'bold' },
+  resetText: {color: '#000', fontSize: 16, fontWeight: 'bold'},
 });
 
 export default FilterScreen;

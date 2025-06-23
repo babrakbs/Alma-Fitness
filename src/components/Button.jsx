@@ -23,6 +23,7 @@ const Button = ({
   transparent = false,
   deleteBtn = false,
   loading,
+  elevation = true,
 }) => {
   return (
     <Pressable
@@ -40,6 +41,7 @@ const Button = ({
         {borderRadius: rounded},
         transparent && {backgroundColor: 'rgba(245, 249, 255, 0.4)'},
         deleteBtn && {backgroundColor: colors.red},
+        elevation ? {elevation: 5} : {elevation: 0},
       ]}
       disabled={disabled}>
       {loading ? (
@@ -76,7 +78,6 @@ const styles = StyleSheet.create({
     height: 45,
     width: '90%',
     padding: 0,
-    elevation: 5,
   },
   blackWhite: {
     button: {
@@ -97,6 +98,31 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.darkWhite,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  transparentWhite: {
+    button: {
+      backgroundColor: 'transparent',
+      borderColor: colors.darkWhite,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.darkWhite,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  transparentBlack: {
+    button: {
+      backgroundColor: 'transparent',
+      borderWidth: 1,
+      borderColor: colors.black,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.black,
       fontWeight: '500',
       fontSize: 16,
     },

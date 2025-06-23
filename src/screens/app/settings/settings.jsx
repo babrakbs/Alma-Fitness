@@ -13,6 +13,7 @@ import {SettingsData} from '../../../constants/staticData';
 import Button from '../../../components/Button';
 import {useNavigation} from '@react-navigation/native';
 import {colors} from '../../../constants';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 const Settings = () => {
   const navigation = useNavigation();
@@ -49,6 +50,7 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: heightPercentageToDP(2),
     // backgroundColor:colors.white
   },
   scrollViewContent: {

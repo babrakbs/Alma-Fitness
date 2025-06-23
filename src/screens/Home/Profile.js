@@ -23,6 +23,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
+import Venues from '../../components/Home/Venues';
 
 const Bookings = ({bookings, loading, navigation}) => {
   const filterBookings = () => {
@@ -62,7 +63,9 @@ const Bookings = ({bookings, loading, navigation}) => {
     return (
       <View style={{marginBottom: 10}}>
         {sectionBookings.map((booking, index) => {
-          const dateText = moment(booking?.start_date).format('ddd D MMM');
+          const dateText = moment(booking?.start_date)
+            .locale('en')
+            .format('ddd D MMM');
           const timeText = `${booking?.start_time?.slice(
             0,
             5,
@@ -117,18 +120,17 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
 
   const renderFavoritesContent = () => (
     <>
-      <View style={[styles.sectionContainer, {marginTop: 10, marginLeft: 20}]}>
+      <View style={[styles.sectionContainer, {marginTop: 20, marginLeft: 24}]}>
         <Text style={styles.sectionTitle}>Venues</Text>
       </View>
-      <HomeCarousel
+      {/* <HomeCarousel
         venues={favourites?.venues}
         isProfile={true}
         onFavouriteChanged={refreshFavourites}
-      />
+      /> */}
+      <Venues classVenues={favourites?.venues} />
 
-      <Text style={[styles.venueText, {marginTop: '18%', marginLeft: 10}]}>
-        Classes
-      </Text>
+      <Text style={[styles.venueText, {marginLeft: 10}]}>Classes</Text>
       <View style={{marginHorizontal: 10}}>
         {favourites?.classes.map((classItem, index) => {
           const dateText = moment(classItem?.start_date).format('ddd D MMM');
@@ -280,6 +282,7 @@ const Profile = () => {
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
+                paddingTop: heightPercentageToDP(2),
               }}>
               <View
                 style={[
@@ -413,9 +416,9 @@ const styles = StyleSheet.create({
   name: {
     // marginTop: 15,
     // margin: 'auto',
-    fontWeight: '500',
+    // fontWeight: '500',
     fontSize: 15,
-    fontFamily: fontFamily.regular,
+    fontFamily: fontFamily.semiBold,
     color: '#8A8A8A',
   },
   text: {
@@ -469,10 +472,8 @@ const styles = StyleSheet.create({
   priceTag: {
     width: '25%',
     // height: '22%',
-    marginTop: 5,
+    marginTop: heightPercentageToDP(2),
     // padding: 5,
-    borderWidth: 0.5,
-    borderColor: colors.darkWhite,
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',

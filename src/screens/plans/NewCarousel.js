@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Dimensions,
   StyleSheet,
@@ -108,7 +110,8 @@ const NewCarousel = ({selectedSpan}) => {
     <View style={{flex: 1}}>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Carousel
-          enabled={true}
+          enabled={plans?.length > 1}
+          loop={plans?.length > 1}
           mode="parallax"
           fixedDirection="horizontal"
           width={width}
@@ -126,18 +129,15 @@ const NewCarousel = ({selectedSpan}) => {
           }}
           onSnapToItem={index => console.log('current index:', index)}
           renderItem={({item, index}) => (
-            // <View style={{height: '110%'}}>
-              <Screen1
-                carouselIndex={index}
-                selectedSpan={selectedSpan}
-                isScrolling={isScrolling}
-                item={item}
-              />
-            // </View>
+            <Screen1
+              carouselIndex={index}
+              selectedSpan={selectedSpan}
+              isScrolling={isScrolling}
+              item={item}
+            />
           )}
         />
       </View>
-     
     </View>
   );
 };

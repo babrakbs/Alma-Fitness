@@ -1,17 +1,17 @@
+/** @format */
+
 // This component is for header with back button and label with it.
 
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import {
-  ArrowBackIcon,
-  ArrowBackWhiteIcon,
-  
-} from '../constants/svgs';
+
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../constants';
 import axiosInstance from '../helper/axiosInstance';
 import HeartIconBlack from '../assets/icons/HeartIconBlack';
 import HeartIconWhite from '../assets/icons/HeartIconWhite';
+import ArrowBackIcon from '../assets/icons/arrowback';
+import ArrowBackWhiteIcon from '../assets/icons/arrowbackwhite';
 
 const Header = ({
   label,
@@ -98,7 +98,14 @@ const Header = ({
   return (
     <>
       {theme == 'light' ? (
-        <View style={[styles.container, {marginTop: marginTop,paddingVertical: paddingVertical? paddingVertical :20}]}>
+        <View
+          style={[
+            styles.container,
+            {
+              marginTop: marginTop,
+              paddingVertical: paddingVertical ? paddingVertical : 20,
+            },
+          ]}>
           {showArrow ? (
             <Pressable
               onPress={
@@ -112,14 +119,10 @@ const Header = ({
           <Text style={styles.label}>{label}</Text>
           {showFavourite && venueId ? (
             <Pressable onPress={handleFavouritePress} style={styles.heartIcon}>
-              {isFavourite ? (
-                <HeartIconBlack />
-              ) : (
-                <HeartIconWhite  />
-              )}
+              {isFavourite ? <HeartIconBlack /> : <HeartIconWhite />}
             </Pressable>
           ) : (
-            <View  />
+            <View />
           )}
         </View>
       ) : (
@@ -166,10 +169,10 @@ const styles = StyleSheet.create({
     // flex: 0.1,
   },
   label: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '500',
     color: colors.black,
-    fontFamily: fontFamily.semiBold,
+    fontFamily: fontFamily.medium,
   },
   heartIcon: {
     padding: 5,
