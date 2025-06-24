@@ -9,11 +9,11 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import moment from 'moment';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Header from '../../../components/header';
-import {ScrollView} from 'react-native-gesture-handler';
 import AlmaIconSm from '../../../assets/icons/AlmaIconSm';
 import AlmaXSIcon from '../../../assets/icons/AlmaXSIcon';
 import TiltRectangleIcon from '../../../assets/icons/PersonGray.svg';

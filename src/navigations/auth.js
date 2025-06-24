@@ -45,7 +45,9 @@ import ChangePassword from '../screens/auth/ChangePassword';
 import axiosInstance from '../helper/axiosInstance';
 import BlueBgComponent from '../components/BlueBgComponent';
 import VenueSchedule from '../screens/app/HomeVenue/VenueSchedule';
-import QRScanner from '../screens/app/HomeVenue/QRScanner';
+import Checkout from '../screens/app/HomeVenue/QRScanner';
+import QRCodeScanner from '../screens/plans/QRCodeScanner';
+import QRCheckInScreen from '../screens/plans/QRCheckInScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -161,8 +163,18 @@ const AuthStack = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
-        name="QRScannerScreen"
-        component={QRScanner}
+        name="Checkout"
+        component={Checkout}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="QRCodeScanner"
+        component={QRCodeScanner}
+      />
+        <Stack.Screen
+        options={{headerShown: false}}
+        name="QRCheckInScreen"
+        component={QRCheckInScreen}
       />
       <Stack.Screen
         options={{headerShown: false}}

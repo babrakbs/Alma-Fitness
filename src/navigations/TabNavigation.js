@@ -97,7 +97,7 @@ const TabNavigation = () => {
             bottom: Platform.OS === 'ios' ? 20 : 10,
           },
         ]}
-        onPress={() => navigation.navigate('QRScannerScreen')}>
+        onPress={() => navigation.navigate('QRCheckInScreen')}>
         <AlmaWhiteSIcon />
       </Pressable>
     </View>

@@ -26,7 +26,7 @@ import Button from '../../../components/Button';
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import {RNCamera} from 'react-native-camera';
 
-const QRScanner = ({ navigation }) => {
+const Checkout = ({ navigation }) => {
   const onSuccess = e => {
     console.log('QR Code scanned: ', e.data);
     // Handle scanned data
@@ -290,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QRScanner;
+export default Checkout;
