@@ -1,3 +1,5 @@
+/** @format */
+
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MapPinIcon from '../../assets/icons/NewMapIcon.svg';
@@ -5,11 +7,15 @@ import ArrowIcon from '../../assets/icons/ArrowIcon';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../constants';
 import moment from 'moment';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 const getDayFromDate = dateString => {
   if (!dateString) return 'Monday';
   // Handle date in format MM/DD/YYYY (from toLocaleDateString)
-  return moment(dateString, 'MM/DD/YYYY').format('dddd');
+  return moment(dateString, 'MM/DD/YYYY').format('ddd');
 };
 
 const ClassesCard = ({
@@ -19,6 +25,7 @@ const ClassesCard = ({
   location = 'AREA, 500 m',
   price = '€8',
   id = 0,
+  onPressCard,
 }) => {
   const navigation = useNavigation();
   const day = date ? getDayFromDate(date) : 'Monday';
@@ -26,13 +33,17 @@ const ClassesCard = ({
   return (
     <Pressable
       onPress={() => {
-        console.log('id', id);
-        navigation.navigate('ClassDetails', {id: id});
+        if (onPressCard) {
+          onPressCard();
+        } else {
+          console.log('id', id);
+          navigation.navigate('ClassDetails', {id: id});
+        }
       }}
       style={styles.cardContainer}>
       <View style={styles.topRow}>
         <Text style={styles.dateText}>
-          {day} <Text style={styles.timeText}>{time}</Text>
+          {date} <Text style={styles.timeText}>{time}</Text>
         </Text>
 
         <ArrowIcon style={styles.arrowIcon} />
@@ -43,7 +54,7 @@ const ClassesCard = ({
           <MapPinIcon />
           <Text style={styles.locationText}>{location}</Text>
         </View>
-        <Text style={styles.price}>€{price}</Text>
+        <Text style={styles.price}>{price}</Text>
       </View>
     </Pressable>
   );
@@ -54,13 +65,14 @@ export default ClassesCard;
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: '#FAFAFA',
-    padding: 16,
-    borderRadius: 12,
+    paddingVertical: heightPercentageToDP(1.5),
+    paddingHorizontal: widthPercentageToDP(6),
+    borderRadius: 10,
     shadowColor: '#000',
-    shadowOffset: {width: 10, height: 10},
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 6,
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    // shadowRadius: 32,
+    elevation: 1.5,
     marginBottom: 12, // Increased margin for better separation
   },
   topRow: {
@@ -86,7 +98,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '600',
     color: '#15161E',
     fontFamily: fontFamily?.medium,

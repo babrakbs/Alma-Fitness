@@ -1,23 +1,26 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import HeaderIconText from '../../components/HeaderIconText';
-import Input from '../../components/input';
-import CheckBox from '@react-native-community/checkbox';
-import Button from '../../components/Button';
-import SocialAuthButtons from '../../components/SocialAuthButtons';
-import AuthNavigationText from '../../components/AuthNavigationText';
-import OrLine from '../../components/OrLine';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import EyeSvg from '../../assets/icons/Password_Icon.svg';
-import {colors, fontFamily} from '../../constants';
-import {useDispatch} from 'react-redux';
-import EyeOpenSvg from '../../assets/icons/EyeOpen';
-import axiosInstance from '../../helper/axiosInstance';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {toast} from '../../helper/toast';
-import {isEmailValid} from '../../helper/utils';
+/** @format */
 
-const Signup = ({navigation}) => {
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import HeaderIconText from "../../components/HeaderIconText";
+import Input from "../../components/input";
+import CheckBox from "@react-native-community/checkbox";
+import Button from "../../components/Button";
+import SocialAuthButtons from "../../components/SocialAuthButtons";
+import AuthNavigationText from "../../components/AuthNavigationText";
+import OrLine from "../../components/OrLine";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import EyeSvg from "../../assets/icons/Password_Icon.svg";
+import { colors, fontFamily } from "../../constants";
+import { useDispatch } from "react-redux";
+import EyeOpenSvg from "../../assets/icons/EyeOpen";
+import axiosInstance from "../../helper/axiosInstance";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { toast } from "../../helper/toast";
+import { isEmailValid } from "../../helper/utils";
+import { heightPercentageToDP } from "react-native-responsive-screen";
+
+const Signup = ({ navigation }) => {
   const onChange = () => {};
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -26,9 +29,9 @@ const Signup = ({navigation}) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState({});
   const [form, setForm] = useState({
-    email: '',
-    password: '',
-    confirm_password: '',
+    email: "",
+    password: "",
+    confirm_password: "",
   });
 
   const handleValidation = () => {
@@ -36,23 +39,23 @@ const Signup = ({navigation}) => {
     let isError = false;
 
     if (!form.email || form.email.length === 0) {
-      errors.email = 'The email field is required.';
+      errors.email = "The email field is required.";
       isError = true;
     } else if (!isEmailValid(form.email)) {
-      errors.email = 'The email is not valid.';
+      errors.email = "The email is not valid.";
       isError = true;
     }
 
     if (!form.password || form.password.length === 0) {
-      errors.password = 'The password field is required.';
+      errors.password = "The password field is required.";
       isError = true;
     }
 
     if (!form.confirm_password || form.confirm_password.length === 0) {
-      errors.confirm_password = 'The confirm password field is required.';
+      errors.confirm_password = "The confirm password field is required.";
       isError = true;
     } else if (form.password !== form.confirm_password) {
-      errors.confirm_password = 'The passwords do not match.';
+      errors.confirm_password = "The passwords do not match.";
       isError = true;
     }
 
@@ -62,10 +65,10 @@ const Signup = ({navigation}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    setError('');
+    setError("");
     setForm({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   }, [isFocused]);
 
@@ -77,38 +80,38 @@ const Signup = ({navigation}) => {
       setLoading(true);
 
       const formdata = new FormData();
-      formdata.append('email', form.email);
-      formdata.append('password', form.password);
-      formdata.append('confirm_password', form.confirm_password);
+      formdata.append("email", form.email);
+      formdata.append("password", form.password);
+      formdata.append("confirm_password", form.confirm_password);
 
       const res = await axiosInstance.post(`/api/register`, formdata, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-      console.log('REGISTER data', res?.data);
+      console.log("REGISTER data", res?.data);
 
       // Check if the response has an error status code
       if (res?.data?.meta?.code === 409) {
-        toast(res?.data?.meta?.message || 'Email already exists');
+        toast(res?.data?.meta?.message || "Email already exists");
         return;
       }
 
       if (res?.status === 200) {
         setData(res?.data);
-        navigation.navigate('ProfileSetup', {
+        navigation.navigate("ProfileSetup", {
           token: res?.data?.data.ACCESS_TOKEN,
           showArrow: false,
         });
-        setForm({email: '', password: ''});
+        setForm({ email: "", password: "" });
       }
     } catch (err) {
-      console.log('Registration Error:', err?.response?.data || err?.message);
+      console.log("Registration Error:", err?.response?.data || err?.message);
       // Display the backend error message if available, otherwise show a generic error
       const errorMessage =
         err?.response?.data?.meta?.message ||
         err?.message ||
-        'An error occurred during registration';
+        "An error occurred during registration";
       toast(errorMessage);
     } finally {
       setLoading(false);
@@ -144,8 +147,8 @@ const Signup = ({navigation}) => {
             // onChange={onChange}
             placeholder="Email"
             rightSVGIcon={true}
-            type={'Email'}
-            onChangeText={text => handleInput('email', text)}
+            type={"Email"}
+            onChangeText={(text) => handleInput("email", text)}
             error={error.email}
             value={form.email}
           />
@@ -153,11 +156,11 @@ const Signup = ({navigation}) => {
           <Input
             // onChange={onChange}
             placeholder="Password"
-            type={'password'}
+            type={"password"}
             showRighIcon
             rightSVGIcon={hide ? EyeSvg : EyeOpenSvg}
             rightIconPress={() => setVisible(!hide)}
-            onChangeText={text => handleInput('password', text)}
+            onChangeText={(text) => handleInput("password", text)}
             secureTextEntry={hide}
             value={form.password}
             error={error.password}
@@ -165,11 +168,11 @@ const Signup = ({navigation}) => {
           <Input
             // onChange={onChange}
             placeholder="Repeat Password"
-            type={'password'}
+            type={"password"}
             showRighIcon
             rightSVGIcon={hide2 ? EyeSvg : EyeOpenSvg}
             rightIconPress={() => setVisible2(!hide2)}
-            onChangeText={text => handleInput('confirm_password', text)}
+            onChangeText={(text) => handleInput("confirm_password", text)}
             secureTextEntry={hide2}
             value={form.confirm_password}
             error={error.confirm_password}
@@ -182,7 +185,7 @@ const Signup = ({navigation}) => {
             onChange={onChange}
           /> */}
         </View>
-        <View style={{marginTop: 30}}>
+        <View style={{ marginTop: 30 }}>
           <Button
             // handleClick={() => navigation.navigate('RegistrationSuccess')}
             handleClick={() => handleSignUp()}
@@ -220,37 +223,38 @@ export default Signup;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    width: '100%',
+    width: "100%",
+    paddingVertical: heightPercentageToDP(6),
     // margin: 'auto',
-    marginHorizontal: 'auto',
+    marginHorizontal: "auto",
   },
   fieldsContainer: {
     marginTop: 35,
   },
   remember: {
-    color: '#46515A',
+    color: "#46515A",
     fontSize: 14,
-    fontWeight: '400',
+    fontWeight: "400",
   },
-  contentContainer: {width: '90%', margin: 'auto'},
-  optContainer: {display: 'flex', flexDirection: 'row', alignItems: 'center'},
+  contentContainer: { width: "90%", margin: "auto" },
+  optContainer: { display: "flex", flexDirection: "row", alignItems: "center" },
   headingText: {
     color: colors.black,
     fontSize: 26,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
-    fontWeight: '400',
+    textAlign: "left",
+    alignSelf: "flex-start",
+    fontWeight: "400",
     fontFamily: fontFamily.regular,
     marginTop: 60,
     paddingHorizontal: 20,
   },
   bodyText: {
     color: colors.darkWhite,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
+    textAlign: "left",
+    alignSelf: "flex-start",
     fontFamily: fontFamily.regular,
     fontSize: 18,
-    fontWeight: '400',
+    fontWeight: "400",
     paddingHorizontal: 20,
     marginTop: 10,
   },

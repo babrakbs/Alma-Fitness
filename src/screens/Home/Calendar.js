@@ -13,7 +13,8 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import FilterIcon from '../../assets/icons/filterBlack.svg';
 import FilterPillText from '../../components/Home/FilterPillText';
 import CalendarComponet from '../../components/calendar';
-import ClassesCard from '../../components/Home/ClassesCard';
+// import ClassesCard from '../../components/Home/ClassesCard';
+import ClassesCard from '../../components/Home/ClassesCardAttached';
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -131,7 +132,7 @@ const Calendar = () => {
     if (selected.isSame(today)) return 'Today';
     if (selected.isSame(today.clone().subtract(1, 'day'))) return 'Yesterday';
     if (selected.isSame(today.clone().add(1, 'day'))) return 'Tomorrow';
-    return selected.format('ddd, MMM D YYYY');
+    return selected.locale('en').format('ddd, MMM D YYYY');
   };
 
   // Handler for time change (e.g., from slider)
@@ -229,309 +230,175 @@ const Calendar = () => {
   const mainSheetSnapPoints = useMemo(() => ['90%'], []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <BottomSheetModalProvider>
-        <ImageBackground
-          source={require('../../assets/images/OnB1.png')}
-          style={styles.backgroundImage}
-          resizeMode="cover">
-          <View style={styles.mainContainer}>
-            {/* <SafeAreaView /> */}
-            <ScrollView style={styles.container}>
-              <View style={styles.dateContainerMain}>
-                <View style={styles.dateContainer}>
-                  <Text style={styles.dateNumber}>
-                    {moment(currentDate).date()}
-                  </Text>
-                  <View>
-                    <Text style={styles.dayText}>
-                      {moment(currentDate).format('ddd')}
+    <>
+      {/* <StatusBar animated={true} backgroundColor="transparent" translucent /> */}
+      <GestureHandlerRootView style={{flex: 1}}>
+        <BottomSheetModalProvider>
+          <ImageBackground
+            source={require('../../assets/images/bg_calender.png')}
+            style={styles.backgroundImage}
+            resizeMode="cover">
+            <View style={styles.mainContainer}>
+              {/* <SafeAreaView /> */}
+              <ScrollView style={styles.container}>
+                <View style={styles.dateContainerMain}>
+                  <View style={styles.dateContainer}>
+                    <Text style={styles.dateNumber}>
+                      {moment(currentDate).date()}
                     </Text>
-                    <Text style={styles.monthText}>
-                      {moment(currentDate).format('MMM YYYY')}
-                    </Text>
+                    <View>
+                      <Text style={styles.dayText}>
+                        {/* {currentDate} */}
+                        {moment(currentDate).locale('en').format('ddd')}
+                      </Text>
+                      <Text style={styles.monthText}>
+                        {moment(currentDate).format('MMM YYYY')}
+                      </Text>
+                    </View>
                   </View>
+                  <TouchableOpacity style={styles.todayButton}>
+                    <Text style={styles.todayText}>{getDateLabel()}</Text>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.todayButton}>
-                  <Text style={styles.todayText}>{getDateLabel()}</Text>
-                </TouchableOpacity>
-              </View>
 
-              <View style={{width: '95%', margin: 'auto'}}>
-                <CalendarComponet
-                  selectedDate={moment(currentDate)}
-                  onDateChange={handleDateChange}
-                />
-              </View>
+                <View style={{width: '100%', margin: 'auto'}}>
+                  <CalendarComponet
+                    selectedDate={moment(currentDate)}
+                    onDateChange={handleDateChange}
+                  />
+                </View>
 
-              <View style={styles.container2}>
-                <DoubleThumbSlider onValueChange={handleTimeChange} />
-              </View>
-              <View style={styles.filtersContainer}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Filter')}
-                  style={{marginRight: 10}}>
-                  <FilterIcon />
-                </TouchableOpacity>
+                <View style={styles.container2}>
+                  <DoubleThumbSlider onValueChange={handleTimeChange} />
+                </View>
+                <View style={styles.filtersContainer}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Filter')}
+                    style={{marginRight: 10}}>
+                    <FilterIcon />
+                  </TouchableOpacity>
 
-                <FlatList
-                  scrollEnabled={true}
-                  data={[{id: 'all', name: 'All'}, ...categories]}
-                  renderItem={({item}) => (
-                    <Pressable
-                      onPress={() => handleCategoryPress(item)}
-                      style={[
-                        {
-                          marginRight: 8,
-                          paddingHorizontal: 16,
-                          paddingVertical: 5,
-                          borderRadius: 20,
-                          borderWidth: 1,
-                          borderColor: colors.darkWhite,
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        },
-                        item.id === 'all'
-                          ? selectedCategories.includes('all') && {
-                              backgroundColor: colors.black,
-                            }
-                          : selectedCategories.includes(item.id) && {
-                              backgroundColor: colors.black,
-                            },
-                      ]}>
-                      <Text
+                  <FlatList
+                    scrollEnabled={true}
+                    data={[{id: 'all', name: 'All'}, ...categories]}
+                    renderItem={({item}) => (
+                      <Pressable
+                        onPress={() => handleCategoryPress(item)}
                         style={[
                           {
-                            color: colors.black,
-                            fontFamily: fontFamily.semiBold,
-                            fontWeight: '600',
-                            fontSize: 14.3,
+                            marginRight: 8,
+                            paddingHorizontal: 16,
+                            paddingVertical: 5,
+                            borderRadius: 20,
+                            borderWidth: 0.4,
+                            borderColor: colors.darkWhite,
+                            alignItems: 'center',
+                            justifyContent: 'center',
                           },
                           item.id === 'all'
                             ? selectedCategories.includes('all') && {
-                                color: colors.white,
+                                backgroundColor: colors.black,
                               }
                             : selectedCategories.includes(item.id) && {
-                                color: colors.white,
+                                backgroundColor: colors.black,
                               },
                         ]}>
-                        {item?.name}
-                      </Text>
-                    </Pressable>
-                  )}
-                  keyExtractor={item => item.id.toString()}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-              </View>
-              <View style={styles.divider} />
-
-              <View style={{marginTop: 15, marginBottom: 25}}>
-                {loading ? (
-                  <View style={{alignItems: 'center', marginVertical: 20}}>
-                    <ActivityIndicator size="large" color="#000" />
-                  </View>
-                ) : classVenues && classVenues.length > 0 ? (
-                  classVenues.map((item, index) => (
-                    <ClassesCard
-                      key={item.class_schedule_id || index}
-                      heading={item.class_title}
-                      onPressTap={handleOnPress}
-                      id={item.class_schedule_id}
-                      dateText={(() => {
-                        const date = new Date(item.start_date);
-                        const days = [
-                          'Sun',
-                          'Mon',
-                          'Tue',
-                          'Wed',
-                          'Thu',
-                          'Fri',
-                          'Sat',
-                        ];
-                        const months = [
-                          'Jan',
-                          'Feb',
-                          'Mar',
-                          'Apr',
-                          'May',
-                          'Jun',
-                          'Jul',
-                          'Aug',
-                          'Sep',
-                          'Oct',
-                          'Nov',
-                          'Dec',
-                        ];
-                        return `${days[date.getDay()]} ${date.getDate()} ${
-                          months[date.getMonth()]
-                        }`;
-                      })()}
-                      timeText={`${item.start_time?.slice(
-                        0,
-                        5,
-                      )} - ${item.end_time?.slice(0, 5)}`}
-                      location={item.workout_type || 'AREA'}
-                      price={item.price === 0 ? 'Free' : `€${item.price}`}
-                    />
-                  ))
-                ) : (
-                  <Text
-                    style={{textAlign: 'center', color: '#888', marginTop: 20}}>
-                    No classes found.
-                  </Text>
-                )}
-              </View>
-
-              <BottomSheetModal
-                enableDismissOnClose
-                backgroundStyle={{backgroundColor: '#F5F5F5'}}
-                backdropComponent={props => (
-                  <BottomSheetBackdrop
-                    {...props}
-                    opacity={0.2}
-                    enableTouchThrough={true}
+                        <Text
+                          style={[
+                            {
+                              color: colors.black,
+                              fontFamily: fontFamily.semiBold,
+                              fontWeight: '600',
+                              fontSize: 14.3,
+                            },
+                            item.id === 'all'
+                              ? selectedCategories.includes('all') && {
+                                  color: colors.white,
+                                }
+                              : selectedCategories.includes(item.id) && {
+                                  color: colors.white,
+                                },
+                          ]}>
+                          {item?.name}
+                        </Text>
+                      </Pressable>
+                    )}
+                    keyExtractor={item => item.id.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
                   />
-                )}
-                ref={bottomSheetModalRef}
-                index={1}
-                snapPoints={snapPoints}
-                onChange={handleSheetChanges}>
-                <BottomSheetView style={styles.contentContainer}>
-                  <ScrollView>
-                    <Text style={styles.filterText}>Filter</Text>
-                    <View style={{width: '93%', margin: 'auto', marginTop: 17}}>
-                      <Input
-                        placeholder="Search Location"
-                        showLeftIcon
-                        leftSVGIcon={<SearchIcon />}
-                      />
-                    </View>
-                    <View style={{width: '93%', margin: 'auto', marginTop: 15}}>
-                      <Text style={styles.creditsText}>Credits</Text>
-                      <View style={{marginTop: 11, marginBottom: -10}}>
-                        <FilterPill />
-                      </View>
-                      <NavigationContainer>
-                        <TextLink
-                          firstText="Type of Workout"
-                          navTo="/"
-                          smallText
-                          handleClick={() => presentAllResultSheet()}
-                        />
-                      </NavigationContainer>
+                </View>
+                <View style={styles.divider} />
 
-                      <View
-                        style={{
-                          width: '87%',
-                          margin: 'auto',
-                        }}>
-                        {preferenceList.slice(0, 8).map((item, index) => {
-                          return (
-                            <PreferenceListItem
-                              theme="black"
-                              key={index}
-                              title={item.title}
-                              checked={item.checked}
-                              handleClick={() => {
-                                const updatedOptions = preferenceList.map(
-                                  (option, i) => {
-                                    if (i === index) {
-                                      // Toggle the checked state instead of making everything else unchecked
-                                      return {
-                                        ...option,
-                                        checked: !option.checked,
-                                      };
-                                    }
-                                    return option; // Keep other options unchanged
-                                  },
-                                );
-                                setPreferenceList(updatedOptions);
-                              }}
-                            />
-                          );
-                        })}
-                      </View>
-                      <Text
-                        style={{
-                          color: '#15161E',
-                          fontWeight: '600',
-                          fontSize: 16,
-                          marginTop: 20,
-                        }}>
-                        Time
-                      </Text>
-                      <View
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          marginTop: 10,
-                          alignItems: 'center',
-                        }}>
-                        <View style={{width: '20%'}}>
-                          <ClockIcon />
-                        </View>
-                        <View
-                          style={{
-                            width: '80%',
-                            display: 'flex',
-                            flexDirection: 'row',
-                          }}>
-                          <View id="time"></View>
-                          <View
-                            id="slider"
-                            style={{
-                              width: '100%',
-                              height: 22,
-                              borderRadius: 20,
-                              display: 'flex',
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                              backgroundColor: '#3D424A1A',
-                              paddingLeft: 20,
-                            }}>
-                            <View
-                              style={{
-                                width: 22,
-                                height: 22,
-                                backgroundColor: '#F5F5F5',
-                                borderRadius: 20,
-                                marginRight: -10,
-                                zIndex: 10,
-                              }}></View>
-                            <View
-                              style={{
-                                backgroundColor: '#15161E',
-                                width: '65%',
-                                height: 22,
-                              }}></View>
-                            <View
-                              style={{
-                                width: 22,
-                                height: 22,
-                                backgroundColor: '#F5F5F5',
-                                borderRadius: 20,
-                                marginLeft: -10,
-                                zIndex: 10,
-                              }}></View>
-                          </View>
-                        </View>
-                      </View>
-                      <View style={{marginVertical: 30}}>
-                        <Button
-                          text="Show 34 results"
-                          rounded={10}
-                          textBold={false}
-                          handleClick={presentAllResultSheet}
-                        />
-                      </View>
+                <View
+                  style={{
+                    marginTop: 15,
+                    marginBottom: 25,
+                    width: '95%',
+                    alignSelf: 'center',
+                  }}>
+                  {loading ? (
+                    <View style={{alignItems: 'center', marginVertical: 20}}>
+                      <ActivityIndicator size="large" color="#000" />
                     </View>
-                  </ScrollView>
-                </BottomSheetView>
+                  ) : classVenues && classVenues.length > 0 ? (
+                    classVenues.map((item, index) => (
+                      <ClassesCard
+                        key={item.class_schedule_id || index}
+                        heading={item.class_title}
+                        onPressTap={handleOnPress}
+                        id={item.class_schedule_id}
+                        dateText={(() => {
+                          const date = new Date(item.start_date);
+                          const days = [
+                            'Sun',
+                            'Mon',
+                            'Tue',
+                            'Wed',
+                            'Thu',
+                            'Fri',
+                            'Sat',
+                          ];
+                          const months = [
+                            'Jan',
+                            'Feb',
+                            'Mar',
+                            'Apr',
+                            'May',
+                            'Jun',
+                            'Jul',
+                            'Aug',
+                            'Sep',
+                            'Oct',
+                            'Nov',
+                            'Dec',
+                          ];
+                          return `${days[date.getDay()]} ${date.getDate()} ${
+                            months[date.getMonth()]
+                          }`;
+                        })()}
+                        timeText={`${item.start_time?.slice(
+                          0,
+                          5,
+                        )} - ${item.end_time?.slice(0, 5)}`}
+                        location={item.workout_type || 'AREA'}
+                        price={item.price === 0 ? 'Free' : `€${item.price}`}
+                      />
+                    ))
+                  ) : (
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#888',
+                        marginTop: 20,
+                      }}>
+                      No classes found.
+                    </Text>
+                  )}
+                </View>
 
                 <BottomSheetModal
                   enableDismissOnClose
-                  style={{zIndex: 999, elevation: 99}}
                   backgroundStyle={{backgroundColor: '#F5F5F5'}}
                   backdropComponent={props => (
                     <BottomSheetBackdrop
@@ -540,26 +407,15 @@ const Calendar = () => {
                       enableTouchThrough={true}
                     />
                   )}
-                  ref={allResultsSheet}
+                  ref={bottomSheetModalRef}
                   index={1}
-                  snapPoints={allResultsSnapPoints}
-                  onChange={onAllResultsSheetChange}>
+                  snapPoints={snapPoints}
+                  onChange={handleSheetChanges}>
                   <BottomSheetView style={styles.contentContainer}>
                     <ScrollView>
-                      <NavigationContainer>
-                        <View style={{width: '95%', margin: 'auto'}}>
-                          <Header
-                            showArrow
-                            label={'Type of Workout'}
-                            navigation={navigation}
-                            backButtonPress={() => {
-                              allResultsSheet.current.close();
-                            }}
-                          />
-                        </View>
-                      </NavigationContainer>
+                      <Text style={styles.filterText}>Filter</Text>
                       <View
-                        style={{width: '95%', margin: 'auto', marginTop: 17}}>
+                        style={{width: '93%', margin: 'auto', marginTop: 17}}>
                         <Input
                           placeholder="Search Location"
                           showLeftIcon
@@ -568,12 +424,25 @@ const Calendar = () => {
                       </View>
                       <View
                         style={{width: '93%', margin: 'auto', marginTop: 15}}>
+                        <Text style={styles.creditsText}>Credits</Text>
+                        <View style={{marginTop: 11, marginBottom: -10}}>
+                          <FilterPill />
+                        </View>
+                        <NavigationContainer>
+                          <TextLink
+                            firstText="Type of Workout"
+                            navTo="/"
+                            smallText
+                            handleClick={() => presentAllResultSheet()}
+                          />
+                        </NavigationContainer>
+
                         <View
                           style={{
                             width: '87%',
                             margin: 'auto',
                           }}>
-                          {preferenceList?.map((item, index) => {
+                          {preferenceList.slice(0, 8).map((item, index) => {
                             return (
                               <PreferenceListItem
                                 theme="black"
@@ -599,26 +468,174 @@ const Calendar = () => {
                             );
                           })}
                         </View>
-                        <View style={{marginVertical: 48}}>
+                        <Text
+                          style={{
+                            color: '#15161E',
+                            fontWeight: '600',
+                            fontSize: 16,
+                            marginTop: 20,
+                          }}>
+                          Time
+                        </Text>
+                        <View
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            marginTop: 10,
+                            alignItems: 'center',
+                          }}>
+                          <View style={{width: '20%'}}>
+                            <ClockIcon />
+                          </View>
+                          <View
+                            style={{
+                              width: '80%',
+                              display: 'flex',
+                              flexDirection: 'row',
+                            }}>
+                            <View id="time"></View>
+                            <View
+                              id="slider"
+                              style={{
+                                width: '100%',
+                                height: 22,
+                                borderRadius: 20,
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                backgroundColor: '#3D424A1A',
+                                paddingLeft: 20,
+                              }}>
+                              <View
+                                style={{
+                                  width: 22,
+                                  height: 22,
+                                  backgroundColor: '#F5F5F5',
+                                  borderRadius: 20,
+                                  marginRight: -10,
+                                  zIndex: 10,
+                                }}></View>
+                              <View
+                                style={{
+                                  backgroundColor: '#15161E',
+                                  width: '65%',
+                                  height: 22,
+                                }}></View>
+                              <View
+                                style={{
+                                  width: 22,
+                                  height: 22,
+                                  backgroundColor: '#F5F5F5',
+                                  borderRadius: 20,
+                                  marginLeft: -10,
+                                  zIndex: 10,
+                                }}></View>
+                            </View>
+                          </View>
+                        </View>
+                        <View style={{marginVertical: 30}}>
                           <Button
-                            text="Apply"
+                            text="Show 34 results"
                             rounded={10}
                             textBold={false}
-                            handleClick={() => {
-                              allResultsSheet.current.close();
-                            }}
+                            handleClick={presentAllResultSheet}
                           />
                         </View>
                       </View>
                     </ScrollView>
                   </BottomSheetView>
+
+                  <BottomSheetModal
+                    enableDismissOnClose
+                    style={{zIndex: 999, elevation: 99}}
+                    backgroundStyle={{backgroundColor: '#F5F5F5'}}
+                    backdropComponent={props => (
+                      <BottomSheetBackdrop
+                        {...props}
+                        opacity={0.2}
+                        enableTouchThrough={true}
+                      />
+                    )}
+                    ref={allResultsSheet}
+                    index={1}
+                    snapPoints={allResultsSnapPoints}
+                    onChange={onAllResultsSheetChange}>
+                    <BottomSheetView style={styles.contentContainer}>
+                      <ScrollView>
+                        <NavigationContainer>
+                          <View style={{width: '95%', margin: 'auto'}}>
+                            <Header
+                              showArrow
+                              label={'Type of Workout'}
+                              navigation={navigation}
+                              backButtonPress={() => {
+                                allResultsSheet.current.close();
+                              }}
+                            />
+                          </View>
+                        </NavigationContainer>
+                        <View
+                          style={{width: '95%', margin: 'auto', marginTop: 17}}>
+                          <Input
+                            placeholder="Search Location"
+                            showLeftIcon
+                            leftSVGIcon={<SearchIcon />}
+                          />
+                        </View>
+                        <View
+                          style={{width: '93%', margin: 'auto', marginTop: 15}}>
+                          <View
+                            style={{
+                              width: '87%',
+                              margin: 'auto',
+                            }}>
+                            {preferenceList?.map((item, index) => {
+                              return (
+                                <PreferenceListItem
+                                  theme="black"
+                                  key={index}
+                                  title={item.title}
+                                  checked={item.checked}
+                                  handleClick={() => {
+                                    const updatedOptions = preferenceList.map(
+                                      (option, i) => {
+                                        if (i === index) {
+                                          // Toggle the checked state instead of making everything else unchecked
+                                          return {
+                                            ...option,
+                                            checked: !option.checked,
+                                          };
+                                        }
+                                        return option; // Keep other options unchanged
+                                      },
+                                    );
+                                    setPreferenceList(updatedOptions);
+                                  }}
+                                />
+                              );
+                            })}
+                          </View>
+                          <View style={{marginVertical: 48}}>
+                            <Button
+                              text="Apply"
+                              rounded={10}
+                              textBold={false}
+                              handleClick={() => {
+                                allResultsSheet.current.close();
+                              }}
+                            />
+                          </View>
+                        </View>
+                      </ScrollView>
+                    </BottomSheetView>
+                  </BottomSheetModal>
                 </BottomSheetModal>
-              </BottomSheetModal>
-            </ScrollView>
-          </View>
-        </ImageBackground>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
+              </ScrollView>
+            </View>
+          </ImageBackground>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </>
   );
 };
 
@@ -704,12 +721,12 @@ const styles = StyleSheet.create({
   dayText: {
     fontSize: 16,
     fontWeight: '500',
-    color: colors.darkWhite,
+    color: '#BCC1CD',
     fontFamily: fontFamily.regular,
   },
   monthText: {
     fontSize: 16,
-    color: '#A0A0A0',
+    color: '#BCC1CD',
   },
   todayButton: {
     backgroundColor: colors.lightWhite,
@@ -750,12 +767,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   divider: {
-    width: '90%',
+    width: '95%',
     alignSelf: 'center',
     marginTop: 25,
-    height: 0.5,
-    backgroundColor: colors.lightGray,
-    borderWidth: 0.2,
+    height: heightPercentageToDP(0.15),
+    backgroundColor: '#DBDBDB',
+    borderWidth: 0.166,
   },
   textContainer: {
     flexDirection: 'row',

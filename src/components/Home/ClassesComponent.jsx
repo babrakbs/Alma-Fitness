@@ -1,3 +1,5 @@
+/** @format */
+
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import ClassesCard from './ClassesCard';
@@ -13,18 +15,40 @@ const ClassesComponent = ({classVenues}) => {
               key={d?.class_id || index}
               id={d?.class_id}
               title={d?.class_title || ''}
-              date={
-                d?.start_date
-                  ? new Date(d?.start_date)?.toLocaleDateString()
-                  : ''
-              }
-              time={
-                d?.start_time && d?.end_time
-                  ? `${d?.start_time} - ${d?.end_time}`
-                  : ''
-              }
+              // date={
+              //   d?.start_date
+              //     ? new Date(d?.start_date)?.toLocaleDateString()
+              //     : ''
+              // }
+              // time={
+              //   d?.start_time && d?.end_time
+              //     ? `${d?.start_time} - ${d?.end_time}`
+              //     : ''
+              // }
               location={d?.class_venue_address}
-              price={d?.price !== undefined ? d?.price : ''}
+              price={d.price === 0 ? 'Free' : `€${d.price}`}
+              date={(() => {
+                const date = new Date(d.start_date);
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const months = [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                  'Oct',
+                  'Nov',
+                  'Dec',
+                ];
+                return `${days[date.getDay()]} ${date.getDate()} ${
+                  months[date.getMonth()]
+                }`;
+              })()}
+              time={`${d.start_time?.slice(0, 5)} - ${d.end_time?.slice(0, 5)}`}
             />
           ))
         ) : (
@@ -48,13 +72,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   shaddow: {
-    shadowColor: '#000',
+    // shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 8,
+      height: 2,
     },
-    shadowOpacity: 0.44,
-    shadowRadius: 10.32,
+    shadowOpacity: 0.2,
     elevation: 16,
   },
 });

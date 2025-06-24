@@ -1,6 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {AppleIcon, FacebookIcon, GoogleIcon} from '../constants/svgs';
+/** @format */
+
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { AppleIcon, FacebookIcon, GoogleIcon } from "../constants/svgs";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 const SocialAuthButtons = () => {
   return (
@@ -22,23 +25,23 @@ export default SocialAuthButtons;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   iconContainer: {
     marginHorizontal: 10,
-    width: 44,
-    height: 44,
-    borderColor: '#E1E4E8',
+    width: widthPercentageToDP(12),
+    height: widthPercentageToDP(12),
+    borderColor: "#E1E4E8",
     borderWidth: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 50,
-    backgroundColor: '#F5F5F5',
-    shadowColor: '#000',
+    backgroundColor: "#F5F5F5",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 5,

@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import {colors, fontFamily} from '../constants';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Button = ({
   text = 'Button',
@@ -23,7 +25,72 @@ const Button = ({
   transparent = false,
   deleteBtn = false,
   loading,
+  elevation = true,
 }) => {
+  const buttonContent = loading ? (
+    <ActivityIndicator
+      style={{
+        flex: 1,
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+      size="small"
+      color={colors.white}
+    />
+  ) : (
+    <Text
+      style={[
+        styles.textStyle,
+        styles[`${theme}`].text,
+        textBold ? styles?.boldText : styles?.nonBold,
+        {fontSize: fontSize && fontSize},
+        transparent && {color: colors.white},
+      ]}>
+      {text}
+    </Text>
+  );
+
+  if (transparent) {
+    return (
+      <LinearGradient
+        colors={['#383EF6', '#4D38C1', '#4E39C4']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        style={[
+          styles.buttonContainer,
+          styles[`${theme}`]?.button,
+          styles?.widthSize[widthSize],
+          !borderLess && [
+            styles?.border,
+            {borderColor: theme === 'gray' ? colors.darkWhite : colors.black},
+          ],
+          disabled && styles.disabled,
+          {marginTop: marginTop},
+          {borderRadius: rounded},
+          deleteBtn && {backgroundColor: colors.red},
+          elevation
+            ? Platform.select({
+                ios: {
+                  shadowColor: '#000',
+                  shadowOffset: {width: 0, height: 2},
+                  shadowOpacity: 0.2,
+                  shadowRadius: 4,
+                },
+                android: {elevation: 2},
+              })
+            : {elevation: 0},
+        ]}>
+        <Pressable
+          onPress={handleClick}
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          disabled={disabled}>
+          {buttonContent}
+        </Pressable>
+      </LinearGradient>
+    );
+  }
+
   return (
     <Pressable
       onPress={handleClick}
@@ -38,33 +105,21 @@ const Button = ({
         disabled && styles.disabled,
         {marginTop: marginTop},
         {borderRadius: rounded},
-        transparent && {backgroundColor: 'rgba(245, 249, 255, 0.4)'},
         deleteBtn && {backgroundColor: colors.red},
+        elevation
+          ? Platform.select({
+              ios: {
+                shadowColor: '#000',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+              },
+              android: {elevation: 2},
+            })
+          : {elevation: 0},
       ]}
       disabled={disabled}>
-      {loading ? (
-        <ActivityIndicator
-          style={{
-            flex: 1,
-            alignSelf: 'center',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          size="small"
-          color={colors.white}
-        />
-      ) : (
-        <Text
-          style={[
-            styles.textStyle,
-            styles[`${theme}`].text,
-            textBold ? styles?.boldText : styles?.nonBold,
-            {fontSize: fontSize && fontSize},
-            transparent && {color: colors.white},
-          ]}>
-          {text}
-        </Text>
-      )}
+      {buttonContent}
     </Pressable>
   );
 };
@@ -76,7 +131,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: '90%',
     padding: 0,
-    elevation: 5,
+    marginBottom: heightPercentageToDP(2),
   },
   blackWhite: {
     button: {
@@ -97,6 +152,31 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.darkWhite,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  transparentWhite: {
+    button: {
+      backgroundColor: 'transparent',
+      borderColor: colors.darkWhite,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.darkWhite,
+      fontWeight: '500',
+      fontSize: 16,
+    },
+  },
+  transparentBlack: {
+    button: {
+      backgroundColor: 'transparent',
+      borderWidth: 1,
+      borderColor: colors.black,
+    },
+    text: {
+      fontFamily: fontFamily.medium,
+      color: colors.black,
       fontWeight: '500',
       fontSize: 16,
     },

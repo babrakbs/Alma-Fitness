@@ -1,3 +1,5 @@
+/** @format */
+
 import {
   Image,
   Pressable,
@@ -14,7 +16,8 @@ import TextLink from './TextLink';
 import axiosInstance from '../../helper/axiosInstance'; // Import axiosInstance
 import HeartIconBlack from '../../assets/icons/HeartIconBlack';
 import HeartIconWhite from '../../assets/icons/HeartIconWhite';
-import { toast } from '../../helper/toast';
+import {toast} from '../../helper/toast';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const VenueCard = ({
   imageUrl,
@@ -26,6 +29,7 @@ const VenueCard = ({
   id = 0,
   initialIsFavourite = false, // Add a prop for initial favourite state
   onFavouriteChanged, // <-- ADD THIS LINE
+  right = 20
 }) => {
   const {width} = useWindowDimensions();
   const {navigate} = useNavigation();
@@ -62,7 +66,9 @@ const VenueCard = ({
           response.data.meta.message || `Could not ${actionText} favourite.`,
         );
         // setIsFavourite(!newFavouriteState);
-        toast( response.data.meta.message || `Could not ${actionText} favourite.`)
+        toast(
+          response.data.meta.message || `Could not ${actionText} favourite.`,
+        );
         return;
       }
       if (!newFavouriteState && typeof onFavouriteChanged === 'function') {
@@ -94,13 +100,13 @@ const VenueCard = ({
         errorMessage = error.message;
       }
       // setFavouriteError(errorMessage);
-      toast(errorMessage)
+      toast(errorMessage);
       setIsFavourite(!newFavouriteState); // Revert UI on error
     }
   };
 
   return (
-    <View style={{borderRadius: 12, paddingVertical: 5}}>
+    <View style={{borderRadius: 12, paddingVertical: 5, paddingLeft:5,paddingRight:10}}>
       <Pressable
         onPress={() => {
           console.log('VenueCard pressed asd as', id);
@@ -111,12 +117,8 @@ const VenueCard = ({
             style={{height: 196, width: width * 0.95, borderRadius: 20}}
             source={{uri: imageUrl}}
           />
-          <Pressable onPress={handleFavouritePress} style={styles.heartIcon}>
-            {isFavourite ? (
-              <HeartIconBlack />
-            ) : (
-              <HeartIconWhite/>
-            )}
+          <Pressable onPress={handleFavouritePress} style={[styles.heartIcon,{right:right}]}>
+            {isFavourite ? <HeartIconBlack /> : <HeartIconWhite />}
           </Pressable>
           <View style={styles.pillContainer}>
             <Text style={styles.pillText}>{name}</Text>
@@ -129,7 +131,6 @@ const VenueCard = ({
           <Text style={styles.venueTime}>{km ? km : '300km'}</Text>
         </View>
       </Pressable>
-      
     </View>
   );
 };
@@ -138,23 +139,26 @@ export default VenueCard;
 
 const styles = StyleSheet.create({
   imageContainer: {
-    borderRadius: 12,
-    margin: 'auto',
-    backgroundColor: '#FFFFFF',
+    borderRadius: 13,
+    // margin: 'auto',
+    // backgroundColor: '#FFFFFF',
+    // backgroundColor:'red',
     shadowColor: '#000',
     // elevation:10
   },
   heartIcon: {
     position: 'absolute',
-    top: 10,
-    right: 16,
+    top: 20,
+    
   },
   pillContainer: {
-    backgroundColor: '#EFEFEB',
+    backgroundColor: '#FFFFFF',
     borderRadius: 21,
-    width: 87,
-    height: 30,
-    display: 'flex',
+    // width: 87,
+    // height: 30,
+    paddingVertical: widthPercentageToDP(1.2),
+    paddingHorizontal: widthPercentageToDP(3),
+    // display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -176,7 +180,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   venueName: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: '500',
     fontFamily: fontFamily.semiBold,
     color: colors.black,
   },

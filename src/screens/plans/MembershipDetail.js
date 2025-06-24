@@ -1,4 +1,6 @@
-import React, {useEffect} from 'react';
+/** @format */
+
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -7,27 +9,27 @@ import {
   ScrollView,
   ActivityIndicator,
   SafeAreaView,
-} from 'react-native';
-import {colors, fontFamily} from '../../constants';
-import {AppleIcon, AppleIconWhite, TickIcon} from '../../constants/svgs';
-import Header from '../../components/header';
-import Button from '../../components/Button';
-import MembershipCard from './MembershipCard';
-import axiosInstance from '../../helper/axiosInstance';
-import {useSelector} from 'react-redux';
+} from "react-native";
+import { colors, fontFamily } from "../../constants";
+import { AppleIcon, AppleIconWhite, TickIcon } from "../../constants/svgs";
+import Header from "../../components/header";
+import Button from "../../components/Button";
+import MembershipCard from "./MembershipCard";
+import axiosInstance from "../../helper/axiosInstance";
+import { useSelector } from "react-redux";
 // import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useStripe} from '@stripe/stripe-react-native';
-import BlueBgComponent from '../../components/BlueBgComponent';
-import {useNavigation} from '@react-navigation/native';
-import CrossCircleIcon from '../../assets/icons/crossCircle';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
+import { useStripe } from "@stripe/stripe-react-native";
+import BlueBgComponent from "../../components/BlueBgComponent";
+import { useNavigation } from "@react-navigation/native";
+import CrossCircleIcon from "../../assets/icons/crossCircle";
+import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsive-screen";
 
-const MembershipDetail = ({route}) => {
+const MembershipDetail = ({ route }) => {
   const planId = route?.params?.planId;
-  const user = useSelector(state => state?.reducer?.user);
+  const user = useSelector((state) => state?.reducer?.user);
   const navigation = useNavigation();
   const [planDetails, setPlanDetails] = React.useState(null);
-  const [clientSecret, setClientSecret] = React.useState('');
+  const [clientSecret, setClientSecret] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [sheetLoading, setSheetLoading] = React.useState(false);
   const [showResult, setShowResult] = React.useState(null); // "success" | "fail" | null
@@ -36,56 +38,56 @@ const MembershipDetail = ({route}) => {
     try {
       setLoading(true);
       const response = await axiosInstance.get(
-        `/api/getPlan?plan_id=${planId}`,
+        `/api/getPlan?plan_id=${planId}`
       );
       // Handle the response data here
-      console.log('Plan details:', response.data?.data);
-      const {plan} = response.data?.data;
-      console.log('Plan details:', plan?.price_id);
+      console.log("Plan details:", response.data?.data);
+      const { plan } = response.data?.data;
+      console.log("Plan details:", plan?.price_id);
       setPlanDetails(plan);
     } catch (error) {
-      console.error('Error fetching plan details:', error);
+      console.error("Error fetching plan details:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const getCurrencySymbol = currency => {
-    if (currency === 'USD') return '$';
-    if (currency === 'GBP') return '£';
-    if (currency === 'EUR') return '€';
-    return currency || '';
+  const getCurrencySymbol = (currency) => {
+    if (currency === "USD") return "$";
+    if (currency === "GBP") return "£";
+    if (currency === "EUR") return "€";
+    return currency || "";
   };
 
   // Calculate price in major units (e.g., cents to dollars)
-  const formatAmount = amount => {
-    if (!amount) return {whole: '0', decimal: '00'};
+  const formatAmount = (amount) => {
+    if (!amount) return { whole: "0", decimal: "00" };
     const total = Number(amount);
     const whole = Math.floor(total / 100);
-    const decimal = (total % 100).toString().padStart(2, '0');
-    return {whole, decimal};
+    const decimal = (total % 100).toString().padStart(2, "0");
+    return { whole, decimal };
   };
 
   const formattedAmount = planDetails
     ? formatAmount(planDetails.amount)
-    : {whole: '0', decimal: '00'};
+    : { whole: "0", decimal: "00" };
   const formattedVat = planDetails
     ? formatAmount(planDetails.amount * 0.1)
-    : {whole: '0', decimal: '00'};
+    : { whole: "0", decimal: "00" };
   const formattedTotal = planDetails
     ? formatAmount(
-        Number(planDetails.amount) + Number(planDetails.amount * 0.1),
-      )
-    : {whole: '0', decimal: '00'};
+      Number(planDetails.amount) + Number(planDetails.amount * 0.1)
+    )
+    : { whole: "0", decimal: "00" };
 
   useEffect(() => {
     fetchPlanDetails();
   }, []);
 
-  const {initPaymentSheet, presentPaymentSheet} = useStripe();
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
-  const handleNavigation = async priceId => {
-    console.log('handleNavigation called with priceId:', priceId);
+  const handleNavigation = async (priceId) => {
+    console.log("handleNavigation called with priceId:", priceId);
     try {
       setSheetLoading(true);
       const payload = {
@@ -94,31 +96,31 @@ const MembershipDetail = ({route}) => {
         email: user?.email,
       };
 
-      const response = await axiosInstance.post('/api/purchasePlan', payload);
-      console.log('Response:', response?.data);
+      const response = await axiosInstance.post("/api/purchasePlan", payload);
+      console.log("Response:", response?.data);
 
       const clientSecret = response?.data?.data?.client_secret;
       const subscriptionId = response?.data?.data?.subscription_id;
       setClientSecret(clientSecret);
 
       if (clientSecret) {
-        const {error: initError} = await initPaymentSheet({
+        const { error: initError } = await initPaymentSheet({
           paymentIntentClientSecret: clientSecret,
-          merchantDisplayName: 'Alma Fitness',
+          merchantDisplayName: "Alma Fitness",
           billingDetailsCollectionConfiguration: {
-            address: 'never',
-            name: 'never',
-            email: 'never',
-            phone: 'never',
+            address: "never",
+            name: "never",
+            email: "never",
+            phone: "never",
           },
-          returnURL: 'almafitness',
+          returnURL: "almafitness",
           defaultBillingDetails: {
             email: user?.email,
           },
           appearance: {
             colors: {
-              primary: '#000000',
-              primaryText: '#000000',
+              primary: "#000000",
+              primaryText: "#000000",
             },
             shapes: {
               borderRadius: 32,
@@ -127,32 +129,32 @@ const MembershipDetail = ({route}) => {
         });
 
         if (initError) {
-          console.log('Init Error:', initError);
-          setShowResult('fail');
+          console.log("Init Error:", initError);
+          setShowResult("fail");
           setSheetLoading(false);
           return;
         }
 
-        const {error: presentError} = await presentPaymentSheet();
+        const { error: presentError } = await presentPaymentSheet();
 
         if (presentError) {
-          console.log('Present Error:', presentError);
-          if (presentError.code !== 'Canceled') {
-            setShowResult('fail');
+          console.log("Present Error:", presentError);
+          if (presentError.code !== "Canceled") {
+            setShowResult("fail");
           }
-          setClientSecret('');
+          setClientSecret("");
         } else {
-          console.log('Payment Success');
+          console.log("Payment Success");
           setRenewDate(response?.data?.data?.renew_date || null);
-          setShowResult('success');
+          setShowResult("success");
         }
       }
     } catch (error) {
-      console.log('Catch Error:', error);
-      if (error?.code !== 'Canceled') {
-        setShowResult('fail');
+      console.log("Catch Error:", error);
+      if (error?.code !== "Canceled") {
+        setShowResult("fail");
       }
-      setClientSecret('');
+      setClientSecret("");
     } finally {
       setSheetLoading(false);
     }
@@ -165,34 +167,35 @@ const MembershipDetail = ({route}) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#f8f8f8',
-        }}>
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#f8f8f8",
+        }}
+      >
         <ActivityIndicator size="large" color={colors.black} />
       </View>
     );
   }
 
-  if (showResult === 'success') {
-    console.log('Showing Success Screen');
+  if (showResult === "success") {
+    console.log("Showing Success Screen");
     return (
       <BlueBgComponent
         heading="Membership Activated"
         description={
           renewDate
             ? `Renews on ${renewDate}`
-            : 'Your membership is now active.'
+            : "Your membership is now active."
         }
         bottomText={
-          'Automatically renews every month, you can cancel your membership at any time.'
+          "Automatically renews every month, you can cancel your membership at any time."
         }
         isbottomTextColor={true}
         bottomTextColor="#D3D3D3"
         btnText="Continue"
         onPressBtn={() => {
           setShowResult(null);
-          navigation.navigate('TabNav');
+          navigation.navigate("TabNav");
         }}
         isIcon={false}
         theme="blackWhite"
@@ -200,8 +203,8 @@ const MembershipDetail = ({route}) => {
     );
   }
 
-  if (showResult === 'fail') {
-    console.log('Showing Failure Screen');
+  if (showResult === "fail") {
+    console.log("Showing Failure Screen");
     return (
       <BlueBgComponent
         heading="Payment Failed"
@@ -211,7 +214,7 @@ const MembershipDetail = ({route}) => {
         icon={<CrossCircleIcon />}
         onPressBtn={() => {
           setShowResult(null);
-          setClientSecret('');
+          setClientSecret("");
         }}
         theme="blackWhite"
         bottomButton={
@@ -221,22 +224,24 @@ const MembershipDetail = ({route}) => {
               borderWidth: 1,
               borderRadius: 65,
               padding: 10,
-              width: '100%',
-              paddingHorizontal: '33%',
-              justifyContent: 'center',
-              alignItems: 'center',
+              width: "100%",
+              paddingHorizontal: "33%",
+              justifyContent: "center",
+              alignItems: "center",
             }}
             onPress={() => {
               setShowResult(null);
-              setClientSecret('');
-            }}>
+              setClientSecret("");
+            }}
+          >
             <Text
               style={{
                 color: colors.white,
-                fontWeight: '500',
+                fontWeight: "500",
                 fontSize: 16,
                 fontFamily: fontFamily.medium,
-              }}>
+              }}
+            >
               Cancel
             </Text>
           </TouchableOpacity>
@@ -257,9 +262,23 @@ const MembershipDetail = ({route}) => {
           </View>
         </View>
       )}
-      <ScrollView style={styles.container}>
-        <SafeAreaView/>
-        <Header label="Membership       " showArrow={true} />
+      <SafeAreaView />
+      <ScrollView showsVerticalScrollIndicator={false} style={[styles.container, {
+        // width: "90%",
+        alignSelf: "center",
+      }]}>
+        {/* <SafeAreaView
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            // flex: 1,
+          }}
+        > */}
+        <View style={{
+          paddingHorizontal: widthPercentageToDP(5)
+        }}>
+          <Header label="Membership       " showArrow={true} />
+        </View>
         {/* <View style={styles.card}>
           <View style={styles.tag}>
             <Text style={styles.tagText}>Membership</Text>
@@ -285,77 +304,98 @@ const MembershipDetail = ({route}) => {
           </View>
         </View> */}
         <MembershipCard plan={planDetails} />
+        <View
+          style={{
+            justifyContent: "flex-end",
+            // flex: 1,
+            width: '90%',
+            alignSelf: 'center'
+          }}
+        >
+          <View style={styles.billing}>
+            <Text style={styles.billingTitle}>Billing</Text>
+            <View style={styles.billingRow}>
+              <Text style={styles.billingText}>Membership</Text>
+              <Text style={styles.billingText}>
+                {/* {getCurrencySymbol(planDetails?.currency)} */}€
+                <Text style={styles.wholeAmount}>
+                  {formattedAmount.whole}
+                </Text>
+                <Text style={styles.decimalAmount}>
+                  ,{formattedAmount.decimal}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.billingRow}>
+              <Text style={styles.billingText}>VAT %</Text>
+              <Text style={styles.billingText}>
+                {/* {getCurrencySymbol(planDetails?.currency)}' */}€
+                <Text style={styles.wholeAmount}>{formattedVat.whole}</Text>
+                <Text style={styles.decimalAmount}>
+                  ,{formattedVat.decimal}
+                </Text>
+              </Text>
+            </View>
+            <View style={styles.totalRow}>
+              <Text style={styles.totalText}>Total</Text>
+              <Text style={styles.totalText}>
+                €
+                <Text style={[styles.wholeAmount, { color: colors.black }]}>
+                  {formattedTotal.whole}
+                </Text>
+                <Text style={[styles.decimalAmount, { color: colors.black }]}>
+                  ,{formattedTotal.decimal}
+                </Text>
+              </Text>
+            </View>
+            <View style={[styles.divider, { marginTop: "5%" }]} />
+          </View>
+          <View style={styles.terms}>
+            <Text
+              style={[
+                styles.billingTitle,
+                {
+                  fontSize: 18,
+                  fontFamily: fontFamily.medium,
+                  paddingHorizontal: widthPercentageToDP(2),
+                },
+              ]}
+            >
+              Terms
+            </Text>
+            <Text style={styles.termsText}>
+              By proceeding, you agree to our{" "}
+              <Text style={styles.link}>Terms of Service</Text> and{" "}
+              <Text style={styles.link}>Privacy Policy</Text>. Your card will
+              be charged €{formattedAmount.whole},{formattedAmount.decimal}{" "}
+              today, and your membership will automatically renew every month
+              until canceled. You can cancel anytime in the app settings
+              before your next billing date to avoid further charges.
+            </Text>
+          </View>
+          {/* <View style={{marginTop:'2%'}}/> */}
+          {/* <Button label="Buy Now" /> */}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
+            <TouchableOpacity style={styles.applePayButton}>
+              <AppleIconWhite height={20} width={20} />
+              <Text style={styles.applePayText}> Pay</Text>
+            </TouchableOpacity>
 
-        <View style={styles.billing}>
-          <Text style={styles.billingTitle}>Billing</Text>
-          <View style={styles.billingRow}>
-            <Text style={styles.billingText}>Membership</Text>
-            <Text style={styles.billingText}>
-              {/* {getCurrencySymbol(planDetails?.currency)} */}€
-              <Text style={styles.wholeAmount}>{formattedAmount.whole}</Text>
-              <Text style={styles.decimalAmount}>
-                ,{formattedAmount.decimal}
-              </Text>
-            </Text>
+            <TouchableOpacity
+              onPress={() => handleNavigation(planDetails?.price_id)}
+              style={[styles.applePayButton]}
+            >
+              {/* <AppleIconWhite height={24} width={24}/>  */}
+              <Text style={styles.applePayText}> Buy Now</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.billingRow}>
-            <Text style={styles.billingText}>VAT %</Text>
-            <Text style={styles.billingText}>
-              {/* {getCurrencySymbol(planDetails?.currency)}' */}€
-              <Text style={styles.wholeAmount}>{formattedVat.whole}</Text>
-              <Text style={styles.decimalAmount}>,{formattedVat.decimal}</Text>
-            </Text>
-          </View>
-          <View style={styles.totalRow}>
-            <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalText}>
-              €
-              <Text style={[styles.wholeAmount, {color: colors.black}]}>
-                {formattedTotal.whole}
-              </Text>
-              <Text style={[styles.decimalAmount, {color: colors.black}]}>
-                ,{formattedTotal.decimal}
-              </Text>
-            </Text>
-          </View>
-          <View style={[styles.divider, {marginTop: '5%'}]} />
         </View>
-        <View style={styles.terms}>
-          <Text
-            style={[
-              styles.billingTitle,
-              {
-                fontSize: 18,
-                fontFamily: fontFamily.medium,
-                paddingHorizontal: widthPercentageToDP(2),
-              },
-            ]}>
-            Terms
-          </Text>
-          <Text style={styles.termsText}>
-            By proceeding, you agree to our{' '}
-            <Text style={styles.link}>Terms of Service</Text> and{' '}
-            <Text style={styles.link}>Privacy Policy</Text>. Your card will be
-            charged €{formattedAmount.whole},{formattedAmount.decimal} today,
-            and your membership will automatically renew every month until
-            canceled. You can cancel anytime in the app settings before your
-            next billing date to avoid further charges.
-          </Text>
-        </View>
-
-        <TouchableOpacity style={styles.applePayButton}>
-          <AppleIconWhite height={24} width={24} />
-          <Text style={styles.applePayText}> Pay</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => handleNavigation(planDetails?.price_id)}
-          style={[styles.applePayButton, {marginBottom: '10%'}]}>
-          {/* <AppleIconWhite height={24} width={24}/>  */}
-          <Text style={styles.applePayText}> Buy Now</Text>
-        </TouchableOpacity>
-        {/* <View style={{marginTop:'2%'}}/> */}
-        {/* <Button label="Buy Now" /> */}
+        {/* </SafeAreaView> */}
       </ScrollView>
     </>
   );
@@ -364,30 +404,31 @@ const MembershipDetail = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-
-    backgroundColor: '#f8f8f8',
+    // padding: 20,
+    width: "100%",
+    alignSelf: "center",
+    backgroundColor: "#f8f8f8",
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 15,
-    padding: 20,
-    shadowColor: '#000',
+    // padding: 20,
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 3,
   },
   tag: {
     backgroundColor: colors.lightWhite,
-    alignSelf: 'flex-start',
-    paddingVertical: '2%',
-    paddingHorizontal: '10%',
+    alignSelf: "flex-start",
+    paddingVertical: "2%",
+    paddingHorizontal: "10%",
     borderRadius: 10,
     marginBottom: 10,
   },
   divider: {
-    width: '100%',
-    alignSelf: 'center',
+    width: "100%",
+    alignSelf: "center",
     // marginTop: '3%',
     height: 0.5,
     backgroundColor: colors.lightGray,
@@ -397,11 +438,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.black,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   price: {
     fontSize: 64.5,
-    fontWeight: '600',
+    fontWeight: "600",
     fontFamily: fontFamily.bold,
     color: colors.black,
   },
@@ -409,52 +450,52 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: fontFamily.semiBold,
     color: colors.black,
-    fontWeight: '400',
+    fontWeight: "400",
   },
   benefits: {
-    marginTop: '5%',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    marginTop: "5%",
+    justifyContent: "center",
+    alignItems: "flex-start",
   },
   benefit: {
     fontSize: 13,
     marginBottom: 5,
     fontFamily: fontFamily.medium,
-    textAlign: 'left',
+    textAlign: "left",
     color: colors.black,
   },
   billing: {
-    marginTop: '10%',
+    marginTop: "10%",
     marginHorizontal: 10,
   },
   billingTitle: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: "500",
     fontFamily: fontFamily.semiBold,
     color: colors.black,
     marginBottom: 10,
   },
   billingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 5,
   },
   billingText: {
     fontSize: 14,
     fontFamily: fontFamily.semiBold,
     color: colors.darkWhite,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   totalRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginTop: 10,
   },
   totalText: {
     fontSize: 14,
     fontFamily: fontFamily.bold,
     color: colors.black,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   terms: {
     marginTop: 20,
@@ -463,56 +504,56 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.black,
     fontFamily: fontFamily.regular,
-    paddingHorizontal: '3%',
+    paddingHorizontal: "3%",
   },
   link: {
     fontFamily: fontFamily.regular,
     color: colors.purple,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   applePayButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
     backgroundColor: colors.black,
-    paddingVertical: 15,
+    paddingVertical: heightPercentageToDP(1.6),
     borderRadius: 30,
   },
   applePayText: {
     color: colors.white,
-    fontSize: 19,
+    fontSize: 16,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   wholeAmount: {
     fontSize: 14,
     fontFamily: fontFamily.bold,
     color: colors.darkWhite,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   decimalAmount: {
     fontSize: 14,
     fontFamily: fontFamily.semiBold,
     color: colors.darkWhite,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   sheetLoadingContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
     zIndex: 1000,
   },
   sheetLoadingContent: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     padding: 20,
     borderRadius: 15,
-    alignItems: 'center',
+    alignItems: "center",
   },
   sheetLoadingText: {
     marginTop: 10,

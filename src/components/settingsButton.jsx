@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     marginHorizontal: '5%',
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
   titleContainer: {
     alignSelf: 'stretch',

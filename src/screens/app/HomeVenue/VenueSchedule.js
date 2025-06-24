@@ -16,11 +16,12 @@ import Header from '../../../components/header';
 import CalendarComponent from '../../../components/calendar';
 import moment from 'moment';
 import axiosInstance from '../../../helper/axiosInstance';
-import ClassesCard from '../../../components/Home/ClassesCard';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../../constants';
 import DoubleThumbSlider from '../../../components/DoubleThumbSlider';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
+import ClassesCard from '../../../components/Home/ClassesCardAttached';
 
 const VenueSchedule = () => {
   const bottomSheetRef = useRef(null);
@@ -92,31 +93,33 @@ const VenueSchedule = () => {
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      {/* <ImageBackground
+      <ImageBackground
         source={{
           uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
         }}
         style={styles.backgroundImage}
-        
-        resizeMode="cover"> */}
-      <SafeAreaView />
+        resizeMode="cover">
+        {/* <SafeAreaView /> */}
 
-      <View style={{paddingHorizontal: '2%'}}>
-        <Header
-          label={'Venue Schedule'}
-          showArrow
-          theme="light"
-          venueId={1}
-          classId={2}
-          isClass={true}
-          initialIsFavourite={0}
-          // onFavouriteChanged={() => {
-          //   fetchClassDetails(1);
-          // }}
-          showFavourite={true}
-        />
-      </View>
-      <View style={styles.mainContainer}>
+        <View
+          style={{
+            paddingHorizontal: heightPercentageToDP(2),
+            paddingTop: heightPercentageToDP(2),
+          }}>
+          <Header
+            label={'Venue Schedule'}
+            showArrow
+            theme="dark"
+            venueId={1}
+            classId={2}
+            isClass={true}
+            initialIsFavourite={0}
+            // onFavouriteChanged={() => {
+            //   fetchClassDetails(1);
+            // }}
+            showFavourite={true}
+          />
+        </View>
         <ScrollView style={styles.container}>
           {/* <View style={styles.dateContainerMain}>
               <View style={styles.dateContainer}>
@@ -147,9 +150,19 @@ const VenueSchedule = () => {
 
           <View style={styles.divider} />
 
-          <View style={{marginTop: 15, marginBottom: 25}}>
+          <View
+            style={{
+              marginTop: 15,
+              marginBottom: 25,
+              width: '95%',
+              alignSelf: 'center',
+            }}>
             {loading ? (
-              <View style={{alignItems: 'center', marginVertical: 20}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginVertical: 20,
+                }}>
                 <ActivityIndicator size="large" color="#000" />
               </View>
             ) : classVenues && classVenues.length > 0 ? (
@@ -159,7 +172,7 @@ const VenueSchedule = () => {
                   heading={item.class_title}
                   onPressTap={handleOnPress}
                   id={item.class_schedule_id}
-                  dateText={(() => {
+                  date={(() => {
                     const date = new Date(item.start_date);
                     const days = [
                       'Sun',
@@ -188,7 +201,7 @@ const VenueSchedule = () => {
                       months[date.getMonth()]
                     }`;
                   })()}
-                  timeText={`${item.start_time?.slice(
+                  time={`${item.start_time?.slice(
                     0,
                     5,
                   )} - ${item.end_time?.slice(0, 5)}`}
@@ -203,12 +216,11 @@ const VenueSchedule = () => {
             )}
           </View>
         </ScrollView>
-      </View>
-      {/* </ImageBackground> */}
+      </ImageBackground>
     </GestureHandlerRootView>
   );
 };
-
+export default VenueSchedule;
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -217,15 +229,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: -2,
-    // },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 5,
   },
   container: {
     flex: 1,
@@ -236,6 +239,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: -2,
     },
+    marginTop: heightPercentageToDP(6),
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 12,
@@ -298,5 +302,3 @@ const styles = StyleSheet.create({
     borderWidth: 0.12,
   },
 });
-
-export default VenueSchedule;

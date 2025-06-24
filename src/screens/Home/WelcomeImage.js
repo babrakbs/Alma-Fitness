@@ -1,17 +1,26 @@
-import {FlatList, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
-import React, {useRef} from 'react';
-import VenueCard from '../../components/Home/VenueCard';
-import Carousel from 'react-native-reanimated-carousel';
-import VenueCardSmall from '../../components/Home/VenueCardSmall';
+/** @format */
 
-const WelcomeImage = props => {
-  const {width} = useWindowDimensions();
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
+import React, { useRef } from "react";
+import VenueCard from "../../components/Home/VenueCard";
+import Carousel from "react-native-reanimated-carousel";
+import VenueCardSmall from "../../components/Home/VenueCardSmall";
+import { heightPercentageToDP } from "react-native-responsive-screen";
+
+const WelcomeImage = (props) => {
+  const { width } = useWindowDimensions();
   const ref = useRef(null);
 
   // console.log('Refffff', ref.current.getCurrentIndex());
 
   return (
-    <View style={{height: 200, backgroundColor: '#F5F5F5'}}>
+    <View style={{ height: 150, marginTop: heightPercentageToDP(1.5) }}>
       <FlatList
         ref={ref}
         // snapEnabled={true}

@@ -1,8 +1,8 @@
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MapPinIcon from '../../assets/icons/NewMapIcon.svg';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
-import { colors, fontFamily } from '../../constants';
+import {colors, fontFamily} from '../../constants';
 
 const ClassesCard = ({
   heading = 'Full Body + Bands',
@@ -11,12 +11,12 @@ const ClassesCard = ({
   location = 'AREA, 500 m',
   price = '€8',
   id = '1',
-  onPressTap = () => { },
+  onPressTap = () => {},
 }) => {
   return (
     <Pressable
       onPress={() => onPressTap(id)}
-      style={{ ...styles.cardContainer, ...styles.shadow }}>
+      style={{...styles.cardContainer, ...styles.shadow}}>
       <View style={styles.leftContainer}>
         <View style={styles.dateRow}>
           <Text style={styles.dateText}>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   shadow: {
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,

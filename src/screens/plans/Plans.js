@@ -1,22 +1,31 @@
-import {ImageBackground, Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import AlmaWhite from '../../assets/icons/AlmaWhite';
-import WhiteClose from '../../assets/icons/WhiteClose';
-import Carousel from './CarouselContainer';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import NewCarousel from './NewCarousel';
+/** @format */
+
+import {
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useState } from "react";
+import AlmaWhite from "../../assets/icons/AlmaWhite";
+import WhiteClose from "../../assets/icons/WhiteClose";
+import Carousel from "./CarouselContainer";
+import { SafeAreaView } from "react-native-safe-area-context";
+import NewCarousel from "./NewCarousel";
 
 const Plans = () => {
-  const [selectedSpan, setSelectedSpan] = useState('Monthly');
+  const [selectedSpan, setSelectedSpan] = useState("Monthly");
   return (
     // <View style={{flex: 1}}>
-      <ImageBackground
-          resizeMode='cover'
-        source={require('../../assets/images/OnB1.png')}
-        style={styles.container}>
-        <View style={styles.header}>
-          {/* <AlmaWhite /> */}
-          {/* <View style={styles.span}>
+    <ImageBackground
+      resizeMode="cover"
+      source={require("../../assets/images/OnB1.png")}
+      style={styles.container}
+    >
+      <View style={styles.header}>
+        {/* <AlmaWhite /> */}
+        {/* <View style={styles.span}>
             <Pressable
               onPress={() => setSelectedSpan('Monthly')}
               style={
@@ -40,13 +49,13 @@ const Plans = () => {
               </Text>
             </Pressable>
           </View> */}
-          {/* <WhiteClose /> */}
-        </View>
-        {/* <View style={styles.carouselContainer}> */}
-          {/* <Carousel selectedSpan={selectedSpan} /> */}
-          <NewCarousel selectedSpan={selectedSpan}/>
-        {/* </View> */}
-      </ImageBackground>
+        {/* <WhiteClose /> */}
+      </View>
+      {/* <View style={styles.carouselContainer}> */}
+      {/* <Carousel selectedSpan={selectedSpan} /> */}
+      <NewCarousel selectedSpan={selectedSpan} />
+      {/* </View> */}
+    </ImageBackground>
     // </View>
   );
 };
@@ -54,7 +63,7 @@ const Plans = () => {
 export default Plans;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, borderWidth: 1},
+  container: { flex: 1, borderWidth: 1 },
   ml: {
     marginLeft: 3,
   },
@@ -64,56 +73,56 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.1,
     // borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     // paddingTop: 10,
-    width: '95%',
-    margin: 'auto',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    width: "95%",
+    margin: "auto",
+    justifyContent: "space-between",
+    alignItems: "center",
     // marginTop: 20,
   },
-  carouselContainer: {flex: 1},
+  carouselContainer: { flex: 1 },
   span: {
     width: 198,
-    flexDirection: 'row',
+    flexDirection: "row",
     // justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: '#15161E',
+    alignItems: "center",
+    backgroundColor: "#15161E",
     height: 30,
     borderRadius: 26,
   },
   selected: {
     width: 99,
-    textAlign: 'center',
-    backgroundColor: '#F5F5F5',
+    textAlign: "center",
+    backgroundColor: "#F5F5F5",
     borderRadius: 26,
     height: 24,
-    margin: 'auto',
+    margin: "auto",
   },
   text: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
     width: 99,
     fontSize: 16,
-    color: '#F5F5F5',
-    fontWeight: '500',
+    color: "#F5F5F5",
+    fontWeight: "500",
   },
 
   selectedText: {
-    color: '#15161E',
-    alignSelf: 'center',
-    alignItems: 'center',
-    fontWeight: '500',
+    color: "#15161E",
+    alignSelf: "center",
+    alignItems: "center",
+    fontWeight: "500",
     fontSize: 16,
   },
   unSelectedText: {
-    color: '#F5F5F5',
-    alignSelf: 'center',
-    alignItems: 'center',
-    fontWeight: '500',
+    color: "#F5F5F5",
+    alignSelf: "center",
+    alignItems: "center",
+    fontWeight: "500",
     fontSize: 16,
-  }
+  },
 });
 // #F5F5F5
