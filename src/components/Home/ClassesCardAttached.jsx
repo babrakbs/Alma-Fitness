@@ -25,6 +25,7 @@ const ClassesCard = ({
   location = 'AREA, 500 m',
   price = '€8',
   id = 0,
+  onPressCard,
 }) => {
   const navigation = useNavigation();
   const day = date ? getDayFromDate(date) : 'Monday';
@@ -32,8 +33,12 @@ const ClassesCard = ({
   return (
     <Pressable
       onPress={() => {
-        console.log('id', id);
-        navigation.navigate('ClassDetails', {id: id});
+        if (onPressCard) {
+          onPressCard();
+        } else {
+          console.log('id', id);
+          navigation.navigate('ClassDetails', {id: id});
+        }
       }}
       style={styles.cardContainer}>
       <View style={styles.topRow}>

@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ImageBackground,
+  Image,
 } from 'react-native';
 import React from 'react';
 import SuccessIconPlus from '../assets/icons/SuccessIconPlus';
@@ -13,7 +14,11 @@ import {AlmaLogoImage, Checkcircle} from '../constants/svgs';
 import {colors, fontFamily} from '../constants';
 import {OnBoardingData} from '../constants/staticData';
 import TickCircleIcon from '../assets/icons/tickCircle';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
+import Sparkle from '../assets/icons/sparkle';
 
 const BlueBgComponent = ({
   heading = 'Account created!',
@@ -32,6 +37,10 @@ const BlueBgComponent = ({
   bottomText,
   bottomButton,
   onPressBtn,
+  showProfile = false,
+  profileImage,
+  profileName,
+  profileNumber,
 }) => {
   const nav = useNavigation();
   return (
@@ -52,7 +61,55 @@ const BlueBgComponent = ({
             {heading}
           </Text>
           <Text style={styles.description}>{description}</Text>
+          {showProfile && (
+            <View style={{marginTop: heightPercentageToDP(5)}}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: -heightPercentageToDP(3),
+                  top: -heightPercentageToDP(1),
+                }}>
+                <Sparkle />
+              </View>
+              <Image
+                source={{
+                  uri: 'https://randomuser.me/api/portraits/women/44.jpg',
+                }}
+                style={styles.profileImage}
+              />
+              <View
+                style={{
+                  position: 'absolute',
+                  right: -heightPercentageToDP(2.5),
+                  bottom: heightPercentageToDP(5.5),
+                }}>
+                <Sparkle />
+              </View>
+              <Text
+                style={{
+                  color: colors.white,
+                  fontSize: 16,
+                  fontWeight: '500',
+                  fontFamily: fontFamily.medium,
+                  textAlign: 'center',
+                  marginTop: 16,
+                }}>
+                {profileName || 'User Name'}
+              </Text>
+              <Text
+                style={{
+                  color: colors.white,
+                  fontSize: 16,
+                  textAlign: 'center',
+                  fontWeight: '500',
+                  fontFamily: fontFamily.medium,
+                }}>
+                {profileNumber || '#123123'}
+              </Text>
+            </View>
+          )}
         </View>
+
         <View
           style={{
             alignItems: 'center',
@@ -86,7 +143,9 @@ const BlueBgComponent = ({
             transparent={true}
           />
           {bottomButton && (
-            <View style={{marginTop: 16, width: '100%',marginBottom:5}}>{bottomButton}</View>
+            <View style={{marginTop: 16, width: '100%', marginBottom: 5}}>
+              {bottomButton}
+            </View>
           )}
         </View>
       </View>
@@ -172,5 +231,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     paddingHorizontal: widthPercentageToDP(10),
     // marginVertical: '2%',
+  },
+
+  profileImage: {
+    width: 96,
+    height: 96,
+    borderRadius: 60,
+    borderColor: 'white',
+    borderWidth: 1,
+    // backgroundColor: 'red',
   },
 });

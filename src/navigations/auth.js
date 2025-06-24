@@ -48,6 +48,7 @@ import VenueSchedule from '../screens/app/HomeVenue/VenueSchedule';
 import Checkout from '../screens/app/HomeVenue/QRScanner';
 import QRCodeScanner from '../screens/plans/QRCodeScanner';
 import QRCheckInScreen from '../screens/plans/QRCheckInScreen';
+import PaymentDetails from '../screens/plans/PaymentDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -168,10 +169,15 @@ const AuthStack = () => {
       />
       <Stack.Screen
         options={{headerShown: false}}
+        name="PaymentDetails"
+        component={PaymentDetails}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
         name="QRCodeScanner"
         component={QRCodeScanner}
       />
-        <Stack.Screen
+      <Stack.Screen
         options={{headerShown: false}}
         name="QRCheckInScreen"
         component={QRCheckInScreen}

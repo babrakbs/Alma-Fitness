@@ -1,5 +1,5 @@
 // screens/Home/QRScannerScreen.js
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,27 +11,46 @@ import {
   Pressable,
   ImageBackground,
 } from 'react-native';
-import Header from '../../../components/header';
-import {colors, fontFamily} from '../../../constants';
+import Header from '../../components/header';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
-import ClassesCard from '../../../components/Home/ClassesCardAttached';
-import ArrowRightIcon from '../../../assets/icons/rightIcon';
-import MasterCard from '../../../assets/icons/masterCard';
-import ArrowIcon from '../../../assets/icons/ArrowIcon';
-import Button from '../../../components/Button';
+import MasterCard from '../../assets/icons/masterCard';
+import ArrowIcon from '../../assets/icons/ArrowIcon';
+import Button from '../../components/Button';
+import {colors, fontFamily} from '../../constants';
+import BlueBgComponent from '../../components/BlueBgComponent';
 
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import {RNCamera} from 'react-native-camera';
 
-const Checkout = ({navigation}) => {
+const PaymentDetails = ({navigation}) => {
+  const [selectedCard, setSelectedCard] = useState(0); // 0 for first, 1 for second
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const onSuccess = e => {
     console.log('QR Code scanned: ', e.data);
     // Handle scanned data
     navigation.goBack(); // or navigate somewhere else
   };
+
+  if (showSuccess) {
+    return (
+      <BlueBgComponent
+        heading="Successful Payment Done!"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.."
+        btnText="Explore"
+        onPressBtn={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'TabNav'}],
+          })
+        }
+        theme="blackWhite"
+      />
+    );
+  }
 
   return (
     // <>
@@ -39,7 +58,7 @@ const Checkout = ({navigation}) => {
       <SafeAreaView />
       <View style={styles.headerContainer}>
         <Header
-          label={'Full Body + Bands     '}
+          label={'Payment Details     '}
           showArrow
           theme="light"
           showFavourite={false}
@@ -51,79 +70,86 @@ const Checkout = ({navigation}) => {
           alignSelf: 'center',
           marginTop: heightPercentageToDP(2),
         }}>
-        <Text style={styles.sectionTitle}>Booking Details</Text>
-        <ClassesCard isCheckout={true} />
-        {/* Price Breakdown */}
-        <View style={styles.divider} />
-        <Text style={styles.sectionTitle}>Price Breakdown</Text>
-        <View style={styles.priceRow}>
-          <Text style={styles.priceLabel}>Subtotal</Text>
-          <Text style={styles.priceValue}>€7,59</Text>
-        </View>
-        <View style={styles.priceRow}>
-          <Text style={styles.priceLabel}>VAT %</Text>
-          <Text style={styles.priceValue}>€2,40</Text>
-        </View>
-        <View style={styles.priceRow}>
-          <Text style={styles.priceLabel}>Service Fee</Text>
-          <Text style={styles.priceValue}>€2,40</Text>
-        </View>
-        <View style={styles.priceRow}>
-          <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalValue}>€9,99</Text>
-        </View>
+        <Pressable
+          style={styles.paymentCard}
+          onPress={() => setSelectedCard(0)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
+              paddingHorizontal: widthPercentageToDP(4),
+              paddingVertical: heightPercentageToDP(0.2),
+            }}>
+            {/* Radio Button */}
+            <Pressable
+              onPress={() => setSelectedCard(0)}
+              style={{marginRight: 12}}>
+              <View style={styles.radioButton}>
+                {selectedCard === 0 && (
+                  <View style={styles.selectedRadioButton} />
+                )}
+              </View>
+            </Pressable>
+            {/* <MasterCard /> */}
+            <View>
+              <Text style={styles.cardText}>Wallet Payment</Text>
+              <Text style={styles.cardDots}>•••••••••••••••••••••</Text>
+            </View>
+          </View>
 
-        {/* Monthly Membership Ad */}
-        <Pressable style={styles.membershipCard}>
-          <ImageBackground
-            source={require('../../../assets/images/bg_calender.png')}
-            style={styles.membershipBg}
-            imageStyle={{borderRadius: 12}}>
-            <Text style={styles.membershipText}>
-              Activate your monthly membership{'\n'}and save on workouts.
-            </Text>
-            <ArrowRightIcon />
-          </ImageBackground>
+          <ArrowIcon />
         </Pressable>
-        <View style={styles.divider} />
-        {/* Payment Method */}
-        <Text style={styles.sectionTitle}>Payment Method</Text>
-        <View style={styles.paymentCard}>
-          <View style={{flexDirection: 'row', alignItems: 'center', flex: 1}}>
+        <Pressable
+          style={styles.paymentCard}
+          onPress={() => setSelectedCard(1)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              flex: 1,
+              paddingHorizontal: widthPercentageToDP(4),
+            }}>
+            {/* Radio Button */}
+            <Pressable
+              onPress={() => setSelectedCard(1)}
+              style={{marginRight: 12}}>
+              <View style={styles.radioButton}>
+                {selectedCard === 1 && (
+                  <View style={styles.selectedRadioButton} />
+                )}
+              </View>
+            </Pressable>
             <MasterCard />
             <View>
               <Text style={styles.cardText}>Card</Text>
               <Text style={styles.cardDots}>••••••••••3549</Text>
             </View>
           </View>
-          <View>
-            <ArrowIcon />
-          </View>
-        </View>
 
-        {/* Terms and Conditions */}
-        <View style={styles.divider} />
-        <Text style={styles.sectionTitle}>Terms</Text>
-        <Text style={styles.terms}>
-          By proceeding, you agree to our{' '}
-          <Text style={styles.link}>Terms of Service</Text> and{' '}
-          <Text style={styles.link}>Privacy Policy</Text>.
-        </Text>
-
-        {/* Book Button */}
-        <View style={{marginVertical: heightPercentageToDP(3)}}>
-          <Button
-            handleClick={async () => {
-              console.log('workings');
-            }}
-            text="Book"
-            elevation={false}
-            textBold={true}
-            marginTop={15}
-            borderLess={false}
-            widthSize={'large'}
-          />
-        </View>
+          <ArrowIcon />
+        </Pressable>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          marginBottom: heightPercentageToDP(2),
+          width: '90%',
+          alignSelf: 'center',
+        }}>
+        <Button
+          handleClick={async () => {
+            setShowSuccess(true);
+          }}
+          text="Continue"
+          elevation={false}
+          textBold={true}
+          marginTop={15}
+          borderLess={false}
+          widthSize={'large'}
+        />
       </View>
     </ScrollView>
     // </>
@@ -136,17 +162,13 @@ const styles = StyleSheet.create({
     // paddingBottom: 40,
 
     backgroundColor: '#fff',
-    // flex: 1,
+    flex: 1,
   },
   headerContainer: {
-    elevation: 5, // Android
     paddingVertical: 4,
-    shadowColor: '#000', // iOS
-    shadowOffset: {width: 0, height: 2}, // iOS
-    shadowOpacity: 0.2, // iOS
-    shadowRadius: 3, // iOS
+
     backgroundColor: '#fff', // To show shadow on iOS
-    zIndex: 1,
+
     width: '100%',
     paddingHorizontal: widthPercentageToDP(4),
   },
@@ -258,13 +280,13 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
     color: 'black',
   },
   cardDots: {
     marginLeft: 'auto',
-    fontSize: 16,
+    fontSize: 18,
     color: 'black',
   },
   terms: {
@@ -288,6 +310,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  radioButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectedRadioButton: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#000',
+  },
 });
 
-export default Checkout;
+export default PaymentDetails;
