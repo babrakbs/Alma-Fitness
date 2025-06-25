@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { colors } from '../constants';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const OnBoardingProgress = ({screen}) => {
     console.log(screen);
@@ -24,8 +25,9 @@ const styles = StyleSheet.create({
         height: 1,
         width: 200,
         justifyContent:'space-between',
-        marginTop: 30,
-        marginBottom: 20,
+        marginVertical:heightPercentageToDP(3.6),
+        // marginTop: 30,
+        // marginBottom: 20,
         alignItems:'center',
         alignSelf:'flex-start',
         backgroundColor:colors.darkWhite,
