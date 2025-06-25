@@ -1046,7 +1046,7 @@ const ClassDetail = ({route}) => {
           </View>
         </View>
         <View style={{marginBottom: heightPercentageToDP(4)}}>
-          <View style={{marginTop: 20}}>
+          <View style={{marginTop: heightPercentageToDP(2)}}>
             <Button
               handleClick={async () => {
                 cancelBookingSheetRef.current?.close();

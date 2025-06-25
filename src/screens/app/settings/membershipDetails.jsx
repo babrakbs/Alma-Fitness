@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -15,14 +15,14 @@ import MembershipSpecificButton from '../../../components/membershipSpecificBtn'
 import Button from '../../../components/Button';
 import CustomBottomSheet from '../../../components/CustomBottomSheet';
 // Remove: import ReactNativeModal from 'react-native-modal';
-import { DangerwarningIcon, WhiteLogoIcon } from '../../../constants/svgs';
+import {DangerwarningIcon, WhiteLogoIcon} from '../../../constants/svgs';
 import RadioGroup from 'react-native-radio-buttons-group';
 import MembershipCard from '../../plans/MembershipCard';
-import { colors, fontFamily } from '../../../constants';
+import {colors, fontFamily} from '../../../constants';
 import axiosInstance from '../../../helper/axiosInstance';
-import { ActivityIndicator } from 'react-native';
-import { heightPercentageToDP } from 'react-native-responsive-screen';
-const MembershipDetails = ({ navigation }) => {
+import {ActivityIndicator} from 'react-native';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
+const MembershipDetails = ({navigation}) => {
   const [warningModal, setWarningModal] = useState(false);
   const [PausemembershipModal, setPausemembershipModal] = useState(false);
   const [pauseMembership, setPauseMembership] = useState(false);
@@ -32,20 +32,20 @@ const MembershipDetails = ({ navigation }) => {
 
   // Options for the radio buttons
   const options = [
-    { id: '1_month', label: '1 Month' },
-    { id: '2_months', label: '2 Months' },
-    { id: '3_month', label: '3 Month' },
-    { id: '4_months', label: '4 Months' },
-    { id: '5_month', label: '5 Month' },
-    { id: '6_months', label: '6 Months' },
-    { id: 'until_manual', label: 'Until I turn it back on' },
+    {id: '1_month', label: '1 Month'},
+    {id: '2_months', label: '2 Months'},
+    {id: '3_month', label: '3 Month'},
+    {id: '4_months', label: '4 Months'},
+    {id: '5_month', label: '5 Month'},
+    {id: '6_months', label: '6 Months'},
+    {id: 'until_manual', label: 'Until I turn it back on'},
   ];
 
   const fetchUserPlan = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get('/api/getUserPlan');
-      const { plan } = response.data?.data;
+      const {plan} = response.data?.data;
       setUserPlan(plan);
 
       console.log(formatRenewalDate(userPlan[0]?.current_period_end));
@@ -66,7 +66,7 @@ const MembershipDetails = ({ navigation }) => {
   const formatRenewalDate = isoString => {
     if (!isoString) return '';
     const date = new Date(isoString);
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const options = {day: 'numeric', month: 'long', year: 'numeric'};
     return date.toLocaleDateString('en-GB', options);
   };
 
@@ -157,7 +157,7 @@ const MembershipDetails = ({ navigation }) => {
   return (
     <>
       {loading ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size="large" color={colors.black} />
         </View>
       ) : (
@@ -170,8 +170,9 @@ const MembershipDetails = ({ navigation }) => {
             {/* 0.1 */}
             <Header showArrow={true} label={'Membership       '} />
             {/* 0.2 */}
+
             <View style={styles.proMemDetailsContainer}>
-              <MembershipCard plan={userPlan} />
+              <MembershipCard plan={userPlan} width="100%" />
             </View>
             {/* 0.15 */}
             <View style={styles.renewalDateCont}>
@@ -210,7 +211,9 @@ const MembershipDetails = ({ navigation }) => {
         </View>
       )}
       {/* Warning Bottom Sheet */}
-      <CustomBottomSheet ref={warningSheetRef} snapPoints={Platform.OS === 'ios' ? ['58'] : ['60']}>
+      <CustomBottomSheet
+        ref={warningSheetRef}
+        snapPoints={Platform.OS === 'ios' ? ['58'] : ['60']}>
         <View style={[styles.modalContent]}>
           <Text style={styles.modalTextTitle}>Cancel Membership</Text>
           <Text
@@ -281,7 +284,9 @@ const MembershipDetails = ({ navigation }) => {
       </CustomBottomSheet>
 
       {/* Pause Membership Options Bottom Sheet */}
-      <CustomBottomSheet ref={pauseMembershipSheetRef} snapPoints={Platform.OS === 'ios' ? ['85'] : ['90']}>
+      <CustomBottomSheet
+        ref={pauseMembershipSheetRef}
+        snapPoints={Platform.OS === 'ios' ? ['85'] : ['90']}>
         {/* <View style={[styles.modalContent]}> */}
         <Text style={styles.modalTextTitle}>Pause Membership</Text>
         <Text
@@ -324,7 +329,7 @@ const MembershipDetails = ({ navigation }) => {
           Choose the duration you want you membership to be paused for. You can
           resume your membership at any time.
         </Text>
-        <View style={{ alignSelf: 'left' }}>
+        <View style={{alignSelf: 'left'}}>
           {options.map(option => (
             <TouchableOpacity
               key={option.id}
@@ -372,7 +377,9 @@ const MembershipDetails = ({ navigation }) => {
       </CustomBottomSheet>
 
       {/* Pause Confirmation Bottom Sheet */}
-      <CustomBottomSheet ref={pauseConfirmSheetRef} snapPoints={Platform.OS === 'ios' ? ['58'] : ['60']}>
+      <CustomBottomSheet
+        ref={pauseConfirmSheetRef}
+        snapPoints={Platform.OS === 'ios' ? ['58'] : ['60']}>
         <View style={[styles.modalContent]}>
           <Text style={styles.modalTextTitle}>Cancel Membership</Text>
           <Text
@@ -561,7 +568,8 @@ const styles = StyleSheet.create({
   bottomBtnCont: {
     width: '100%',
     paddingHorizontal: '5%',
-    paddingVertical: Platform.OS === 'ios' ? heightPercentageToDP(6) : heightPercentageToDP(4),
+    paddingVertical:
+      Platform.OS === 'ios' ? heightPercentageToDP(6) : heightPercentageToDP(4),
     backgroundColor: '#F7F7F7',
     // borderTopWidth: 1,
     // // borderTopColor: 'rgba(0, 0, 0, 0.1)',

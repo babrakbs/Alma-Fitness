@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     height: 45,
     width: '90%',
     padding: 0,
-    marginBottom: heightPercentageToDP(2),
   },
   blackWhite: {
     button: {

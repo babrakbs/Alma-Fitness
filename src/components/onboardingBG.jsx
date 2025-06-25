@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import {
   ImageBackground,
   View,
@@ -12,17 +12,17 @@ import {
 } from 'react-native';
 import ViewPager from 'react-native-pager-view';
 import Button from './Button';
-import { OnBoardingData } from '../constants/staticData';
-import { colors, fontFamily } from '../constants';
+import {OnBoardingData} from '../constants/staticData';
+import {colors, fontFamily} from '../constants';
 import OnBoardingProgress from './onBoardingProgress';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const OnBoardingBG = ({ navigation }) => {
+const OnBoardingBG = ({navigation}) => {
   const viewPagerRef = useRef(null);
   const [page, setPage] = useState(0);
 
@@ -54,6 +54,7 @@ const OnBoardingBG = ({ navigation }) => {
         </ViewPager>
         <View style={styles.buttonContainer}>
           <OnBoardingProgress screen={page} />
+
           <Button
             handleClick={() => {
               if (page < OnBoardingData.length - 1) {
