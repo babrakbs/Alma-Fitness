@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   headerText: {
     color: 'white',
     fontSize: 20,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginTop: StatusBar.currentHeight || 0,
   },
   scrollViewContent: {

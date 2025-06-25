@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
     height: 45,
     width: '90%',
     padding: 0,
-    marginBottom: heightPercentageToDP(2),
   },
   blackWhite: {
     button: {
@@ -249,7 +248,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   boldText: {
-    fontWeight: '800',
+    // fontWeight: '800',
   },
   nonBold: {
     fontWeight: '500',

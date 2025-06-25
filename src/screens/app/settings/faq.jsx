@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     helpCentreText: {
         textDecorationLine: 'underline',
-        fontWeight: '700',
+        // fontWeight: '700',
     },
     footer: {
         backgroundColor: '#DBDCDB',

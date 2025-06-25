@@ -215,7 +215,7 @@ const ProfileBookingHistory = () => {
                 <Text
                   style={{
                     color: '#15161E',
-                    fontWeight: '600',
+                    // fontWeight: '600',
                     fontSize: 16,
                     marginTop: 20,
                   }}>

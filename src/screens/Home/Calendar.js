@@ -308,7 +308,7 @@ const Calendar = () => {
                             {
                               color: colors.black,
                               fontFamily: fontFamily.semiBold,
-                              fontWeight: '600',
+                              // fontWeight: '600',
                               fontSize: 14.3,
                             },
                             item.id === 'all'
@@ -471,7 +471,7 @@ const Calendar = () => {
                         <Text
                           style={{
                             color: '#15161E',
-                            fontWeight: '600',
+                            // fontWeight: '600',
                             fontSize: 16,
                             marginTop: 20,
                           }}>
@@ -658,7 +658,7 @@ const styles = StyleSheet.create({
   },
   headingText: {
     color: '#15161E',
-    fontWeight: '700',
+    // fontWeight: '700',
     fontSize: 18,
   },
   filtersContainer: {
@@ -687,14 +687,14 @@ const styles = StyleSheet.create({
   },
 
   filterText: {
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#15161E',
     textAlign: 'center',
     marginTop: 5,
   },
   creditsText: {
     color: '#15161E',
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 16,
   },
   dateContainerMain: {

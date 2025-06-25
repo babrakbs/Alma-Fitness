@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   addedCardsText: {
     fontSize: 14,
-    fontWeight: '700',
+    // fontWeight: '700',
     color: '#242424',
     marginTop: 15,
   },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   cardTypeText: {
     fontSize: 14,
-    fontWeight: '700',
+    // fontWeight: '700',
     color: '#232323',
   },
   startDateText: {

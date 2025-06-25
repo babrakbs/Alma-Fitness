@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontFamily: fontFamily.bold,
       // fontSize: 20,
-      fontWeight: '700',
+      // fontWeight: '700',
       paddingTop: 50,
     },
     secondaryText: {

@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   categoryText: {
     color: colors.black,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 14.3,
   },
   selectedText: {color: colors.white},
@@ -277,13 +277,13 @@ const styles = StyleSheet.create({
   },
   priceText: {
     fontSize: 16,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: colors.black,
     fontFamily: fontFamily.semiBold,
   },
   priceValue: {
     fontSize: 16,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: colors.black,
     fontFamily: fontFamily.semiBold,
   },
@@ -294,7 +294,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  applyText: {color: '#fff', fontSize: 16, fontWeight: '600'},
+  applyText: {color: '#fff', fontSize: 16,
+    //  fontWeight: '600'
+    },
   resetButton: {
     borderColor: '#000',
     borderWidth: 1,
@@ -303,7 +305,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  resetText: {color: '#000', fontSize: 16, fontWeight: 'bold'},
+  resetText: {color: '#000', fontSize: 16,
+    //  fontWeight: 'bold'
+    },
 });
 
 export default FilterScreen;

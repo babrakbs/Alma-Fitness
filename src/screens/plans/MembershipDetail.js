@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 64.5,
-    fontWeight: "600",
+    // fontWeight: "600",
     fontFamily: fontFamily.bold,
     color: colors.black,
   },
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fontFamily.bold,
     color: colors.black,
-    fontWeight: "600",
+    // fontWeight: "600",
   },
   terms: {
     marginTop: 20,
@@ -530,13 +530,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fontFamily.bold,
     color: colors.darkWhite,
-    fontWeight: "600",
+    // fontWeight: "600",
   },
   decimalAmount: {
     fontSize: 14,
     fontFamily: fontFamily.semiBold,
     color: colors.darkWhite,
-    fontWeight: "600",
+    // fontWeight: "600",
   },
   sheetLoadingContainer: {
     position: "absolute",

@@ -44,6 +44,7 @@ import BlueBgComponent from '../../../components/BlueBgComponent';
 import CrossCircleIcon from '../../../assets/icons/crossCircle';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import MapPinClass from '../../../assets/icons/MapPinClass.jsx';
+import {BlurView} from '@react-native-community/blur';
 
 // const StipePayment = ({clientSecret, onSuccess}) =>{
 //   console.log('clientSecret', clientSecret);
@@ -127,7 +128,8 @@ const ClassDetail = ({route}) => {
   const successCancelSheetRef = useRef();
   const addedCalendarSheetRef = useRef();
   const classDetailRef = useRef();
-
+  const screenHeight = Dimensions.get('window').height;
+  const snapPoint = screenHeight > 800 ? '65%' : '56%';
   const navigation = useNavigation();
   const classId = route?.params?.id;
   const [classDetails, setClassDetails] = useState([]);
@@ -135,7 +137,7 @@ const ClassDetail = ({route}) => {
   const [publishableKey, setPublishableKey] = useState(
     process.env.Publishable_key,
   );
-  console.log('publishableKey', publishableKey);
+  // console.log('publishableKey', publishableKey);
   // const fetchPublishableKey = async () => {
   //   const key = await fetchKey(); // fetch key from your server here
   //   setPublishableKey(key);
@@ -285,12 +287,18 @@ const ClassDetail = ({route}) => {
       setSheetLoading(false);
     }
   };
-
+  const [showBlur, setShowBlur] = useState(false);
   const handlePaymentSuccess = () => {
     setClientSecret('');
     setShowStripeOverlay(false);
     setStatusBooked(true);
   };
+
+  useEffect(() => {
+    console.log('234567876543456789', cancelBookingSheetRef.current);
+
+    setShowBlur(false);
+  }, [cancelBookingSheetRef]);
 
   return (
     <>
@@ -743,7 +751,7 @@ const ClassDetail = ({route}) => {
                   <View style={styles.sectionClass}>
                     <Text
                       style={{
-                        fontWeight: '600',
+                        // fontWeight: '600',
                         fontSize: 16,
                         color: '#202226',
                         lineHeight: 24,
@@ -772,7 +780,7 @@ const ClassDetail = ({route}) => {
                     ]}>
                     <Text
                       style={{
-                        fontWeight: '600',
+                        // fontWeight: '600',
                         fontSize: 16,
                         color: '#202226',
                         lineHeight: 24,
@@ -818,7 +826,7 @@ const ClassDetail = ({route}) => {
               }}>
               <Text
                 style={{
-                  fontWeight: 600,
+                  // fontWeight: 600,
                   fontSize: 18,
                   color: '#B6B6B6',
                   fontFamily: fontFamily.medium,
@@ -827,7 +835,7 @@ const ClassDetail = ({route}) => {
                 {'\n'}
                 <Text
                   style={{
-                    fontWeight: 600,
+                    // fontWeight: 600,
                     fontSize: 11,
                     color: '#B6B6B6',
                   }}>
@@ -868,6 +876,7 @@ const ClassDetail = ({route}) => {
                     warningSheetRef.current?.open();
                   } else {
                     cancelBookingSheetRef.current?.open();
+                    setShowBlur(true);
                   }
                 }}
                 text={statusBooked ? 'Cancel Booking' : 'Book'}
@@ -880,7 +889,7 @@ const ClassDetail = ({route}) => {
         </>
       )}
       {/* Bottom sheets are now outside the ScrollView */}
-      <CustomBottomSheet ref={successBookingSheetRef} snapPoints={['50']}>
+      <CustomBottomSheet ref={successBookingSheetRef} snapPoints={[snapPoint]}>
         <View style={[styles.modalContent]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TickSuccessIcon />
@@ -925,7 +934,7 @@ const ClassDetail = ({route}) => {
             <Text
               style={{
                 fontSize: 18,
-                fontWeight: '600',
+                // fontWeight: '600',
                 color: '#202226',
                 textAlign: 'center',
                 lineHeight: 24,
@@ -948,8 +957,22 @@ const ClassDetail = ({route}) => {
           </View>
         </View>
       </CustomBottomSheet>
+      {showBlur && (
+        <BlurView
+          style={StyleSheet.absoluteFill}
+          // blurType="light"
+          // blurAmount={5}
+          // reducedTransparencyFallbackColor="white"
 
-      <CustomBottomSheet ref={cancelBookingSheetRef} snapPoints={['56']}>
+          tint="light"
+          intensity={10}
+          // style={[style, { borderRadius: 20, overflow: "hidden" }]}
+        />
+      )}
+      <CustomBottomSheet
+        ref={cancelBookingSheetRef}
+        snapPoints={[snapPoint]}
+        onOpenChange={setShowBlur}>
         <View
           style={{
             width: '100%',
@@ -973,7 +996,7 @@ const ClassDetail = ({route}) => {
           <View style={styles.sectionClass}>
             <Text
               style={{
-                fontWeight: '600',
+                // fontWeight: '600',
                 fontSize: 16,
                 color: '#202226',
                 marginTop: heightPercentageToDP(1.2),
@@ -1000,7 +1023,7 @@ const ClassDetail = ({route}) => {
           <View style={styles.sectionClass}>
             <Text
               style={{
-                fontWeight: '600',
+                // fontWeight: '600',
                 fontSize: 16,
                 color: '#202226',
                 lineHeight: 24,
@@ -1023,7 +1046,7 @@ const ClassDetail = ({route}) => {
           </View>
         </View>
         <View style={{marginBottom: heightPercentageToDP(4)}}>
-          <View style={{marginTop: 20}}>
+          <View style={{marginTop: heightPercentageToDP(2)}}>
             <Button
               handleClick={async () => {
                 cancelBookingSheetRef.current?.close();
@@ -1100,7 +1123,7 @@ const ClassDetail = ({route}) => {
       </CustomBottomSheet>
 
       {/* Success Cancel Bottom Sheet */}
-      <CustomBottomSheet ref={successCancelSheetRef} snapPoints={['50']}>
+      <CustomBottomSheet ref={successCancelSheetRef} snapPoints={[snapPoint]}>
         <View style={[styles.modalContent]}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TickSuccessIcon />
@@ -1203,7 +1226,7 @@ const styles = StyleSheet.create({
   },
   modalTextTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#202226',
     textAlign: 'center',
   },
@@ -1217,7 +1240,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   boldText: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: '#202226',
     fontSize: 12,
   },

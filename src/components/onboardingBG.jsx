@@ -49,11 +49,12 @@ const OnBoardingBG = ({navigation}) => {
             <View key={index} style={styles.slide}>
               <Text style={styles.headingText}>{item.headingText}</Text>
               <Text style={styles.bodyText}>{item.bodyText}</Text>
-              <OnBoardingProgress screen={page} />
             </View>
           ))}
         </ViewPager>
         <View style={styles.buttonContainer}>
+          <OnBoardingProgress screen={page} />
+
           <Button
             handleClick={() => {
               if (page < OnBoardingData.length - 1) {
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     fontFamily: fontFamily.medium,
     fontSize: 38,
-    fontWeight: '600',
+    // fontWeight: '600',
     // paddingHorizontal: widthPercentageToDP(10),
     width: widthPercentageToDP(96),
     // alignSelf: 'center',

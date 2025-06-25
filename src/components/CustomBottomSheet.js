@@ -18,6 +18,7 @@ const CustomBottomSheet = forwardRef(
       index = -1,
       hasPadding = true,
       hasThumb = true,
+      onOpenChange,
     },
     ref,
   ) => {
@@ -32,8 +33,11 @@ const CustomBottomSheet = forwardRef(
     const handleSheetChanges = useCallback(
       index => {
         if (onChange) onChange(index);
+        if (onOpenChange) {
+          onOpenChange(index !== -1);
+        }
       },
-      [onChange],
+      [onChange, onOpenChange],
     );
 
     return (

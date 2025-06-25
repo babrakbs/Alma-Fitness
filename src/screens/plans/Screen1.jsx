@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
   planName: {
     fontSize: 22.28,
     // color: '#15161E', //Can be a prop
-    fontWeight: "600",
+    // fontWeight: "600",
   },
   memberShipView: {
     width: "55%",
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
   credit: {
     color: colors.black,
     fontSize: 22,
-    fontWeight: "600",
+    // fontWeight: "600",
     marginTop: 8,
     lineHeight: 26,
   },
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 26,
     fontFamily: fontFamily.medium,
-    fontWeight: "600",
+    // fontWeight: "600",
     textAlign: "center",
     alignSelf: "center",
     paddingTop: heightPercentageToDP(1),
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 58,
-    fontWeight: "600",
+    // fontWeight: "600",
     color: colors.black,
     fontFamily: fontFamily.bold,
     marginTop: 8,
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: fontFamily.semiBold,
     color: colors.black,
-    fontWeight: "600",
+    // fontWeight: "600",
   },
   time: {
     fontSize: 22,
@@ -463,7 +463,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
   planType: {
-    fontWeight: "700",
+    // fontWeight: "700",
     fontSize: 24,
     color: colors.black,
   },

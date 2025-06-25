@@ -14,7 +14,6 @@ import moment from 'moment';
 import SettingIcon from '../../assets/icons/SettingIcon';
 import AlmaXSIcon from '../../assets/icons/AlmaXSIcon';
 import TextLink from '../../components/Home/TextLink';
-import ClassesCard from '../../components/Home/ClassesCard';
 import {useNavigation} from '@react-navigation/native';
 import {colors, fontFamily} from '../../constants';
 import HomeCarousel from './HomeCarousel';
@@ -24,6 +23,7 @@ import {ActivityIndicator} from 'react-native';
 import {useSelector} from 'react-redux';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import Venues from '../../components/Home/Venues';
+import ClassesCard from '../../components/Home/ClassesCardAttached';
 
 const Bookings = ({bookings, loading, navigation}) => {
   const filterBookings = () => {
@@ -61,7 +61,7 @@ const Bookings = ({bookings, loading, navigation}) => {
     }
 
     return (
-      <View style={{marginBottom: 10}}>
+      <View style={{marginBottom: 10, width: '95%', alignSelf: 'center'}}>
         {sectionBookings.map((booking, index) => {
           const dateText = moment(booking?.start_date)
             .locale('en')
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#15161E',
-    fontWeight: '700',
+    // fontWeight: '700',
     fontSize: 18,
     width: '33%',
     textAlign: 'center',
@@ -423,14 +423,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#818C81',
-    fontWeight: '700',
+    // fontWeight: '700',
     fontSize: 20,
     textAlign: 'center',
   },
 
   secondaryText: {
     fontSize: 14,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#373A36',
     textAlign: 'center',
   },
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginLeft: 50,
   },
   profileInfo: {

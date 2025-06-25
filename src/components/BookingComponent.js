@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
       color: '#FFFFFF',
       textAlign: 'center',
       // fontSize: 20,
-      fontWeight: '700',
+      // fontWeight: '700',
       paddingTop: 50,
     },
     secondaryText: {
