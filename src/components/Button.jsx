@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
   },
   boldText: {
-    fontWeight: '800',
+    // fontWeight: '800',
   },
   nonBold: {
     fontWeight: '500',

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: colors.black,
     fontSize: 14,
-    fontWeight: '600',
+    // fontWeight: '600',
     fontFamily: fontFamily.semiBold,
     marginBottom: 10
   },

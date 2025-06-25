@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '600',
+    // fontWeight: '600',
     marginVertical: 8,
 
     color: 'black',
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   bookingTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginBottom: 6,
   },
   locationRow: {
@@ -218,25 +218,25 @@ const styles = StyleSheet.create({
   },
   priceLabel: {
     color: '#949494',
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 18,
     fontFamily: fontFamily.semiBold,
   },
   priceValue: {
     color: '#949494',
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 18,
     fontFamily: fontFamily.semiBold,
   },
   totalLabel: {
     // fontWeight: 'bold',
     fontSize: 18,
-    fontWeight: '600',
+    // fontWeight: '600',
     fontFamily: fontFamily.semiBold,
     color: colors.black,
   },
   totalValue: {
-    fontWeight: '600', // fontWeight: 'bold',
+    // fontWeight: '600', // fontWeight: 'bold',
     fontSize: 18,
     fontFamily: fontFamily.semiBold,
     color: 'black',
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   bookText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
   },
   radioButton: {
     width: 20,

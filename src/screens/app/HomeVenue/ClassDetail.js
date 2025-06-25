@@ -751,7 +751,7 @@ const ClassDetail = ({route}) => {
                   <View style={styles.sectionClass}>
                     <Text
                       style={{
-                        fontWeight: '600',
+                        // fontWeight: '600',
                         fontSize: 16,
                         color: '#202226',
                         lineHeight: 24,
@@ -780,7 +780,7 @@ const ClassDetail = ({route}) => {
                     ]}>
                     <Text
                       style={{
-                        fontWeight: '600',
+                        // fontWeight: '600',
                         fontSize: 16,
                         color: '#202226',
                         lineHeight: 24,
@@ -826,7 +826,7 @@ const ClassDetail = ({route}) => {
               }}>
               <Text
                 style={{
-                  fontWeight: 600,
+                  // fontWeight: 600,
                   fontSize: 18,
                   color: '#B6B6B6',
                   fontFamily: fontFamily.medium,
@@ -835,7 +835,7 @@ const ClassDetail = ({route}) => {
                 {'\n'}
                 <Text
                   style={{
-                    fontWeight: 600,
+                    // fontWeight: 600,
                     fontSize: 11,
                     color: '#B6B6B6',
                   }}>
@@ -934,7 +934,7 @@ const ClassDetail = ({route}) => {
             <Text
               style={{
                 fontSize: 18,
-                fontWeight: '600',
+                // fontWeight: '600',
                 color: '#202226',
                 textAlign: 'center',
                 lineHeight: 24,
@@ -996,7 +996,7 @@ const ClassDetail = ({route}) => {
           <View style={styles.sectionClass}>
             <Text
               style={{
-                fontWeight: '600',
+                // fontWeight: '600',
                 fontSize: 16,
                 color: '#202226',
                 marginTop: heightPercentageToDP(1.2),
@@ -1023,7 +1023,7 @@ const ClassDetail = ({route}) => {
           <View style={styles.sectionClass}>
             <Text
               style={{
-                fontWeight: '600',
+                // fontWeight: '600',
                 fontSize: 16,
                 color: '#202226',
                 lineHeight: 24,
@@ -1226,7 +1226,7 @@ const styles = StyleSheet.create({
   },
   modalTextTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#202226',
     textAlign: 'center',
   },
@@ -1240,7 +1240,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   boldText: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: '#202226',
     fontSize: 12,
   },

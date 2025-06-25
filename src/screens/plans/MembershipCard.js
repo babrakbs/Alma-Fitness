@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 64.5,
-    fontWeight: '600',
+    // fontWeight: '600',
     fontFamily: fontFamily.bold,
     color: colors.black,
   },
@@ -126,13 +126,13 @@ const styles = StyleSheet.create({
     fontSize: 64.5,
     fontFamily: fontFamily.bold,
     color: colors.black,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   decimalAmount: {
     fontSize: 38,
     fontFamily: fontFamily.semiBold,
     color: colors.black,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   perMonth: {
     fontSize: 18,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fontFamily.bold,
     color: colors.black,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   terms: {
     marginTop: 20,

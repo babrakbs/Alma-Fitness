@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: '#15161E',
-    fontWeight: '700',
+    // fontWeight: '700',
     fontSize: 18,
     width: '33%',
     textAlign: 'center',
@@ -423,14 +423,14 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#818C81',
-    fontWeight: '700',
+    // fontWeight: '700',
     fontSize: 20,
     textAlign: 'center',
   },
 
   secondaryText: {
     fontSize: 14,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#373A36',
     textAlign: 'center',
   },
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     fontSize: 24,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginLeft: 50,
   },
   profileInfo: {

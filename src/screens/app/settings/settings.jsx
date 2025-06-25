@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: 18,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginTop: 20,
   },
   heading: {
     color: '#15161E',
     fontSize: 16,
-    fontWeight: '700',
+    // fontWeight: '700',
     marginLeft: '5%',
   },
   buttonCont: {

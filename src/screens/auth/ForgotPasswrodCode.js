@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   innerText: {
     color: colors.black,
     fontFamily: fontFamily.medium,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   btnContainer: {
     width: '90%',

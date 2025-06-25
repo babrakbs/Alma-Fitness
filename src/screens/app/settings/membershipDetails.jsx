@@ -221,7 +221,7 @@ const MembershipDetails = ({navigation}) => {
               styles.modalTextTitle,
               {
                 fontSize: 18,
-                fontWeight: 600,
+                // fontWeight: 600,
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 20,
@@ -235,7 +235,7 @@ const MembershipDetails = ({navigation}) => {
               styles.modalTextTitle,
               {
                 fontSize: 18,
-                fontWeight: 600,
+                // fontWeight: 600,
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 10,
@@ -294,7 +294,7 @@ const MembershipDetails = ({navigation}) => {
             styles.modalTextTitle,
             {
               fontSize: 18,
-              fontWeight: 600,
+              // fontWeight: 600,
               textAlign: 'left',
               marginBottom: 10,
               marginTop: 20,
@@ -308,7 +308,7 @@ const MembershipDetails = ({navigation}) => {
             styles.modalTextTitle,
             {
               fontSize: 18,
-              fontWeight: 600,
+              // fontWeight: 600,
               textAlign: 'left',
               marginBottom: 10,
               marginTop: 10,
@@ -387,7 +387,7 @@ const MembershipDetails = ({navigation}) => {
               styles.modalTextTitle,
               {
                 fontSize: 18,
-                fontWeight: 600,
+                // fontWeight: 600,
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 20,
@@ -401,7 +401,7 @@ const MembershipDetails = ({navigation}) => {
               styles.modalTextTitle,
               {
                 fontSize: 18,
-                fontWeight: 600,
+                // fontWeight: 600,
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 10,
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
   },
   modalTextTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: colors.black,
     fontFamily: fontFamily.semiBold,
     textAlign: 'center',

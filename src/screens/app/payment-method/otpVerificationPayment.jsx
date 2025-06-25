@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: 15,
     fontFamily: fontFamily.medium,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   btnContainer: {
     width: '90%',

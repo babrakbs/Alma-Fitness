@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#15161E',
     fontSize: 16,
-    fontWeight: '600',
+    // fontWeight: '600',
     fontFamily: 'Inter Tight',
   },
   description: {

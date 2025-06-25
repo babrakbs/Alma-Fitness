@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
       title: {
         color: '#15161E',
         fontSize: 18,
-        fontWeight: '700',
+        // fontWeight: '700',
         fontFamily: 'Inter Tight, sans-serif',
       },
       footer: {

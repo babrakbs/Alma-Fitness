@@ -73,7 +73,7 @@ const ModalComponent = React.forwardRef((props, ref) => {
               <Text
                 style={{
                   color: '#15161E',
-                  fontWeight: '600',
+                  // fontWeight: '600',
                   fontSize: 16,
                   marginTop: 20,
                 }}>
@@ -187,14 +187,14 @@ export default ModalComponent;
 
 const styles = StyleSheet.create({
   filterText: {
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#15161E',
     textAlign: 'center',
     marginTop: 5,
   },
   creditsText: {
     color: '#15161E',
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 16,
     // fontFamily: 'Inter Tight',
   },

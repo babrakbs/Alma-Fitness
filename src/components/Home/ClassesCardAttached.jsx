@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 19,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: '#15161E',
     fontFamily: fontFamily?.medium,
     marginBottom: 12,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 6,
     fontSize: 14,
-    fontWeight: '600',
+    // fontWeight: '600',
     color: colors.black,
   },
   arrowIcon: {

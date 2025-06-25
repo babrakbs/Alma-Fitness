@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   exploreText: {
     color: "#15161E",
-    fontWeight: "700",
+    // fontWeight: "700",
     fontSize: 18,
   },
   span: {

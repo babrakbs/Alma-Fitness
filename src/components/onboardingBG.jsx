@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     fontFamily: fontFamily.medium,
     fontSize: 38,
-    fontWeight: '600',
+    // fontWeight: '600',
     // paddingHorizontal: widthPercentageToDP(10),
     width: widthPercentageToDP(96),
     // alignSelf: 'center',
