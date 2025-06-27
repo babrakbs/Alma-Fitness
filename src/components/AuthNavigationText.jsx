@@ -2,12 +2,13 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import { colors, fontFamily } from '../constants';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const AuthNavigationText = ({
   primaryText = 'Don’t have an account?',
   navText = 'Register',
   navTo = 'Signup',
-  marginTop=180,
+  marginTop=heightPercentageToDP(25),
 }) => {
   const navigation = useNavigation();
   return (
@@ -25,10 +26,11 @@ export default AuthNavigationText;
 
 const styles = StyleSheet.create({
   textContainer: {
-    display: 'flex',
+    // display: 'flex',
+    flex:1,
     flexDirection: 'row',
     justifyContent: 'center',
     // marginTop: 150,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 });

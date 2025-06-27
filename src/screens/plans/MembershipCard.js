@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.3,
     shadowOffset: {
-      width: 0,
-      height: 3,
+      width: 3,
+      height: 5,
     },
-    shadowRadius: 5,
+    shadowRadius: 8,
     elevation: 20,
   },
   tag: {
@@ -108,7 +108,9 @@ const styles = StyleSheet.create({
     // marginTop: '3%',
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: Platform.OS === 'ios' ? 0.5 : 0.17,
+    borderWidth: Platform.OS === 'ios' ? 0.3 : 0.17,
+    marginBottom: heightPercentageToDP(1),
+    marginTop: heightPercentageToDP(2)
   },
   tagText: {
     fontSize: 14,
@@ -144,6 +146,7 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    gap: heightPercentageToDP(0.9)
   },
   benefit: {
     fontSize: 13,
@@ -224,7 +227,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     textAlign: 'left',
     color: colors.black,
-    marginLeft: 8,
+    marginLeft: 15,
   },
 });
 

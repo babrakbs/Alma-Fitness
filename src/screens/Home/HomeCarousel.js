@@ -29,7 +29,7 @@ const HomeCarousel = props => {
           failOffsetY: [-10, 10],
         }}
         modeConfig={{
-          parallaxScrollingScale: 0.98,
+          parallaxScrollingScale: 0.99,
           parallaxScrollingOffset: 21,
         }}
         onSnapToItem={index => console.log('current index:', index)}

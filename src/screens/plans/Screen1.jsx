@@ -211,7 +211,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
-          flexGrow: Platform.OS === "ios" ? 0.78 : 0.85,
+          flexGrow: Platform.OS === "ios" ? 0.73 : 0.85,
         }}
       >
         {/* <Text>{props.data}</Text> */}
@@ -312,7 +312,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
                 <Text
                   style={{
                     ...styles.planPara,
-                    marginLeft: widthPercentageToDP(2),
+                    marginLeft: widthPercentageToDP(4),
                   }}
                 >
                   {feature}
@@ -392,8 +392,8 @@ const styles = StyleSheet.create({
     // marginTop: '10%',
     marginVertical: heightPercentageToDP(2),
     height: 0.5,
-    backgroundColor: colors.lightGray,
-    borderWidth: Platform.OS === "ios" ? 0.5 : 0.2,
+    backgroundColor: '#15161E',
+    borderWidth: Platform.OS === "ios" ? 0.31 : 0.2,
   },
   planName: {
     fontSize: 22.28,
@@ -476,6 +476,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     // marginTop: '5%',
     paddingVertical: "1%",
+    marginLeft:widthPercentageToDP(5),
   },
   footer: {
     // position: 'absolute',

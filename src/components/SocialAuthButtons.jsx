@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginHorizontal: 10,
-    width: widthPercentageToDP(12),
-    height: widthPercentageToDP(12),
+    width: widthPercentageToDP(13),
+    height: widthPercentageToDP(13),
     borderColor: "#E1E4E8",
     borderWidth: 1,
     display: "flex",
@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 5,
     },
-    shadowOpacity: 0.36,
-    shadowRadius: 6.68,
+    shadowOpacity: 0.1,
+    shadowRadius: 2.68,
 
-    elevation: 11,
+    elevation: 5,
   },
 });

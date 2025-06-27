@@ -104,9 +104,7 @@ const DeleteAccount = ({navigation}) => {
         <Text style={styles.headText}>Deleting your account:</Text>
       </View>
       <Text style={styles.description}>
-        We’re sorry to see you go! Deleting your account is permanent and cannot
-        be undone. This will remove all your personal information, memberships,
-        and settings.
+       {` We’re sorry to see you go! Deleting your account is permanent and cannot be undone. This will remove all your personal information, memberships, and settings.\n`}
       </Text>
       <Text style={[styles.description, {marginTop: 10}]}>
         If you’re experiencing any issues or need assistance, please contact us
@@ -134,7 +132,7 @@ const DeleteAccount = ({navigation}) => {
         <Text
           style={{
             fontFamily: fontFamily.bold,
-            fontWeight: Platform.OS === 'ios' ? '700' : '100',
+            fontWeight: Platform.OS === 'ios' ? '600' : '100',
           }}>
           Delete Account
         </Text>{' '}
@@ -179,11 +177,11 @@ const styles = StyleSheet.create({
   },
   description: {
     color: colors.black,
-    fontSize: 14,
-    color: colors.black,
+    fontSize: 16,
     fontWeight: '400',
     fontFamily: fontFamily.regular,
     marginHorizontal: 20,
+    lineHeight:24
   },
   footer: {
     flex: 1,

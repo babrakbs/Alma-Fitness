@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 import Header from '../../../components/header';
 import ArrowIcon from '../../../assets/icons/ArrowIcon';
-import {useNavigation} from '@react-navigation/native';
-import {colors, fontFamily} from '../../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { colors, fontFamily } from '../../../constants';
 import ExternalLinkIcon from '../../../assets/icons/External_Link';
 import {
   heightPercentageToDP,
@@ -185,29 +185,25 @@ const VenueProfile = () => {
             borderBottomColor: '#EAEAEA',
             borderBottomWidth: 1,
           }}>
-          <View style={{width: '100%'}}>
+          <View style={{ width: '100%' }}>
             <View
               style={[
                 styles.locationContainer,
-                {justifyContent: 'space-between'},
+                { justifyContent: 'space-between' },
               ]}>
               {/* <MapPinIcon /> */}
               <Text
                 style={[
                   styles.locationText,
-                  {textDecorationLine: 'underline', marginLeft: 10},
+                  { textDecorationLine: 'underline', marginLeft: 10 },
                 ]}>
                 Ieros Kazika 6, 10331 Athens, Greece
               </Text>
             </View>
             <Image
               //   width={'100%'}
-              style={[
-                styles.image,
-                {width: '100%'},
-                // {marginTop: -15},
-                // {marginBottom: -17},
-              ]} // Adjust height to maintain aspect ratio
+              style={[styles.image, { height: heightPercentageToDP(30), width: '95%', alignSelf: 'center', marginTop: heightPercentageToDP(1) }]}
+
               resizeMode="contain"
               source={require('../../../assets/icons/Map.png')}
             />
@@ -284,6 +280,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 200,
   },
   scheduleContainer: {
     flexDirection: 'row',

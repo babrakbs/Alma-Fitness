@@ -43,7 +43,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import moment from 'moment';
 import DoubleThumbSlider from '../../components/DoubleThumbSlider';
 import {ActivityIndicator} from 'react-native';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import {heightPercentageToDP, widthPercentageToDP} from 'react-native-responsive-screen';
 
 const filters = [
   'Yoga',
@@ -256,9 +256,9 @@ const Calendar = () => {
                       </Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.todayButton}>
+                  <View  style={styles.todayButton}>
                     <Text style={styles.todayText}>{getDateLabel()}</Text>
-                  </TouchableOpacity>
+                  </View>
                 </View>
 
                 <View style={{width: '100%', margin: 'auto'}}>
@@ -268,9 +268,9 @@ const Calendar = () => {
                   />
                 </View>
 
-                <View style={styles.container2}>
+                {/* <View style={styles.container2}> */}
                   <DoubleThumbSlider onValueChange={handleTimeChange} />
-                </View>
+                {/* </View> */}
                 <View style={styles.filtersContainer}>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('Filter')}
@@ -288,7 +288,7 @@ const Calendar = () => {
                           {
                             marginRight: 8,
                             paddingHorizontal: 16,
-                            paddingVertical: 5,
+                            paddingVertical: 7,
                             borderRadius: 20,
                             borderWidth: 0.4,
                             borderColor: colors.darkWhite,
@@ -348,7 +348,7 @@ const Calendar = () => {
                         heading={item.class_title}
                         onPressTap={handleOnPress}
                         id={item.class_schedule_id}
-                        dateText={(() => {
+                        date={(() => {
                           const date = new Date(item.start_date);
                           const days = [
                             'Sun',
@@ -377,7 +377,7 @@ const Calendar = () => {
                             months[date.getMonth()]
                           }`;
                         })()}
-                        timeText={`${item.start_time?.slice(
+                        time={`${item.start_time?.slice(
                           0,
                           5,
                         )} - ${item.end_time?.slice(0, 5)}`}
@@ -391,6 +391,7 @@ const Calendar = () => {
                         textAlign: 'center',
                         color: '#888',
                         marginTop: 20,
+                        fontFamily:fontFamily.regular
                       }}>
                       No classes found.
                     </Text>
@@ -744,6 +745,7 @@ const styles = StyleSheet.create({
   },
 
   container2: {
+    alignSelf:'center',
     alignItems: 'center',
   },
   timeline: {

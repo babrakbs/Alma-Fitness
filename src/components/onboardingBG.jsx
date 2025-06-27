@@ -1,6 +1,6 @@
 /** @format */
 
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   ImageBackground,
   View,
@@ -12,17 +12,17 @@ import {
 } from 'react-native';
 import ViewPager from 'react-native-pager-view';
 import Button from './Button';
-import {OnBoardingData} from '../constants/staticData';
-import {colors, fontFamily} from '../constants';
+import { OnBoardingData } from '../constants/staticData';
+import { colors, fontFamily } from '../constants';
 import OnBoardingProgress from './onBoardingProgress';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-const OnBoardingBG = ({navigation}) => {
+const OnBoardingBG = ({ navigation }) => {
   const viewPagerRef = useRef(null);
   const [page, setPage] = useState(0);
 
@@ -54,7 +54,9 @@ const OnBoardingBG = ({navigation}) => {
         </ViewPager>
         <View style={styles.buttonContainer}>
           <OnBoardingProgress screen={page} />
-
+          <View style={{
+            marginBottom: heightPercentageToDP(2),
+          }} />
           <Button
             handleClick={() => {
               if (page < OnBoardingData.length - 1) {
@@ -78,7 +80,7 @@ const OnBoardingBG = ({navigation}) => {
 
 const styles = StyleSheet.create({
   viewPager: {
-    width: '100%',
+    width: '95%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -110,15 +112,15 @@ const styles = StyleSheet.create({
     color: colors.white,
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontFamily: fontFamily.medium,
+    fontFamily: fontFamily.semiBold,
     fontSize: 38,
     // fontWeight: '600',
     // paddingHorizontal: widthPercentageToDP(10),
-    width: widthPercentageToDP(96),
+    // width: widthPercentageToDP(96),
     // alignSelf: 'center',
     marginLeft: widthPercentageToDP(5),
     marginTop: 6,
-    marginBottom: 32,
+    marginBottom: heightPercentageToDP(8),
   },
   paginationContainer: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import CalendarIcon from '../assets/icons/CalendarIcon.svg';
-import {colors, fontFamily} from '../constants';
+import { colors, fontFamily } from '../constants';
 import RNPickerSelect from 'react-native-picker-select';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 // import DropdownIcon from '../assets/icons/DropDown_icon.svg';
 
 interface InputProps {
@@ -86,7 +87,7 @@ const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.container,
-          {backgroundColor: inputBG, marginBottom: error ? 0 : 10},
+          { backgroundColor: inputBG, marginBottom: error ? 0 : 10 },
         ]}>
         {showLeftIcon && LeftSVGIcon}
 
@@ -96,13 +97,13 @@ const Input: React.FC<InputProps> = ({
               onValueChange={value => setSelectedGender(value)}
               value={selectedGender}
               placeholder={{
-                label: 'Select Gender',
+                label: 'Gender',
                 value: null,
                 color: colors.darkWhite,
               }}
               items={[
-                {label: 'Male', value: 'Male'},
-                {label: 'Female', value: 'Female'},
+                { label: 'Male', value: 'Male' },
+                { label: 'Female', value: 'Female' },
               ]}
               useNativeAndroidPickerStyle={false} // Important for custom styles
               style={{
@@ -115,7 +116,7 @@ const Input: React.FC<InputProps> = ({
           </View>
         ) : placeholder === 'Date of Birth' ? (
           <TouchableOpacity
-            style={[styles.inputField, {height: 50, paddingTop: 12}]}
+            style={[styles.inputField, { alignItems:'flex-start',justifyContent:'center' }]}
             onPress={() => setDatePickerVisible(true)}>
             <Text style={dob ? styles.inputText : styles.placeholderText}>
               {dob || 'Date of Birth'}
@@ -128,7 +129,8 @@ const Input: React.FC<InputProps> = ({
             style={
               customStyles
                 ? customStyles
-                : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
+                : [styles.inputField]
+              // : [styles.inputField, {paddingTop: textalignvertical ? 20 : 10}]
             }
             secureTextEntry={secureTextEntry ? secureTextEntry : false}
             onChangeText={text => {
@@ -180,7 +182,7 @@ const Input: React.FC<InputProps> = ({
       {error ? (
         <Text
           allowFontScaling={false}
-          style={[styles.error, {color: errorColor || colors.error}]}>
+          style={[styles.error, { color: errorColor || colors.error }]}>
           {error}
         </Text>
       ) : null}
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.regular,
     fontSize: 16,
-    height: 45,
+    height: heightPercentageToDP(5.6),
   },
   inputText: {
     color: colors.black,

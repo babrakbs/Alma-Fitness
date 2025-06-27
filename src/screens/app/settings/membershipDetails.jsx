@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -15,14 +15,14 @@ import MembershipSpecificButton from '../../../components/membershipSpecificBtn'
 import Button from '../../../components/Button';
 import CustomBottomSheet from '../../../components/CustomBottomSheet';
 // Remove: import ReactNativeModal from 'react-native-modal';
-import {DangerwarningIcon, WhiteLogoIcon} from '../../../constants/svgs';
+import { DangerwarningIcon, WhiteLogoIcon } from '../../../constants/svgs';
 import RadioGroup from 'react-native-radio-buttons-group';
 import MembershipCard from '../../plans/MembershipCard';
-import {colors, fontFamily} from '../../../constants';
+import { colors, fontFamily } from '../../../constants';
 import axiosInstance from '../../../helper/axiosInstance';
-import {ActivityIndicator} from 'react-native';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-const MembershipDetails = ({navigation}) => {
+import { ActivityIndicator } from 'react-native';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
+const MembershipDetails = ({ navigation }) => {
   const [warningModal, setWarningModal] = useState(false);
   const [PausemembershipModal, setPausemembershipModal] = useState(false);
   const [pauseMembership, setPauseMembership] = useState(false);
@@ -32,20 +32,20 @@ const MembershipDetails = ({navigation}) => {
 
   // Options for the radio buttons
   const options = [
-    {id: '1_month', label: '1 Month'},
-    {id: '2_months', label: '2 Months'},
-    {id: '3_month', label: '3 Month'},
-    {id: '4_months', label: '4 Months'},
-    {id: '5_month', label: '5 Month'},
-    {id: '6_months', label: '6 Months'},
-    {id: 'until_manual', label: 'Until I turn it back on'},
+    { id: '1_month', label: '1 Month' },
+    { id: '2_months', label: '2 Months' },
+    { id: '3_month', label: '3 Month' },
+    { id: '4_months', label: '4 Months' },
+    { id: '5_month', label: '5 Month' },
+    { id: '6_months', label: '6 Months' },
+    { id: 'until_manual', label: 'Until I turn it back on' },
   ];
 
   const fetchUserPlan = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get('/api/getUserPlan');
-      const {plan} = response.data?.data;
+      const { plan } = response.data?.data;
       setUserPlan(plan);
 
       console.log(formatRenewalDate(userPlan[0]?.current_period_end));
@@ -66,7 +66,7 @@ const MembershipDetails = ({navigation}) => {
   const formatRenewalDate = isoString => {
     if (!isoString) return '';
     const date = new Date(isoString);
-    const options = {day: 'numeric', month: 'long', year: 'numeric'};
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
     return date.toLocaleDateString('en-GB', options);
   };
 
@@ -157,7 +157,7 @@ const MembershipDetails = ({navigation}) => {
   return (
     <>
       {loading ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator size="large" color={colors.black} />
         </View>
       ) : (
@@ -197,10 +197,12 @@ const MembershipDetails = ({navigation}) => {
               text="Pause Membership"
               theme="grayWhite"
               textBold={false}
+              elevation={false}
               handleClick={() => pauseMembershipSheetRef.current?.open()}
             />
             <Button
               marginTop={10}
+              elevation={false}
               text="Cancel Membership"
               theme="whiteBlack"
               borderLess={false}
@@ -213,7 +215,7 @@ const MembershipDetails = ({navigation}) => {
       {/* Warning Bottom Sheet */}
       <CustomBottomSheet
         ref={warningSheetRef}
-        snapPoints={Platform.OS === 'ios' ? ['58'] : ['60']}>
+        snapPoints={Platform.OS === 'ios' ? ['56'] : ['60']}>
         <View style={[styles.modalContent]}>
           <Text style={styles.modalTextTitle}>Cancel Membership</Text>
           <Text
@@ -225,10 +227,10 @@ const MembershipDetails = ({navigation}) => {
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 20,
+                  fontFamily:fontFamily.semiBold,
               },
             ]}>
-            Are you sure you want to cancel your monthly membership? You will
-            continue to have access until the end of your current billing cycle.
+           { `Are you sure you want to cancel your\nmonthly membership? You will continue\nto have access until the end of your current\nbilling cycle.`}
           </Text>
           <Text
             style={[
@@ -245,22 +247,22 @@ const MembershipDetails = ({navigation}) => {
           </Text>
           <Text
             style={{
-              fontSize: 14,
+             fontSize: 14,
               fontWeight: '400',
-              color: colors.darkWhite,
+              color: colors.gray,
               textAlign: 'left',
-              lineHeight: 24,
+              lineHeight: 20,
               fontFamily: fontFamily.regular,
+
               marginBottom: 5,
             }}>
-            Cancelling your membership deletes all user data meaning your
-            profile, bookings, history, favorites will be lost. If you want to
-            join again you will have to create a new account.
+           {` Cancelling your membership deletes all user data meaning\nyour profile, bookings, history, favorites will be lost. If you\nwant to join again you will have to create a new account.`}
           </Text>
           <View
             style={{
               justifyContent: 'space-around',
               width: '100%',
+              marginTop:heightPercentageToDP(3)
             }}>
             <Button
               handleClick={handlePauseFromWarning}
@@ -269,6 +271,7 @@ const MembershipDetails = ({navigation}) => {
               marginTop={15}
               borderLess={false}
               widthSize={'large'}
+               elevation={false}
             />
             <Button
               handleClick={handleCancelMembership}
@@ -276,8 +279,9 @@ const MembershipDetails = ({navigation}) => {
               textBold={true}
               marginTop={15}
               borderLess={false}
-              theme="whiteBlack"
+              theme="transparentBlack"
               widthSize={'large'}
+              elevation={false}
             />
           </View>
         </View>
@@ -287,93 +291,94 @@ const MembershipDetails = ({navigation}) => {
       <CustomBottomSheet
         ref={pauseMembershipSheetRef}
         snapPoints={Platform.OS === 'ios' ? ['85'] : ['90']}>
-        {/* <View style={[styles.modalContent]}> */}
-        <Text style={styles.modalTextTitle}>Pause Membership</Text>
-        <Text
-          style={[
-            styles.modalTextTitle,
-            {
-              fontSize: 18,
-              // fontWeight: 600,
+        <View style={[styles.modalContent]}>
+          <Text style={styles.modalTextTitle}>Pause Membership</Text>
+          <Text
+            style={[
+              styles.modalTextTitle,
+              {
+                fontSize: 18,
+                // fontWeight: 600,
+                textAlign: 'left',
+                marginBottom: 10,
+                marginTop: 20,
+              },
+            ]}>
+            {`Are you sure you want to pause your\nmonthly membership? You will continue to\nhave access until the end of your current\nbilling cycle.`}{' '}
+          </Text>
+          <Text
+            style={[
+              styles.modalTextTitle,
+              {
+                fontSize: 18,
+                // fontWeight: 600,
+                textAlign: 'left',
+                marginBottom: 10,
+                marginTop: 10,
+              },
+            ]}>
+            Pause Duration
+          </Text>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: '400',
+              color: colors.darkWhite,
               textAlign: 'left',
-              marginBottom: 10,
-              marginTop: 20,
-            },
-          ]}>
-          Are you sure you want to pause your monthly membership? You will
-          continue to have access until the end of your current billing cycle.{' '}
-        </Text>
-        <Text
-          style={[
-            styles.modalTextTitle,
-            {
-              fontSize: 18,
-              // fontWeight: 600,
-              textAlign: 'left',
-              marginBottom: 10,
-              marginTop: 10,
-            },
-          ]}>
-          Pause Duration
-        </Text>
-        <Text
-          style={{
-            fontSize: 14,
-            fontWeight: '400',
-            color: colors.darkWhite,
-            textAlign: 'left',
-            lineHeight: 24,
-            fontFamily: fontFamily.regular,
-            marginBottom: 5,
-          }}>
-          Choose the duration you want you membership to be paused for. You can
-          resume your membership at any time.
-        </Text>
-        <View style={{alignSelf: 'left'}}>
-          {options.map(option => (
-            <TouchableOpacity
-              key={option.id}
-              style={styles.optionContainer}
-              onPress={() => handleSelectOption(option.id)}>
-              <View style={styles.radioButtonOuter}>
-                {selectedOption === option.id && (
-                  <View style={styles.radioButtonInner} />
-                )}
-              </View>
-              <Text style={styles.optionLabel}>{option.label}</Text>
-            </TouchableOpacity>
-          ))}
+              lineHeight: 24,
+              fontFamily: fontFamily.regular,
+              marginBottom: 5,
+            }}>
+            {`Choose the duration you want you membership to be\npaused for. You can resume your membership at any time.`}
+          </Text>
+          <View style={{ alignSelf: 'left' }}>
+            {options.map(option => (
+              <TouchableOpacity
+                key={option.id}
+                style={styles.optionContainer}
+                onPress={() => handleSelectOption(option.id)}>
+                <View style={styles.radioButtonOuter}>
+                  {selectedOption === option.id && (
+                    <View style={styles.radioButtonInner} />
+                  )}
+                </View>
+                <Text style={styles.optionLabel}>{option.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View
+            style={{
+              justifyContent: 'space-around',
+              width: '100%',
+              marginTop: heightPercentageToDP(3)
+            }}>
+            <Button
+              handleClick={() => {
+                pauseMembershipSheetRef.current?.close();
+                pauseMembershipApi();
+                // setTimeout(() => {
+                //   pauseConfirmSheetRef.current?.open();
+                // }, 200);
+              }}
+              elevation={false}
+              text="Pause Membership"
+              textBold={true}
+              marginTop={15}
+              borderLess={false}
+              widthSize={'large'}
+            />
+            <Button
+              handleClick={() => pauseMembershipSheetRef.current?.close()}
+              text="Cancel"
+              textBold={true}
+              elevation={false}
+              marginTop={15}
+              borderLess={false}
+              theme="transparentBlack"
+              widthSize={'large'}
+            />
+          </View>
         </View>
-        <View
-          style={{
-            justifyContent: 'space-around',
-            width: '100%',
-          }}>
-          <Button
-            handleClick={() => {
-              pauseMembershipSheetRef.current?.close();
-              pauseMembershipApi();
-              // setTimeout(() => {
-              //   pauseConfirmSheetRef.current?.open();
-              // }, 200);
-            }}
-            text="Pause Membership"
-            textBold={true}
-            marginTop={15}
-            borderLess={false}
-            widthSize={'large'}
-          />
-          <Button
-            handleClick={() => pauseMembershipSheetRef.current?.close()}
-            text="Cancel"
-            textBold={true}
-            marginTop={15}
-            borderLess={false}
-            theme="whiteBlack"
-            widthSize={'large'}
-          />
-        </View>
-        {/* </View> */}
       </CustomBottomSheet>
 
       {/* Pause Confirmation Bottom Sheet */}
@@ -391,10 +396,10 @@ const MembershipDetails = ({navigation}) => {
                 textAlign: 'left',
                 marginBottom: 10,
                 marginTop: 20,
+                fontFamily:fontFamily.semiBold,
               },
             ]}>
-            Are you sure you want to cancel your monthly membership? You will
-            continue to have access until the end of your current billing cycle.
+           { `Are you sure you want to cancel your\nmonthly membership? You will continue\nto have access until the end of your current\nbilling cycle.`}
           </Text>
           <Text
             style={[
@@ -413,7 +418,7 @@ const MembershipDetails = ({navigation}) => {
             style={{
               fontSize: 14,
               fontWeight: '400',
-              color: colors.darkWhite,
+              color: colors.gray,
               textAlign: 'left',
               lineHeight: 24,
               fontFamily: fontFamily.regular,
@@ -427,6 +432,7 @@ const MembershipDetails = ({navigation}) => {
             style={{
               justifyContent: 'space-around',
               width: '100%',
+              marginTop:heightPercentageToDP(2),
             }}>
             <Button
               handleClick={() => pauseConfirmSheetRef.current?.close()}

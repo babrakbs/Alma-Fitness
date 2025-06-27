@@ -265,13 +265,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,
+    gap:widthPercentageToDP(2)
   },
   priceButton: {
     fontSize: 16,
     padding: 7,
-    borderWidth: 0.5,
+    borderWidth: 0.2,
     borderRadius: 10,
-    marginHorizontal: 10,
+    marginHorizontal: widthPercentageToDP(2),
     paddingHorizontal: 12,
     color: colors.lightGray,
   },

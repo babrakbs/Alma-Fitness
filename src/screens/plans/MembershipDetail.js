@@ -348,7 +348,7 @@ const MembershipDetail = ({ route }) => {
                 </Text>
               </Text>
             </View>
-            <View style={[styles.divider, { marginTop: "5%" }]} />
+            <View style={[styles.divider, { marginTop: "7%" }]} />
           </View>
           <View style={styles.terms}>
             <Text
@@ -432,7 +432,7 @@ const styles = StyleSheet.create({
     // marginTop: '3%',
     height: 0.5,
     backgroundColor: colors.lightGray,
-    borderWidth: 0.5,
+    borderWidth: 0.31,
   },
   tagText: {
     fontSize: 14,
@@ -505,6 +505,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.regular,
     paddingHorizontal: "3%",
+    
   },
   link: {
     fontFamily: fontFamily.regular,
