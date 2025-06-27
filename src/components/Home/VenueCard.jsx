@@ -29,7 +29,7 @@ const VenueCard = ({
   id = 0,
   initialIsFavourite = false, // Add a prop for initial favourite state
   onFavouriteChanged, // <-- ADD THIS LINE
-  right = 20
+  right = 25
 }) => {
   const {width} = useWindowDimensions();
   const {navigate} = useNavigation();
@@ -106,7 +106,7 @@ const VenueCard = ({
   };
 
   return (
-    <View style={{borderRadius: 12, paddingVertical: 5, paddingLeft:5,paddingRight:10}}>
+    <View style={{borderRadius: 0, paddingVertical: 5, paddingLeft:5,paddingRight:10}}>
       <Pressable
         onPress={() => {
           console.log('VenueCard pressed asd as', id);
@@ -114,7 +114,7 @@ const VenueCard = ({
         }}>
         <View style={styles.imageContainer}>
           <Image
-            style={{height: 196, width: width * 0.95, borderRadius: 20}}
+            style={{height: 196, width: width * 0.95, borderRadius: 16}}
             source={{uri: imageUrl}}
           />
           <Pressable onPress={handleFavouritePress} style={[styles.heartIcon,{right:right}]}>
@@ -139,7 +139,7 @@ export default VenueCard;
 
 const styles = StyleSheet.create({
   imageContainer: {
-    borderRadius: 13,
+    borderRadius: 0,
     // margin: 'auto',
     // backgroundColor: '#FFFFFF',
     // backgroundColor:'red',
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   heartIcon: {
     position: 'absolute',
-    top: 20,
+    top: 19,
     
   },
   pillContainer: {
@@ -175,7 +175,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 15,
+    paddingRight: 15,
+    paddingLeft:10,
     marginTop: 8,
     marginBottom: 10,
   },
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fontFamily.regular,
     color: colors.darkGray,
+    textDecorationLine: 'underline'
   },
   errorText: {
     // Style for the error message

@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Image, Text, Pressable} from 'react-native';
-import {ArrowRightIcon} from '../constants/svgs';
-import {useNavigation} from '@react-navigation/native';
-import {Switch} from 'react-native-switch';
-import {colors, fontFamily} from '../constants';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
+import { ArrowRightIcon } from '../constants/svgs';
+import { useNavigation } from '@react-navigation/native';
+import { Switch } from 'react-native-switch';
+import { colors, fontFamily } from '../constants';
 import ArrowIcon from '../assets/icons/ArrowIcon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SettingsButton = ({title, showRadioButton, navString}) => {
+const SettingsButton = ({ title, showRadioButton, navString }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const navigation = useNavigation();
   const handleNavigation = () => {
     if (title === 'Log Out') {
       AsyncStorage.clear();
       navigation.navigate('Login');
-    } else if (navString) {
+    }
+    else if (title === 'Edit Profile') {
+      navigation.navigate('EditProfile', {
+        comingFromSettings: true
+      });
+    }
+    else if (navString) {
       navigation.navigate(navString);
     } else {
       console.log('Navigation not added for this button');
@@ -27,7 +33,7 @@ const SettingsButton = ({title, showRadioButton, navString}) => {
   return (
     <Pressable
       onPress={handleNavigation}
-      style={[styles.container, {marginTop: 0}]}>
+      style={[styles.container, { marginTop: 0 }]}>
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>{title}</Text>
       </View>
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     // paddingHorizontal: 13,
     shadowColor: 'rgba(22, 25, 102, 0.05)',
-    shadowOffset: {width: 0, height: 0},
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 16,
     elevation: 5,
@@ -64,9 +70,9 @@ const styles = StyleSheet.create({
   titleText: {
     color: colors.black,
     fontFamily: fontFamily.medium,
-    fontSize: 17,
+    fontSize: 17.01,
     fontWeight: '500',
-    lineHeight: 28,
+    lineHeight: 25.5,
   },
   backIcon: {
     alignSelf: 'stretch',

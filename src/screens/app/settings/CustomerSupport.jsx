@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.semiBold,
     fontWeight: '500',
-    marginBottom: 20,
+    marginVertical: heightPercentageToDP(3),
   },
   faqItem: {
     marginBottom: 10,
@@ -118,12 +118,13 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 20,
     alignSelf: 'center',
     fontWeight: '500',
     fontSize: 14,
     color: colors.black,
     fontFamily: fontFamily.semiBold,
+    
   },
   link: {
     fontWeight: Platform.OS === 'ios' ? '700' : '100',

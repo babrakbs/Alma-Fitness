@@ -9,23 +9,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import SettingIcon from '../../assets/icons/SettingIcon';
 import AlmaXSIcon from '../../assets/icons/AlmaXSIcon';
 import TextLink from '../../components/Home/TextLink';
-import {useNavigation} from '@react-navigation/native';
-import {colors, fontFamily} from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { colors, fontFamily } from '../../constants';
 import HomeCarousel from './HomeCarousel';
 import Settings from '../app/settings/settings';
 import axiosInstance from '../../helper/axiosInstance';
-import {ActivityIndicator} from 'react-native';
-import {useSelector} from 'react-redux';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import { ActivityIndicator } from 'react-native';
+import { useSelector } from 'react-redux';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import Venues from '../../components/Home/Venues';
 import ClassesCard from '../../components/Home/ClassesCardAttached';
 
-const Bookings = ({bookings, loading, navigation}) => {
+const Bookings = ({ bookings, loading, navigation }) => {
   const filterBookings = () => {
     const now = new Date();
     const upcoming = [];
@@ -40,13 +40,13 @@ const Bookings = ({bookings, loading, navigation}) => {
       }
     });
 
-    return {upcoming, history};
+    return { upcoming, history };
   };
 
   const renderBookingSection = (sectionBookings, title) => {
     if (loading) {
       return (
-        <View style={{marginVertical: 20, alignItems: 'center'}}>
+        <View style={{ marginVertical: 20, alignItems: 'center' }}>
           <ActivityIndicator size="large" color={colors.black} />
         </View>
       );
@@ -54,14 +54,14 @@ const Bookings = ({bookings, loading, navigation}) => {
 
     if (!sectionBookings || sectionBookings.length === 0) {
       return (
-        <Text style={{textAlign: 'center', color: '#888', marginTop: 20}}>
+        <Text style={{ textAlign: 'center', color: '#888', marginTop: 20 }}>
           No {title.toLowerCase()} bookings found.
         </Text>
       );
     }
 
     return (
-      <View style={{marginBottom: 10, width: '95%', alignSelf: 'center'}}>
+      <View style={{ marginBottom: 10, width: '95%', alignSelf: 'center' }}>
         {sectionBookings.map((booking, index) => {
           const dateText = moment(booking?.start_date)
             .locale('en')
@@ -81,7 +81,7 @@ const Bookings = ({bookings, loading, navigation}) => {
               price={booking?.price === 0 ? 'Free' : `€${booking?.price}`}
               id={booking?.id}
               onPressTap={() =>
-                navigation.navigate('ClassDetails', {id: booking?.id})
+                navigation.navigate('ClassDetails', { id: booking?.id })
               }
             />
           );
@@ -90,12 +90,12 @@ const Bookings = ({bookings, loading, navigation}) => {
     );
   };
 
-  const {upcoming, history} = filterBookings();
+  const { upcoming, history } = filterBookings();
 
   return (
-    <View style={{marginVertical: 10, marginHorizontal: 10}}>
+    <View style={{ marginVertical: 10, marginHorizontal: 10 }}>
       {/* Upcoming Bookings Section */}
-      <View style={[styles.sectionContainer, {marginTop: 10}]}>
+      <View style={[styles.sectionContainer, { marginTop: 10 }]}>
         <Text style={styles.sectionTitle}>Upcoming</Text>
       </View>
       {renderBookingSection(history, 'Upcoming')}
@@ -109,10 +109,10 @@ const Bookings = ({bookings, loading, navigation}) => {
   );
 };
 
-const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
+const Favorites = ({ favourites, loading, navigation, refreshFavourites }) => {
   if (loading) {
     return (
-      <View style={{marginVertical: 20, alignItems: 'center'}}>
+      <View style={{ marginVertical: 20, alignItems: 'center' }}>
         <ActivityIndicator size="large" color={colors.black} />
       </View>
     );
@@ -120,7 +120,7 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
 
   const renderFavoritesContent = () => (
     <>
-      <View style={[styles.sectionContainer, {marginTop: 20, marginLeft: 24}]}>
+      <View style={[styles.sectionContainer, { marginTop: 20, marginLeft: 24 }]}>
         <Text style={styles.sectionTitle}>Venues</Text>
       </View>
       {/* <HomeCarousel
@@ -130,8 +130,8 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
       /> */}
       <Venues classVenues={favourites?.venues} />
 
-      <Text style={[styles.venueText, {marginLeft: 10}]}>Classes</Text>
-      <View style={{marginHorizontal: 10}}>
+      <Text style={[styles.venueText, { marginLeft: 10 }]}>Classes</Text>
+      <View style={{ marginHorizontal: 10 }}>
         {favourites?.classes.map((classItem, index) => {
           const dateText = moment(classItem?.start_date).format('ddd D MMM');
           const timeText = `${classItem?.start_time?.slice(
@@ -148,7 +148,7 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
               price={classItem?.price}
               id={classItem?.id}
               onPressTap={() =>
-                navigation.navigate('ClassDetails', {id: classItem?.id})
+                navigation.navigate('ClassDetails', { id: classItem?.id })
               }
             />
           );
@@ -167,7 +167,7 @@ const Favorites = ({favourites, loading, navigation, refreshFavourites}) => {
       }>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{paddingBottom: 20}}
+      // contentContainerStyle={{paddingBottom: 20}}
       >
         {renderFavoritesContent()}
       </ScrollView>
@@ -224,7 +224,7 @@ const Profile = () => {
 
   const navigation = useNavigation();
   return (
-    <ScrollView style={{...styles.container}}>
+    <ScrollView style={{ ...styles.container }}>
       <SafeAreaView />
 
       <View style={styles.container}>
@@ -235,7 +235,7 @@ const Profile = () => {
                 <Text
                   style={
                     selectedSpan == 'Settings'
-                      ? [styles.selectedText, {marginRight: 10}]
+                      ? [styles.selectedText, { marginRight: 10 }]
                       : styles.text
                   }>
                   Settings
@@ -246,7 +246,7 @@ const Profile = () => {
                 <Text
                   style={
                     selectedSpan == 'Profile'
-                      ? [styles.selectedText, {marginLeft: 10}]
+                      ? [styles.selectedText, { marginLeft: 10 }]
                       : styles.text
                   }>
                   Profile
@@ -266,8 +266,8 @@ const Profile = () => {
           <Image
             source={
               user?.profile_image
-                ? {uri: user.profile_image}
-                : {uri: 'https://randomuser.me/api/portraits/women/44.jpg'}
+                ? { uri: user.profile_image }
+                : { uri: 'https://randomuser.me/api/portraits/women/44.jpg' }
             }
             style={styles.profileImage}
           />
@@ -338,14 +338,14 @@ const Profile = () => {
                   navigation={navigation}
                 />
               ) : (
-                <Text style={{textAlign: 'center', marginTop: 20}}>
+                <Text style={{ textAlign: 'center', marginTop: 20 }}>
                   No bookings available.
                 </Text>
               )
             ) : (
               userFavourite &&
               (userFavourite.venues?.length > 0 ||
-              userFavourite.classes?.length > 0 ? (
+                userFavourite.classes?.length > 0 ? (
                 <Favorites
                   favourites={userFavourite}
                   loading={loadingBookings}
@@ -353,7 +353,7 @@ const Profile = () => {
                   refreshFavourites={refreshFavourites}
                 />
               ) : (
-                <Text style={{textAlign: 'center', marginTop: 20}}>
+                <Text style={{ textAlign: 'center', marginTop: 20 }}>
                   No favourites available.
                 </Text>
               ))
@@ -463,25 +463,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     fontFamily: fontFamily.regular,
-    color: colors.darkWhite,
+    color: colors.darkGray2,
   },
   id: {
     fontSize: 14,
     color: 'gray',
   },
   priceTag: {
-    width: '25%',
-    // height: '22%',
+    width: heightPercentageToDP(2.8),
+    height: heightPercentageToDP(2.8),
     marginTop: heightPercentageToDP(2),
-    // padding: 5,
+    borderColor:colors.darkWhite,
     borderRadius: 5,
-    flexDirection: 'row',
+    borderWidth: 0.2,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FAFAFA',
   },
   price: {
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'left',
     fontWeight: '400',
     fontFamily: fontFamily.regular,
@@ -535,8 +535,8 @@ const styles = StyleSheet.create({
 
   selectedText: {
     color: colors.black,
-    fontWeight: '500',
-    fontFamily: fontFamily.semiBold,
+    // fontWeight: '500',
+    fontFamily: fontFamily.medium,
     fontSize: 24,
   },
 

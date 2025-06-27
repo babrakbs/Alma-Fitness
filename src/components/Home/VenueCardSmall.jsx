@@ -55,7 +55,7 @@ const VenueCardSmall = ({
             justifyContent: "center",
             alignItems: "center",
             position: "absolute",
-            top: heightPercentageToDP(7),
+            top: heightPercentageToDP(6.5),
             // bottom: 80,
             // left: 35,
           }}

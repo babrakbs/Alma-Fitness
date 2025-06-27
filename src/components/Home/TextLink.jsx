@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     fontFamily: fontFamily.regular,
-
+    marginRight:widthPercentageToDP(2),
     textDecorationLine: "underline",
   },
 });

@@ -16,10 +16,12 @@ export const colors = {
   paleWhite: "#B6B6B6",
   black: "#15161E",
   lightWhite: "#F0F0F0",
-  lightGray: "##DBDBDB",
+  lightGray: "#DBDBDB",
   red: "#FF0000",
   blue: "#1976D2",
   purple: "#0808AC",
   error: "#EB6355",
   green: "#BFFFC0",
+  gray:'#7C7C7C',
+  darkGray2:'#8A8A8A'
 };

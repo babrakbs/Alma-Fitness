@@ -36,14 +36,14 @@ const ClassesCard = ({
         if (onPressCard) {
           onPressCard();
         } else {
-          console.log('id', id);
+          // console.log('id', id);
           navigation.navigate('ClassDetails', {id: id});
         }
       }}
       style={styles.cardContainer}>
       <View style={styles.topRow}>
         <Text style={styles.dateText}>
-          {date} <Text style={styles.timeText}>{time}</Text>
+          {date} <Text style={styles.timeText}>  {time}</Text>
         </Text>
 
         <ArrowIcon style={styles.arrowIcon} />
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
-    // shadowRadius: 32,
+    shadowRadius: 2,
     elevation: 1.5,
     marginBottom: 12, // Increased margin for better separation
   },
@@ -90,10 +90,12 @@ const styles = StyleSheet.create({
     color: '#3D3D3D',
     fontSize: 14,
     fontWeight: '500',
+        fontFamily:fontFamily.regular,
   },
   timeText: {
     color: '#3D3D3D',
     fontSize: 14,
+    fontFamily:fontFamily.regular,
     fontWeight: '500',
     marginLeft: 10,
   },
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   },
   locationText: {
     color: '#818C81',
-    fontSize: 14,
+    fontSize: 14.26,
     marginLeft: 6,
     fontFamily: fontFamily.regular,
     textDecorationLine: 'underline',

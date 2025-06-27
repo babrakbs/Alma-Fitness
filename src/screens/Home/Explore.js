@@ -142,7 +142,7 @@ const Explore = () => {
         </View>
       </View>
       <View style={{ marginBottom: 25 }}>
-        <View style={{ margin: "auto", marginVertical: 1 }}></View>
+        <View style={{  marginVertical: 1 }}></View>
         {/* ActivityIndicator below the tabs */}
         {loading && (
           <ActivityIndicator

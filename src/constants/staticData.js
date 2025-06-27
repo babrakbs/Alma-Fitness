@@ -1,20 +1,20 @@
 export const OnBoardingData = [
   {
     headingText: 'Welcome',
-    bodyText: 'discover and book workouts anywhere, anytime.',
+    bodyText: 'discover and book\nworkouts anywhere,\nanytime.',
     imagePath: require('../assets/images/OnB1.png'),
     buttonTitle: 'Next',
   },
   {
     headingText: 'Explore',
-    bodyText: 'experience ultimate flexibility and variety, all in one app.',
+    bodyText: 'experience ultimate\nflexibility and variety,\nall in one app.',
     imagePath: require('../assets/images/OnB2.png'),
     buttonTitle: 'Next',
   },
   {
     headingText: 'Get Started',
     bodyText:
-      'join the collective and pay as you go for the workouts you want.',
+      'join the collective and\npay as you go for the\nworkouts you want.',
     imagePath: require('../assets/images/OnB3.png'),
     buttonTitle: 'Next',
   },

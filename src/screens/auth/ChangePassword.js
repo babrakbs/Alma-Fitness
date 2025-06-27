@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { colors, fontFamily } from '../../constants';
 import axiosInstance from '../../helper/axiosInstance';
 import Header from '../../components/header';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const ChangePassword = () => {
   const navigation = useNavigation();
@@ -95,7 +96,7 @@ const ChangePassword = () => {
             width: '70%',
             alignSelf: 'center',
           }}>
-          Enter your current password and create a new one below.
+          {`Enter your current password and\ncreate a new one below.`}
         </Text>
         <View style={{ marginTop: 20 }}>
           <Input
@@ -171,7 +172,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     width: '90%',
     marginHorizontal: '5%',
-    marginBottom: 20,
+    marginBottom: heightPercentageToDP(4),
   },
   errorText: {
     color: 'red',

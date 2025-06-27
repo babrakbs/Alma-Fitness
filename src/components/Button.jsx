@@ -100,7 +100,7 @@ const Button = ({
         styles?.widthSize[widthSize],
         !borderLess && [
           styles?.border,
-          {borderColor: theme === 'gray' ? colors.darkWhite : colors.black},
+          {borderColor: theme === 'gray' ? colors.darkWhite : colors.darkWhite},
         ],
         disabled && styles.disabled,
         {marginTop: marginTop},
@@ -128,7 +128,7 @@ export default Button;
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    height: 45,
+    height: heightPercentageToDP(5.02),
     width: '90%',
     padding: 0,
   },
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
   whiteBlack: {
     button: {
       backgroundColor: colors.white,
-      borderColor: colors.black,
-      borderWidth: 1,
+      // borderColor: colors.black,
+      // borderWidth: 1,
     },
     text: {
       fontFamily: fontFamily.medium,
@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
       width: '65%',
     },
     xmedium: {
-      width: '50%',
+      width: '45%',
     },
     small: {
       width: '41%',

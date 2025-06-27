@@ -1,11 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import VenueCard from './VenueCard';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 
 const Venues = ({classVenues}) => {
   return (
     <View style={styles.contianer}>
-      <View style={{marginVertical: 20}}>
+      <View style={{marginVertical: heightPercentageToDP(3)}}>
         {Array.isArray(classVenues) && classVenues.length > 0 ? (
           classVenues.map((venue, idx) => (
             <VenueCard
@@ -26,7 +27,7 @@ const Venues = ({classVenues}) => {
               workoutType={venue.workout_type}
               price={venue.price}
               id={venue.class_id}
-              right={10}
+              right={20}
               // Add any other props you need
             />
           ))
@@ -42,8 +43,11 @@ export default Venues;
 
 const styles = StyleSheet.create({
   contianer: {
-    width: '95%',
-    margin: 'auto',
+    width: '100%',
+    alignItems:'center',
+    alignSelf:'center',
+    justifyContent:'center',
+    marginLeft: '1.2%',
   },
   availableText: {
     color: '#46515A',

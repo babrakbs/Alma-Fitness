@@ -24,8 +24,9 @@ const QRCheckInScreen = ({navigation}) => {
     return (
       <BlueBgComponent
         heading="You're in!"
-        description="Full Body & Bands                      AREA Athens"
+        description={`Full Body & Bands\nAREA Athens`}
         isIcon={false}
+        bottomButton={true}
         showProfile={true}
         btnText="Continue"
         profileName={'Mark Ibrahim'}

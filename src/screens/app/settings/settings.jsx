@@ -18,7 +18,8 @@ import {heightPercentageToDP} from 'react-native-responsive-screen';
 const Settings = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={[styles.container]}>
+    <>
+    {/* // <SafeAreaView style={[styles.container]}> */}
       {/* <View style={styles.headerCont}> */}
       {/* <Header label={'Settings          '} showArrow /> */}
       {/* </View> */}
@@ -43,18 +44,21 @@ const Settings = () => {
       <View style={styles.buttonCont}>
         {/* <Button handleClick={() => navigation.navigate('Login')} text='Logout' theme='blackWhite' /> */}
       </View>
-    </SafeAreaView>
+    {/* // </SafeAreaView> */}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: heightPercentageToDP(2),
+    paddingTop: heightPercentageToDP(5),
     // backgroundColor:colors.white
   },
   scrollViewContent: {
-    paddingBottom: 40,
+    // paddingBottom: 40,
+    marginTop:heightPercentageToDP(4),
+    // backgroundColor:'red'
   },
   sectionHeader: {
     fontSize: 18,

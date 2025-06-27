@@ -212,7 +212,7 @@ const Signup = ({ navigation }) => {
         primaryText="Already have an account?"
         navText="Log In"
         navTo="Login"
-        marginTop={150}
+        // marginTop={150}
       />
     </ScrollView>
   );
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
   },
   fieldsContainer: {
     marginTop: 35,
+    gap:heightPercentageToDP(0.5),
   },
   remember: {
     color: "#46515A",

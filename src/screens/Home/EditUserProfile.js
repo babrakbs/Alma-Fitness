@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {StatusBar, StyleSheet, View, ScrollView, Text, SafeAreaView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, StyleSheet, View, ScrollView, Text, SafeAreaView } from 'react-native';
 import Header from '../../components/header';
 import UploadPhoto from '../../components/uploadPhoto';
 import Input from '../../components/input';
 import Button from '../../components/Button';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import axiosInstance from '../../helper/axiosInstance';
 
-const EditProfile = ({navigation}) => {
+const EditProfile = ({ navigation, route }) => {
   const user = useSelector(state => state.reducer?.user);
-  console.log(user);
+  const { comingFromSettings } = route?.params ? route?.params : {}
+  console.log(user,comingFromSettings);
 
   // Local state for each field
   const [name, setName] = useState(user?.name);
@@ -112,12 +113,12 @@ const EditProfile = ({navigation}) => {
 
   return (
     <>
-          <SafeAreaView/>
-    
+      <SafeAreaView />
+
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{...styles.container}}>
-        <Header showArrow={true} label={'Edit Profile'} />
+        style={{ ...styles.container }}>
+        <Header showArrow={true} label={'Edit Profile      '} />
         <UploadPhoto photo={photo} setPhoto={setPhoto} />
         <View style={styles.inputsView}>
           <View style={styles.inputContainer}>
@@ -158,7 +159,7 @@ const EditProfile = ({navigation}) => {
         </View>
       </ScrollView>
       <View style={styles.buttonView}>
-        <Button handleClick={handleNavigation} text="Save & Continue" />
+        <Button handleClick={handleNavigation} text={comingFromSettings ? "Update" : "Continue"} />
       </View>
     </>
   );

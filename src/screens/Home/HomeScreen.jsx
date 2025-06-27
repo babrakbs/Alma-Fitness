@@ -21,7 +21,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import AlmaScans from "../../assets/icons/AlmaScans";
 import { HeartIconWhite, HeartIconWhites } from "../../constants/svgs";
-import { colors } from "../../constants";
+import { colors, fontFamily } from "../../constants";
 import WelcomeImage from "./WelcomeImage";
 import HomeCarouselHorizontal from "./FitnessCategories";
 import FitnessCategories from "./FitnessCategories";
@@ -130,6 +130,7 @@ const HomeScreen = () => {
         <ScrollView
           style={{
             backgroundColor: "white",
+            width: '99%',alignSelf: 'center'
             // marginBottom: 50,
             // flex: 1,
           }}
@@ -215,7 +216,7 @@ const HomeScreen = () => {
               ))
             ) : (
               <Text
-                style={{ textAlign: "center", color: "gray", marginTop: 20 }}
+                style={{ textAlign: "center", color: colors.darkWhite, marginTop: 20 , fontFamily:fontFamily.regular}}
               >
                 No schedule available
               </Text>

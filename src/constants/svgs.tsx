@@ -94,7 +94,7 @@ export const GoogleIcon = ({style}: Icons) => {
   return <Google height={32} width={32} />;
 };
 export const FacebookIcon = ({style}: Icons) => {
-  return <Facebook height={32} width={32} />;
+  return <Facebook height={34} width={34} />;
 };
 export const AppleIcon = ({style}: Icons) => {
   return <Apple height={32} width={32} style={style} />;

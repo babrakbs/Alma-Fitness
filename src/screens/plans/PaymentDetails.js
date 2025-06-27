@@ -1,5 +1,5 @@
 // screens/Home/QRScannerScreen.js
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -19,13 +19,13 @@ import {
 import MasterCard from '../../assets/icons/masterCard';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
 import Button from '../../components/Button';
-import {colors, fontFamily} from '../../constants';
+import { colors, fontFamily } from '../../constants';
 import BlueBgComponent from '../../components/BlueBgComponent';
 
 // import QRCodeScanner from 'react-native-qrcode-scanner';
 // import {RNCamera} from 'react-native-camera';
 
-const PaymentDetails = ({navigation}) => {
+const PaymentDetails = ({ navigation }) => {
   const [selectedCard, setSelectedCard] = useState(0); // 0 for first, 1 for second
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -44,9 +44,10 @@ const PaymentDetails = ({navigation}) => {
         onPressBtn={() =>
           navigation.reset({
             index: 0,
-            routes: [{name: 'TabNav'}],
+            routes: [{ name: 'TabNav' }],
           })
         }
+        bottomButton={true}
         theme="blackWhite"
       />
     );
@@ -54,7 +55,7 @@ const PaymentDetails = ({navigation}) => {
 
   return (
     // <>
-    <ScrollView contentContainerStyle={styles.container} style={{flex: 1}}>
+    <ScrollView contentContainerStyle={styles.container} style={{ flex: 1 }}>
       <SafeAreaView />
       <View style={styles.headerContainer}>
         <Header
@@ -84,7 +85,7 @@ const PaymentDetails = ({navigation}) => {
             {/* Radio Button */}
             <Pressable
               onPress={() => setSelectedCard(0)}
-              style={{marginRight: 12}}>
+              style={{ marginRight: 12 }}>
               <View style={styles.radioButton}>
                 {selectedCard === 0 && (
                   <View style={styles.selectedRadioButton} />
@@ -113,7 +114,7 @@ const PaymentDetails = ({navigation}) => {
             {/* Radio Button */}
             <Pressable
               onPress={() => setSelectedCard(1)}
-              style={{marginRight: 12}}>
+              style={{ marginRight: 12 }}>
               <View style={styles.radioButton}>
                 {selectedCard === 1 && (
                   <View style={styles.selectedRadioButton} />
@@ -135,7 +136,7 @@ const PaymentDetails = ({navigation}) => {
           flex: 1,
           justifyContent: 'flex-end',
           alignItems: 'center',
-          marginBottom: heightPercentageToDP(2),
+          marginBottom: heightPercentageToDP(4),
           width: '90%',
           alignSelf: 'center',
         }}>
