@@ -94,9 +94,10 @@ const VenueSchedule = () => {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <ImageBackground
-        source={{
-          uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
-        }}
+        // source={{
+        //   uri: 'https://images.pexels.com/photos/317155/pexels-photo-317155.jpeg?cs=srgb&dl=pexels-chevanon-317155.jpg&fm=jpg',
+        // }}
+        source={require('../../../assets/images/OnB1.png')}
         style={styles.backgroundImage}
         resizeMode="cover">
         {/* <SafeAreaView /> */}
@@ -104,7 +105,7 @@ const VenueSchedule = () => {
         <View
           style={{
             paddingHorizontal: heightPercentageToDP(2),
-            paddingTop: heightPercentageToDP(2),
+            paddingTop: heightPercentageToDP(5),
           }}>
           <Header
             label={'Venue Schedule'}
