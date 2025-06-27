@@ -75,8 +75,8 @@ const Bookings = ({ bookings, loading, navigation }) => {
             <ClassesCard
               key={booking?.id || index}
               heading={booking?.class_name}
-              dateText={dateText}
-              timeText={timeText}
+              date={dateText}
+              time={timeText}
               location={booking?.venue_name}
               price={booking?.price === 0 ? 'Free' : `€${booking?.price}`}
               id={booking?.id}
@@ -142,8 +142,8 @@ const Favorites = ({ favourites, loading, navigation, refreshFavourites }) => {
             <ClassesCard
               key={classItem?.id || index}
               heading={classItem?.class_name}
-              dateText={dateText}
-              timeText={timeText}
+              date={dateText}
+              time={timeText}
               location={classItem?.venue_name}
               price={classItem?.price}
               id={classItem?.id}

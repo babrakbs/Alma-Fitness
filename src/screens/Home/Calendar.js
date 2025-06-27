@@ -348,7 +348,7 @@ const Calendar = () => {
                         heading={item.class_title}
                         onPressTap={handleOnPress}
                         id={item.class_schedule_id}
-                        dateText={(() => {
+                        date={(() => {
                           const date = new Date(item.start_date);
                           const days = [
                             'Sun',
@@ -377,7 +377,7 @@ const Calendar = () => {
                             months[date.getMonth()]
                           }`;
                         })()}
-                        timeText={`${item.start_time?.slice(
+                        time={`${item.start_time?.slice(
                           0,
                           5,
                         )} - ${item.end_time?.slice(0, 5)}`}
