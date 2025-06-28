@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable, Linking } from 'react-native';
 import { ArrowRightIcon } from '../constants/svgs';
 import { useNavigation } from '@react-navigation/native';
 import { Switch } from 'react-native-switch';
@@ -21,7 +21,15 @@ const SettingsButton = ({ title, showRadioButton, navString }) => {
       });
     }
     else if (navString) {
-      navigation.navigate(navString);
+      if (navString === 'PrivacyPolicy') {
+        Linking.openURL('https://almaxcollective.com/privacypolicy/')
+      } else if (navString === 'TermsCondition') {
+        Linking.openURL('https://almaxcollective.com/terms/')
+      } else if (navString === 'CustomerSupport') {
+        Linking.openURL('https://almaxcollective.com/general/')
+      } else {
+        navigation.navigate(navString);
+      }
     } else {
       console.log('Navigation not added for this button');
     }
