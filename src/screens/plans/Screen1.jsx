@@ -208,6 +208,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
         Activate your monthly membership and save on workouts.
       </Text>
       <ScrollView
+        scrollEnabled={false}
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
@@ -476,7 +477,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     // marginTop: '5%',
     paddingVertical: "1%",
-    marginLeft:widthPercentageToDP(5),
+    marginLeft: widthPercentageToDP(5),
   },
   footer: {
     // position: 'absolute',
