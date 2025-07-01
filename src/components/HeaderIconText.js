@@ -5,9 +5,9 @@ import {colors, fontFamily} from '../constants';
 import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 const HeaderIconText = ({
-  size = 60,
+  size = 120,
   text = 'Welcome to Alma',
-  headingSize = 24,
+  headingSize = 26,
   headingColor = '#15161E',
   headingMTop = 44,
   iconMTop = 52,
@@ -22,6 +22,7 @@ const HeaderIconText = ({
           fontSize: headingSize,
           color: headingColor,
           marginTop: headingMTop,
+          lineHeight:26
         }}>
         {text}
       </Text>

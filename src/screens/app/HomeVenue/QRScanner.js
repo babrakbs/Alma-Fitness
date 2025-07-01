@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    fontWeight: '500',
+     
     color: 'black',
   },
   cardDots: {

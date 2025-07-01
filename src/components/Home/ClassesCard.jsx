@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 18.49,
-    fontWeight: '500',
+     
     color: colors.black,
     fontFamily: fontFamily.bold,
     marginVertical: 5,

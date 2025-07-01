@@ -91,13 +91,13 @@ export const HeartIconWhites = ({style, width, height}: Icons) => (
 );
 
 export const GoogleIcon = ({style}: Icons) => {
-  return <Google height={32} width={32} />;
+  return <Google height={50} width={50} />;
 };
 export const FacebookIcon = ({style}: Icons) => {
-  return <Facebook height={34} width={34} />;
+  return <Facebook height={54} width={54} />;
 };
 export const AppleIcon = ({style}: Icons) => {
-  return <Apple height={32} width={32} style={style} />;
+  return <Apple height={50} width={50} style={style} />;
 };
 export const AppleIconWhite = ({style,height,width}: Icons) => {
   return <AppleWhite height={height} width={width} style={style} />;

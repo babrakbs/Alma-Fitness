@@ -1,6 +1,6 @@
 /** @format */
 
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import MapPinIcon from '../../assets/icons/NewMapIcon.svg';
 import ArrowIcon from '../../assets/icons/ArrowIcon';
@@ -46,7 +46,8 @@ const ClassesCard = ({
           {date} <Text style={styles.timeText}>  {time}</Text>
         </Text>
 
-        <ArrowIcon style={styles.arrowIcon} />
+        {/* <ArrowIcon style={styles.arrowIcon} /> */}
+        <Image source={require('../../assets/images/arrowRight.png')}/>
       </View>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.bottomRow}>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 1.5,
     marginBottom: 12, // Increased margin for better separation
@@ -89,14 +90,14 @@ const styles = StyleSheet.create({
   dateText: {
     color: '#3D3D3D',
     fontSize: 14,
-    fontWeight: '500',
+     
         fontFamily:fontFamily.regular,
   },
   timeText: {
     color: '#3D3D3D',
     fontSize: 14,
     fontFamily:fontFamily.regular,
-    fontWeight: '500',
+     
     marginLeft: 10,
   },
   title: {
@@ -116,19 +117,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   locationText: {
-    color: '#818C81',
+    color: '#878787',
     fontSize: 14.26,
     marginLeft: 6,
     fontFamily: fontFamily.regular,
     textDecorationLine: 'underline',
   },
   price: {
-    borderColor: colors.darkWhite,
-    borderWidth: 0.7,
-    paddingVertical: 4,
-    paddingHorizontal: 5,
+    borderColor: '#4E4E4E',
+    borderWidth: 0.2,
+    paddingVertical: 6,
+    paddingHorizontal: 6,
     borderRadius: 6,
-    fontSize: 14,
+    fontSize: 12,
+    fontFamily:fontFamily.regular,
     // fontWeight: '600',
     color: colors.black,
   },

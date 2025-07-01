@@ -27,6 +27,7 @@ import HomeCarouselHorizontal from "./FitnessCategories";
 import FitnessCategories from "./FitnessCategories";
 import axiosInstance from "../../helper/axiosInstance";
 import { useSelector } from "react-redux";
+import { heightPercentageToDP } from "react-native-responsive-screen";
 
 const workouts = [
   {
@@ -147,7 +148,7 @@ const HomeScreen = () => {
             {/* <HeartIconWhite width={24} height={24} /> */}
           {/* </TouchableOpacity>  */}
           {/* </View> */}
-          <View style={{ width: "95%", margin: "auto" }}>
+          <View style={{ width: "95%", margin: "auto", marginTop:heightPercentageToDP(1) }}>
             <TextLink
               firstText={user?.name ? `Hi, ${user?.name}` : "Hi, Mark"}
               navTo="Expore"

@@ -1,4 +1,3 @@
-/** @format */
 
 export const fontFamily = {
   light: "InterTight-Light",

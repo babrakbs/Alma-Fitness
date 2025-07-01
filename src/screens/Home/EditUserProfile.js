@@ -1,22 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet, View, ScrollView, Text, SafeAreaView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StatusBar,
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import Header from '../../components/header';
 import UploadPhoto from '../../components/uploadPhoto';
 import Input from '../../components/input';
 import Button from '../../components/Button';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import axiosInstance from '../../helper/axiosInstance';
+import {Dropdown} from 'react-native-element-dropdown';
+import {colors, fontFamily} from '../../constants';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
-const EditProfile = ({ navigation, route }) => {
+// Gender options for dropdown
+const genderOptions = [
+  {label: 'Male', value: 'Male'},
+  {label: 'Female', value: 'Female'},
+  {label: 'Other', value: 'Other'},
+];
+
+const EditProfile = ({navigation, route}) => {
   const user = useSelector(state => state.reducer?.user);
-  const { comingFromSettings } = route?.params ? route?.params : {}
-  console.log(user,comingFromSettings);
+  const {comingFromSettings} = route?.params ? route?.params : {};
+  console.log(user, comingFromSettings);
 
   // Local state for each field
   const [name, setName] = useState(user?.name);
   const [gender, setGender] = useState('');
   const [photo, setPhoto] = useState('');
   const [dob, setDob] = useState('');
+  const [isFocus, setIsFocus] = useState(false);
 
   // Error states for each field
   const [errors, setErrors] = useState({
@@ -117,7 +139,7 @@ const EditProfile = ({ navigation, route }) => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ ...styles.container }}>
+        style={{...styles.container}}>
         <Header showArrow={true} label={'Edit Profile      '} />
         <UploadPhoto photo={photo} setPhoto={setPhoto} />
         <View style={styles.inputsView}>
@@ -134,11 +156,36 @@ const EditProfile = ({ navigation, route }) => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Input
-              placeholder="Gender"
+            <Dropdown
+              style={[
+                styles.dropdown,
+                isFocus && {borderColor: colors.lightGray},
+              ]}
+              placeholderStyle={[styles?.label, {color: colors.darkWhite}]}
+              selectedTextStyle={styles.selectedTextStyle}
+              dropdownPosition="auto"
+              containerStyle={styles.dropdownContainer}
+              itemContainerStyle={styles.itemContainerStyle}
+              activeColor={'#eee'}
+              itemTextStyle={styles.itemTextStyle}
+              data={genderOptions}
+              labelField="label"
+              valueField="value"
+              placeholder={'Gender'}
               value={gender}
-              onChangeText={val => onChange(val, 'Gender')}
-              style={errors.gender ? styles.inputError : null}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={item => {
+                setGender(item.value);
+                setIsFocus(false);
+              }}
+              renderRightIcon={() => (
+                <Image
+                  resizeMode="center"
+                  style={styles.rightIcon}
+                  source={require('../../assets/icons/arrow_down.png')}
+                />
+              )}
             />
             {errors.gender ? (
               <Text style={styles.errorText}>{errors.gender}</Text>
@@ -159,7 +206,10 @@ const EditProfile = ({ navigation, route }) => {
         </View>
       </ScrollView>
       <View style={styles.buttonView}>
-        <Button handleClick={handleNavigation} text={comingFromSettings ? "Update" : "Continue"} />
+        <Button
+          handleClick={handleNavigation}
+          text={comingFromSettings ? 'Update' : 'Continue'}
+        />
       </View>
     </>
   );
@@ -194,6 +244,82 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginLeft: 12,
+  },
+  dropdown: {
+    flexDirection: 'row',
+    width: widthPercentageToDP(90),
+    borderRadius: 32,
+    alignItems: 'center',
+    alignSelf: 'center',
+    height: heightPercentageToDP(5.5),
+    justifyContent: 'space-evenly',
+    marginBottom: heightPercentageToDP(1),
+    backgroundColor: '#fff',
+  },
+  label: {
+    color: colors.black,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    paddingHorizontal: widthPercentageToDP(4),
+    fontWeight: '400',
+    fontSize: 16,
+    // paddingVertical: heightPercentageToDP(0.3),
+    fontFamily: fontFamily.regular,
+  },
+  selectedTextStyle: {
+    color: colors.black,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    paddingHorizontal: widthPercentageToDP(4),
+    // paddingVertical: heightPercentageToDP(0.3),
+    fontSize: 16,
+    fontFamily: fontFamily.regular,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 14,
+    borderRadius: 8,
+  },
+  dropdownContainer: {
+    marginTop: heightPercentageToDP(-3.7),
+    backgroundColor: 'white',
+    borderBottomEndRadius: widthPercentageToDP(2),
+    borderBottomStartRadius: widthPercentageToDP(2),
+    // borderWidth: 0.4,
+
+    borderTopWidth: 0,
+    borderColor: colors.lightGray,
+    // elevation: 5,
+    // paddingVertical: 10,
+  },
+  selectedItemContainerStyle: {
+    backgroundColor: colors.black,
+    // borderRadius: 8,
+    // padding: 10,
+  },
+  selectedItemTextStyle: {
+    color: colors.black,
+    fontSize: 16,
+    fontWeight: '400',
+  },
+  itemContainerStyle: {
+    backgroundColor: 'transparent',
+    // padding: 10,
+  },
+  itemTextStyle: {
+    color: colors.black,
+    fontSize: 16,
+    fontFamily: fontFamily.regular,
+    // fontWeight: '400',
+  },
+  rightIcon: {
+    width: widthPercentageToDP(3),
+    height: heightPercentageToDP(1),
+    marginRight: widthPercentageToDP(5),
   },
 });
 

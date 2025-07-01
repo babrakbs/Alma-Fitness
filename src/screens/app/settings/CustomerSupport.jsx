@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: colors.black,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+     
     marginVertical: heightPercentageToDP(3),
   },
   faqItem: {
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 16,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.semiBold,
     color: colors.black,
     flex: 1,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#fff',
     fontSize: 14,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.medium,
     color: '#46515A',
     lineHeight: heightPercentageToDP(3),
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     alignSelf: 'center',
-    fontWeight: '500',
+     
     fontSize: 14,
     color: colors.black,
     fontFamily: fontFamily.semiBold,

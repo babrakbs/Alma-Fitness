@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: fontFamily.regular,
     marginTop: 20,
+    marginBottom:heightPercentageToDP(1),
     paddingHorizontal: 20,
   },
   bodyText: {
@@ -160,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     fontFamily: fontFamily.regular,
+    marginTop:heightPercentageToDP(1)
   },
 });
 

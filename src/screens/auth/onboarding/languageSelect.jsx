@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   almaText: {
     color: '#EFEFEB',
     fontSize: 45,
-    fontWeight: '500',
+     
   },
   langPref: {
     color: '#EFEFEB',

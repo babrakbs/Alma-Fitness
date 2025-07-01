@@ -714,14 +714,14 @@ const styles = StyleSheet.create({
   },
   dateNumber: {
     fontSize: 50.69,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.semiBold,
     color: colors.black,
     marginRight: 10,
   },
   dayText: {
     fontSize: 16,
-    fontWeight: '500',
+     
     color: '#BCC1CD',
     fontFamily: fontFamily.regular,
   },
@@ -740,7 +740,7 @@ const styles = StyleSheet.create({
   todayText: {
     fontSize: 18,
     color: colors.black,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.medium,
   },
 

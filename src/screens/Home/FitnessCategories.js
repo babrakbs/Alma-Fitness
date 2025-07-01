@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { colors, fontFamily } from "../../constants";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsive-screen";
 
 const { width } = Dimensions.get("window");
 
@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 16,
-    fontWeight: "500",
-    color: colors.darkWhite,
-    marginBottom: 10,
+    // fontWeight: "500",
+    color: '#B6B6B6',
+    marginBottom: heightPercentageToDP(1.6),
     fontFamily: fontFamily.regular,
   },
   itemContainer: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   image: {
-    width: 117,
+    width: 120,
     height: 107,
     justifyContent: "center",
     alignItems: "center",

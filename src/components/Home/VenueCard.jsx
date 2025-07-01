@@ -168,7 +168,6 @@ const styles = StyleSheet.create({
   pillText: {
     color: colors.black,
     fontFamily: fontFamily.medium,
-    fontWeight: '500',
     fontSize: 11.55,
   },
   textRow: {
@@ -181,19 +180,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   venueName: {
-    fontSize: 18,
-    fontWeight: '500',
-    fontFamily: fontFamily.semiBold,
+    fontSize: 17.87,
+    //  
+    fontFamily: fontFamily.medium,
     color: colors.black,
   },
   venueTime: {
-    fontSize: 14,
+    fontSize: 10.92,
     fontFamily: fontFamily.regular,
-    color: colors.darkGray,
-    textDecorationLine: 'underline'
+    color: '#8A8A8A',
+    textDecorationLine: 'underline',
+    lineHeight:13.5
   },
   errorText: {
-    // Style for the error message
     color: 'red',
     fontSize: 10,
     textAlign: 'center',

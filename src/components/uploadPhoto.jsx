@@ -8,7 +8,7 @@ const UploadPhoto = ({ photo, setPhoto }) => {
         launchImageLibrary(
             {
                 mediaType: 'photo',
-                quality: 0.7,
+                quality: 0.8,
                 includeBase64: false,
             },
             response => {
@@ -54,8 +54,8 @@ const UploadPhoto = ({ photo, setPhoto }) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
         backgroundColor: '#DBDCDB',
         borderRadius: 100,
         // justifyContent: 'flex-end',

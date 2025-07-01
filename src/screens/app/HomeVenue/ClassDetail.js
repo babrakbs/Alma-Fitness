@@ -143,7 +143,7 @@ const ClassDetail = ({ route }) => {
   const addedCalendarSheetRef = useRef();
   const classDetailRef = useRef();
   const screenHeight = Dimensions.get('window').height;
-  const snapPoint = screenHeight > 800 && Platform.OS === 'android' ? '60%' :Platform.OS === 'ios' ? '52' : '56%';
+  const snapPoint = screenHeight > 800 && Platform.OS === 'android' ? '60%' :Platform.OS === 'ios' ? '58' : '56%';
   const navigation = useNavigation();
   const classId = route?.params?.id;
   const [classDetails, setClassDetails] = useState([]);
@@ -407,7 +407,7 @@ const ClassDetail = ({ route }) => {
                 <Text
                   style={{
                     color: colors.white,
-                    fontWeight: '500',
+                     
                     fontSize: 16,
                     fontFamily: fontFamily.medium,
                   }}>
@@ -443,7 +443,7 @@ const ClassDetail = ({ route }) => {
                 <Text
                   style={{
                     color: colors.white,
-                    fontWeight: '500',
+                     
                     fontSize: 16,
                     fontFamily: fontFamily.medium,
                   }}>
@@ -554,12 +554,12 @@ const ClassDetail = ({ route }) => {
                   width: '90%',
                   margin: 'auto',
                 }}>
-                <View style={{ flexDirection: 'row', gap: 10 }}>
+                <View style={{ flexDirection: 'row', gap: 10, marginLeft:widthPercentageToDP(0.2),marginTop: heightPercentageToDP(0.4) }}>
                   <Text
                     style={{
                       color: colors.black,
                       fontFamily: fontFamily.medium,
-                      fontWeight: '500',
+                       
                       fontSize: 17,
                     }}>
                     {classDetails?.start_date
@@ -585,11 +585,11 @@ const ClassDetail = ({ route }) => {
                   <Text
                     style={{
                       fontSize: 28,
-                      fontWeight: '600',
+                      // fontWeight: '600',
                       fontFamily: fontFamily.semiBold,
                       color: colors.black,
                     }}>
-                    {classDetails?.class_title.trim()}
+                    {classDetails?.class_title?.trim()}
                   </Text>
 
 
@@ -628,15 +628,15 @@ const ClassDetail = ({ route }) => {
                       <Text
                         style={{
                           color: '#8A8A8A',
-                          fontWeight: '500',
+                           
                           fontSize: 15.88,
-                          fontFamily: fontFamily.semiBold,
+                          fontFamily: fontFamily.medium,
                         }}>
                         Available Spots
                       </Text>
                       <Text
                         style={{
-                          fontWeight: '500',
+                           
                           fontSize: 15.88,
                           color: colors.black,
                           fontFamily: fontFamily.medium,
@@ -702,7 +702,7 @@ const ClassDetail = ({ route }) => {
                   <Text
                     style={{
                       color: '#15161E',
-                      fontWeight: '500',
+                       
                       fontSize: 18,
                       fontFamily: fontFamily.semiBold,
                       marginHorizontal: 10,
@@ -722,7 +722,7 @@ const ClassDetail = ({ route }) => {
                     justifyContent: 'center',
                     borderRadius: 22,
                   }}>
-                  <ArrowIcon />
+                   <Image source={require('../../../assets/images/arrowRightDark.png')}/>
                 </Pressable>
               </Pressable>
               <View
@@ -873,7 +873,7 @@ const ClassDetail = ({ route }) => {
               alignItems: 'center',
               justifyContent: 'center',
               height: heightPercentageToDP(20),
-              paddingHorizontal: widthPercentageToDP(3),
+              paddingHorizontal: widthPercentageToDP(6),
               // elevation:10,
               backgroundColor: '#fff', // Optional: for visibility
               elevation: 5,
@@ -927,7 +927,7 @@ const ClassDetail = ({ route }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginTop: heightPercentageToDP(2),
+                // marginTop: heightPercentageToDP(1),
               }}>
               <Button
                 widthSize="xmedium"
@@ -1048,7 +1048,8 @@ const ClassDetail = ({ route }) => {
             onOpenChange={setShowBlur}>
             <View
               style={{
-                width: '100%',
+                width: '95%',
+                alignSelf:'center',
                 margin: 'auto',
                 marginTop: 10,
                 backgroundColor: 'white',
@@ -1080,17 +1081,14 @@ const ClassDetail = ({ route }) => {
                 </Text>
                 <Text
                   style={{
-                    fontWeight: '400',
+                    // fontWeight: '400',
                     fontSize: 14,
                     color: colors.gray,
                     lineHeight: 24,
                     fontFamily: fontFamily.regular,
                     marginTop: 10,
                   }}>
-                  Canceling your spot less than 6 hours before the booking
-                  starts will incur a €5 late cancellation fee. The remaining
-                  cost of the booking will be automatically refunded to your
-                  account for future use.
+                  {`Canceling your spot less than 6 hours before the booking\nstarts will incur a €5 late cancellation fee. The remaining cost\nof the booking will be automatically refunded to your account\nfor future use.`}
                 </Text>
               </View>
               <View style={styles.sectionClass}>
@@ -1113,9 +1111,9 @@ const ClassDetail = ({ route }) => {
                     fontFamily: fontFamily.regular,
 
                     marginTop: 10,
+                    marginBottom:heightPercentageToDP(3)
                   }}>
-                  Canceling your booking less than 1 hour before it starts, or
-                  failing to attend, will result in no refunds being issued.
+            {`Canceling your booking less than 1 hour before it starts, or\nfailing to attend, will result in no refunds being issued.`}
                 </Text>
               </View>
             </View>
@@ -1301,7 +1299,7 @@ const styles = StyleSheet.create({
   },
   locationText: {
     color: '#8A8A8A',
-    fontWeight: '500',
+     
     fontFamily: fontFamily.medium,
     fontSize: 12,
     textAlign: 'left',

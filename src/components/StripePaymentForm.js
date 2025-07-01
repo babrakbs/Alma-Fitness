@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   codeNote: {
     fontSize: 14,
     marginTop: 8,
-    fontWeight: '500',
+     
   },
   codeBlock: {
     backgroundColor: '#f8f8f8',

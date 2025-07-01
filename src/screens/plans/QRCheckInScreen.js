@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.black,
     fontFamily: fontFamily.medium,
-    fontWeight: '500',
+     
     marginVertical: heightPercentageToDP(2),
   },
   dragThumbContainer: {

@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     color: colors.darkGray,
     textDecorationLine: "underline",
     fontFamily: fontFamily.regular,
-    // fontWeight: '500',
+    //  
     fontSize: 13,
   },
 });

@@ -85,13 +85,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   featured: {
-    color: colors.darkWhite,
+    color: '#B6B6B6',
     fontWeight: "500",
     fontFamily: fontFamily.regular,
     fontSize: 16,
   },
   viewAll: {
-    color: "#818C81",
+    color: "#B6B6B6",
     fontSize: 14,
     fontWeight: "400",
     fontFamily: fontFamily.regular,

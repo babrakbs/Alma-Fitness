@@ -1,6 +1,7 @@
 /** @format */
 
 import {
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -86,7 +87,8 @@ const Explore = () => {
 
   return (
     <ScrollView style={{ ...styles.container }}>
-      <SafeAreaView />
+      {/* <SafeAreaView  /> */}
+      {/* <StatusBar backgroundColor={'white'} /> */}
 
       <View
         style={{
@@ -96,8 +98,9 @@ const Explore = () => {
             height:3
           },
           shadowOpacity:0.2,
-          paddingBottom: heightPercentageToDP(2),
+          paddingBottom: heightPercentageToDP(3),
           backgroundColor: "white",
+          paddingTop: heightPercentageToDP(6),
         }}
       >
         <View style={styles.header}>
@@ -108,34 +111,35 @@ const Explore = () => {
               <Text
                 style={
                   selectedSpan == "Venues"
-                    ? [styles.selectedText, { marginRight: 10 }]
+                    ? [styles.selectedText, { marginRight: 12.5 }]
                     : styles.text
                 }
               >
-                Venues
+              Venues
               </Text>
             </Pressable>
             <Pressable onPress={() => setSelectedSpan("Classes")}>
               <Text
                 style={
                   selectedSpan == "Classes"
-                    ? [styles.selectedText, { marginLeft: 10 }]
+                    ? [styles.selectedText, { marginLeft: 12.5 }]
                     : styles.text
                 }
               >
-                Classes
+              {" "}Classes
               </Text>
             </Pressable>
           </View>
           <Pressable>
-            <MapIcon />
+            {/* <MapIcon /> */}
+          <Image source={require('../../assets/icons/class_icon_new.png')} style={{width: 25, height: 25}} />
           </Pressable>
         </View>
         <View style={{ marginTop: "5%" }}>
           <SearchBarFilter
             value={search}
             leftIcon={<Search />}
-            icon={<FilterIcon />}
+            icon={<Image source={require('../../assets/icons/filter_icon_new.png')} style={{width: 20, height: 20}} />}
             onRightIconClick={handleNavigation}
             onChangeText={setSearch}
           />

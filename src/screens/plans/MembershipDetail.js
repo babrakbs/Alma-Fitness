@@ -365,7 +365,7 @@ const MembershipDetail = ({ route }) => {
             </Text>
             <Text style={styles.termsText}>
               By proceeding, you agree to our{" "}
-              <Text style={styles.link}>Terms of Service</Text> and{" "}
+              <Text style={styles.link}>Terms of Service</Text> {`and\n`}
               <Text style={styles.link}>Privacy Policy</Text>. Your card will
               be charged €{formattedAmount.whole},{formattedAmount.decimal}{" "}
               today, and your membership will automatically renew every month
@@ -407,10 +407,10 @@ const styles = StyleSheet.create({
     // padding: 20,
     width: "100%",
     alignSelf: "center",
-    backgroundColor: "#f8f8f8",
+    // backgroundColor: "#fff",
   },
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     borderRadius: 15,
     // padding: 20,
     shadowColor: "#000",
@@ -426,14 +426,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  divider: {
-    width: "100%",
-    alignSelf: "center",
-    // marginTop: '3%',
-    height: 0.5,
-    backgroundColor: colors.lightGray,
-    borderWidth: 0.31,
-  },
+  // divider: {
+  //   width: "100%",
+  //   alignSelf: "center",
+  //   // marginTop: '3%',
+  //   height: 0.5,
+  //   backgroundColor: colors.lightGray,
+  //   borderWidth: 0.31,
+  // },
+    divider: {
+      width: '100%',
+      alignSelf: 'center',
+      // marginTop: '3%',
+      // height: heightPercentageToDP(0.1),
+      backgroundColor: '#15161E',
+      borderWidth: Platform.OS === 'ios' ? 0.2 : 0.17,
+      marginBottom: heightPercentageToDP(1),
+      marginTop: heightPercentageToDP(2),
+    },
   tagText: {
     fontSize: 14,
     color: colors.black,
@@ -505,6 +515,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.regular,
     paddingHorizontal: "3%",
+    lineHeight:19
     
   },
   link: {

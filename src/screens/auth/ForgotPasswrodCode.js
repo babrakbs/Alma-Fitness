@@ -16,7 +16,7 @@ const ForgotPasswrodCode = ({route}) => {
   const [otpError, setOtpError] = useState(''); // State for OTP error message
   const [loading, setLoading] = useState(false); // Add loading state
   const [countdown, setCountdown] = useState(0);
-  const {email} = route?.params;
+  const {email} = route?.params ? route?.params : {};
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -231,9 +231,10 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     color: '#15161E',
+    fontFamily:fontFamily.regular,
     margin: 'auto',
     fontSize: 18,
-    fontWeight: '500',
+     
     textAlign: 'center',
   },
   text: {

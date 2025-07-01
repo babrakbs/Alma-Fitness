@@ -1,8 +1,8 @@
-import {Pressable, StyleSheet, Text, TextInput, View} from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import React from 'react';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import FilterIcon from '../../assets/icons/FilterIcon';
-import {colors, fontFamily} from '../../constants';
+import { colors, fontFamily } from '../../constants';
 
 const SearchBarFilter = props => {
   return (
@@ -15,7 +15,13 @@ const SearchBarFilter = props => {
         value={props.value}
         onChangeText={props.onChangeText}
       />
-      <Pressable onPress={props.onRightIconClick}>{props?.icon}</Pressable>
+      <Pressable onPress={props.onRightIconClick}>
+        {typeof props.icon === 'number' ? (
+          <Image source={props.icon} style={{ width: 20, height: 20 }} />
+        ) : (
+          props.icon
+        )}
+      </Pressable>
     </View>
   );
 };

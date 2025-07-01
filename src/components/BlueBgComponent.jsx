@@ -89,7 +89,7 @@ const BlueBgComponent = ({
                 style={{
                   color: colors.white,
                   fontSize: 16,
-                  fontWeight: '500',
+                   
                   fontFamily: fontFamily.medium,
                   textAlign: 'center',
                   marginTop: 16,
@@ -101,7 +101,7 @@ const BlueBgComponent = ({
                   color: colors.white,
                   fontSize: 16,
                   textAlign: 'center',
-                  fontWeight: '500',
+                   
                   fontFamily: fontFamily.medium,
                 }}>
                 {profileNumber || '#123123'}

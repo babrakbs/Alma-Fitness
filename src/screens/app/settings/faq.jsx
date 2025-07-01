@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     title: {
         color: '#15161E',
         fontSize: 16,
-        fontWeight: '500',
+         
         fontFamily: 'Inter Tight',
     },
     helpCentreLink: {
         color: '#15161E',
         fontSize: 14,
-        fontWeight: '500',
+         
         fontFamily: 'Inter Tight',
         marginTop: 8,
     },

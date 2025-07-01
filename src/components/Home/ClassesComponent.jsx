@@ -8,7 +8,7 @@ import ClassesCardAttached from './ClassesCardAttached';
 const ClassesComponent = ({classVenues}) => {
   return (
     <View style={styles.contianer}>
-      <View style={{marginVertical: 20}}>
+      <View style={{marginTop: 20}}>
         {Array.isArray(classVenues) && classVenues.length > 0 ? (
           classVenues.map((d, index) => (
             <ClassesCardAttached

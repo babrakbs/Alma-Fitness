@@ -107,7 +107,7 @@ const TabNavigation = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
   },
   tabBar: {
     backgroundColor: colors.black,
@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 60,
     alignItems: 'center',
-    width: width * 0.8,
+    width: width * 0.76,
     paddingBottom: 5,
-    marginHorizontal: 5,
+    marginHorizontal: widthPercentageToDP(4),
     marginBottom: Platform.OS === 'ios' ? heightPercentageToDP(4) : heightPercentageToDP(2)
   },
   iconWrapper: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   activeTab: {
-    backgroundColor: colors.white,
+    backgroundColor: '#fff',
     marginTop: 4,
     borderRadius: 25,
     paddingHorizontal: widthPercentageToDP(2.5),
@@ -160,9 +160,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 12,
     elevation: 20,
-    marginHorizontal: 5,
-        marginBottom: Platform.OS === 'ios' ? heightPercentageToDP(2) : heightPercentageToDP(1)
-
+    marginHorizontal: widthPercentageToDP(4),
+    marginBottom: Platform.OS === 'ios' ? heightPercentageToDP(2) : heightPercentageToDP(1)
   },
 });
 

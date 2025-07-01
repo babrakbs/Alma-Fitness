@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   workoutText: {
     fontSize: 16,
-    fontWeight: '500',
+     
     color: '#EFEFEB',
   },
   totalCount: {

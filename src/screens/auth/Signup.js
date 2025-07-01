@@ -212,7 +212,7 @@ const Signup = ({ navigation }) => {
         primaryText="Already have an account?"
         navText="Log In"
         navTo="Login"
-        // marginTop={150}
+        marginTop={heightPercentageToDP(20)}
       />
     </ScrollView>
   );

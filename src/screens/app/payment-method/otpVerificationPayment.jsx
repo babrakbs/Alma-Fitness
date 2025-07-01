@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#15161E',
     margin: 'auto',
     fontSize: 18,
-    fontWeight: '500',
+     
     textAlign: 'center',
   },
   text: {

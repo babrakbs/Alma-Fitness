@@ -261,14 +261,14 @@ const styles = StyleSheet.create({
   },
   dateNumber: {
     fontSize: 50.69,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.semiBold,
     color: colors.black,
     marginRight: 10,
   },
   dayText: {
     fontSize: 16,
-    fontWeight: '500',
+     
     color: colors.darkWhite,
     fontFamily: fontFamily.regular,
   },
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#BCC1CD',
     marginLeft: 10,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.medium,
   },
   container2: {

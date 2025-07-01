@@ -13,7 +13,7 @@ const FilterPillText = ({text = 'Yoga', selected}) => {
         style={{
           //   borderWidth: 1,
           fontSize: 13.71,
-          fontWeight: '500',
+           
           fontFamily:fontFamily.regular,
           color: selected == text ? '#EFEFEB' : '#373A36',
           textDecorationLine: text == 'View more' ? 'underline' : 'none',

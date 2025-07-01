@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontFamily: fontFamily.medium,
     fontSize: 17.01,
-    fontWeight: '500',
+     
     lineHeight: 25.5,
   },
   backIcon: {

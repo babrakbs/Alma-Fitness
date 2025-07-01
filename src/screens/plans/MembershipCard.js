@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   tag: {
-    backgroundColor: colors.lightWhite,
+    backgroundColor: '#F5F4F4',
     alignSelf: 'flex-start',
     paddingVertical: '2%',
     paddingHorizontal: '10%',
@@ -106,17 +106,18 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     // marginTop: '3%',
-    height: 0.5,
-    backgroundColor: colors.lightGray,
-    borderWidth: Platform.OS === 'ios' ? 0.3 : 0.17,
+    // height: heightPercentageToDP(0.1),
+    backgroundColor: '#15161E',
+    borderWidth: Platform.OS === 'ios' ? 0.03 : 0.17,
     marginBottom: heightPercentageToDP(1),
-    marginTop: heightPercentageToDP(2)
+    marginTop: heightPercentageToDP(2),
   },
   tagText: {
-    fontSize: 14,
+    fontSize: 11.45,
+    lineHeight:16.5,
     color: colors.black,
-    fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+    fontFamily: fontFamily.medium,
+     
   },
   price: {
     fontSize: 64.5,
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
   },
   billingTitle: {
     fontSize: 18,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.semiBold,
     color: colors.black,
     marginBottom: 10,
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: fontFamily.semiBold,
     color: colors.darkWhite,
-    fontWeight: '500',
+     
   },
   totalRow: {
     flexDirection: 'row',
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 19,
     fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+     
   },
   benefitRow: {
     flexDirection: 'row',

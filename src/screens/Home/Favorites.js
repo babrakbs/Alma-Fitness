@@ -115,14 +115,14 @@ const styles = StyleSheet.create({
     width: 99,
     fontSize: 16,
     color: '#F5F5F5',
-    fontWeight: '500',
+     
   },
 
   selectedText: {
     color: '#15161E',
     alignSelf: 'center',
     alignItems: 'center',
-    fontWeight: '500',
+     
     fontSize: 16,
   },
 

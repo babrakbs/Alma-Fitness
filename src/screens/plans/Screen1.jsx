@@ -200,19 +200,20 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
           ...styles.getStarted,
           fontSize: 14,
           width: "60%",
-          marginBottom: 40,
-          marginTop: 20,
+          fontFamily: fontFamily.medium,
+          marginBottom: heightPercentageToDP(6),
+          marginTop: heightPercentageToDP(0.6),
           // color: plansData[selectedSpan][`${carouselIndex}`]['primaryColor'],
         }}
       >
-        Activate your monthly membership and save on workouts.
+        {`Activate your monthly membership\nand save on workouts.`}
       </Text>
       <ScrollView
         scrollEnabled={false}
         style={{
           ...styles.planContainer,
           // backgroundColor: plansData[selectedSpan][`${carouselIndex}`]['bgColor'],
-          flexGrow: Platform.OS === "ios" ? 0.73 : 0.85,
+          flexGrow: Platform.OS === "ios" ? 0.70 : 0.85,
         }}
       >
         {/* <Text>{props.data}</Text> */}
@@ -273,9 +274,27 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
               }}
             >
               {" "}
-              / {item?.recurring}
+              /{item?.recurring}
             </Text>
           </Text>
+
+
+
+          {/* <Text
+            style={{
+              ...styles.price,
+            }}
+          >€10
+            <Text
+              style={{
+                ...styles.time,
+              }}
+            >
+              {" "}
+              /{item?.recurring}
+            </Text>
+          </Text> */}
+          
           <View style={styles.divider} />
           {/* <Text
           style={{
@@ -322,7 +341,7 @@ const Screen1 = ({ selectedSpan, carouselIndex, isScrolling, item }) => {
             </Text>
           ))}
         </View>
-        <View style={{ ...styles.footer, marginTop: "2%" }}>
+        <View style={{ alignItems:'center', justifyContent:'center' }}>
           <Button
             fontSize={15}
             text="Continue"
@@ -369,16 +388,16 @@ const styles = StyleSheet.create({
     // flex:1,
     // borderWidth: 1,
     // borderColor: 'green',
-    width: "95%",
+    width: "92%",
     alignSelf: "center",
     backgroundColor: colors.white,
-    borderRadius: 24,
+    borderRadius: 20,
     // marginTop: heightPercentageToDP(10),
     // height: 600,
     // height: 600,
   },
   heading: {
-    marginTop: "10%",
+    marginTop: "7%",
     // borderWidth: 1,
     height: "30%",
     width: "80%",
@@ -391,10 +410,11 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     // marginTop: '10%',
-    marginVertical: heightPercentageToDP(2),
-    height: 0.5,
-    backgroundColor: '#15161E',
-    borderWidth: Platform.OS === "ios" ? 0.31 : 0.2,
+    marginVertical: heightPercentageToDP(1.4),
+    height: heightPercentageToDP(0.2),
+    backgroundColor: '#F0F0F0',
+    borderColor:'#F0F0F0',
+    borderWidth: Platform.OS === "ios" ? 1 : 0.2,
   },
   planName: {
     fontSize: 22.28,
@@ -404,13 +424,13 @@ const styles = StyleSheet.create({
   memberShipView: {
     width: "55%",
     height: "30%",
-    backgroundColor: colors.lightWhite,
-    borderRadius: 8,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   memberShip: {
-    fontSize: 14.86,
+    fontSize: 13.03,
     textAlign: "center",
 
     fontFamily: fontFamily.medium,
@@ -428,7 +448,7 @@ const styles = StyleSheet.create({
   getStarted: {
     color: colors.white,
     fontSize: 26,
-    fontFamily: fontFamily.medium,
+    fontFamily: fontFamily.semiBold,
     // fontWeight: "600",
     textAlign: "center",
     alignSelf: "center",
@@ -501,8 +521,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#261F63",
     borderWidth: 1,
     borderColor: colors.darkGray,
-    paddingHorizontal: 18,
-    paddingVertical: 4,
+    paddingHorizontal: widthPercentageToDP(4),
+    paddingVertical: heightPercentageToDP(0.6),
     textAlign: "center",
     borderRadius: 100,
   },

@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 20,
-    fontWeight: '500',
+     
     color: colors.black,
     fontFamily: fontFamily.medium,
   },

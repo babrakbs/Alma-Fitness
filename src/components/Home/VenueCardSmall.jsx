@@ -94,7 +94,7 @@ const VenueCardSmall = ({
               style={{
                 color: '#818C81',
                 // textDecorationLine: 'underline',
-                fontWeight: '500',
+                 
                 fontSize: 14,
               }}>
               {time}

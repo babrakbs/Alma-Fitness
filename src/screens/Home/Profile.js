@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
   name: {
     // marginTop: 15,
     // margin: 'auto',
-    // fontWeight: '500',
+    //  
     fontSize: 15,
     fontFamily: fontFamily.semiBold,
     color: '#8A8A8A',
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontWeight: '500',
+     
     fontFamily: fontFamily.regular,
     color: colors.darkGray2,
   },
@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     fontFamily: fontFamily.semiBold,
-    fontWeight: '500',
+     
     borderBottomColor: colors.black,
     color: colors.black,
   },
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
 
   selectedText: {
     color: colors.black,
-    // fontWeight: '500',
+    //  
     fontFamily: fontFamily.medium,
     fontSize: 24,
   },
@@ -544,14 +544,14 @@ const styles = StyleSheet.create({
     color: colors.darkWhite,
     fontFamily: fontFamily.medium,
     fontSize: 24,
-    fontWeight: '500',
+     
   },
   venueText: {
     fontFamily: fontFamily.regular,
     color: colors.darkWhite,
     paddingHorizontal: 10,
     fontSize: 16,
-    fontWeight: '500',
+     
     marginBottom: 10,
   },
   sectionContainer: {
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '500',
+     
     color: '#B6B6B6',
     fontFamily: fontFamily.regular,
     marginBottom: 15,

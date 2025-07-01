@@ -13,6 +13,7 @@ import { colors, fontFamily } from '../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
 // import DropdownIcon from '../assets/icons/DropDown_icon.svg';
+import { Dropdown } from 'react-native-element-dropdown';
 
 interface InputProps {
   placeholder: string;
@@ -124,7 +125,8 @@ const Input: React.FC<InputProps> = ({
           </TouchableOpacity>
         ) : placeholder === 'Name' ? (
           <TextInput
-            placeholderTextColor={colors.darkWhite}
+            // placeholderTextColor={colors.darkWhite}
+            placeholderTextColor={'#A3A3A3'}
             placeholder={placeholder}
             style={
               customStyles
@@ -144,7 +146,7 @@ const Input: React.FC<InputProps> = ({
           />
         ) : (
           <TextInput
-            placeholderTextColor={colors.darkWhite}
+            placeholderTextColor={'#A3A3A3'}
             placeholder={placeholder}
             style={
               customStyles
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.black,
     fontFamily: fontFamily.regular,
-    fontSize: 16,
+    fontSize: 15.44,
     height: heightPercentageToDP(5.6),
   },
   inputText: {

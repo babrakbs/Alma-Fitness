@@ -7,8 +7,8 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {colors, fontFamily} from '../constants';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
+import { colors, fontFamily } from '../constants';
+import { heightPercentageToDP } from 'react-native-responsive-screen';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Button = ({
@@ -44,8 +44,8 @@ const Button = ({
         styles.textStyle,
         styles[`${theme}`].text,
         textBold ? styles?.boldText : styles?.nonBold,
-        {fontSize: fontSize && fontSize},
-        transparent && {color: colors.white},
+        { fontSize: fontSize && fontSize },
+        transparent && { color: colors.white },
       ]}>
       {text}
     </Text>
@@ -55,35 +55,35 @@ const Button = ({
     return (
       <LinearGradient
         colors={['#383EF6', '#4D38C1', '#4E39C4']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
         style={[
           styles.buttonContainer,
           styles[`${theme}`]?.button,
           styles?.widthSize[widthSize],
           !borderLess && [
             styles?.border,
-            {borderColor: theme === 'gray' ? colors.darkWhite : colors.black},
+            { borderColor: theme === 'gray' ? colors.darkWhite : colors.black },
           ],
           disabled && styles.disabled,
-          {marginTop: marginTop},
-          {borderRadius: rounded},
-          deleteBtn && {backgroundColor: colors.red},
+          { marginTop: marginTop },
+          { borderRadius: rounded },
+          deleteBtn && { backgroundColor: colors.red },
           elevation
             ? Platform.select({
-                ios: {
-                  shadowColor: '#000',
-                  shadowOffset: {width: 0, height: 2},
-                  shadowOpacity: 0.2,
-                  shadowRadius: 4,
-                },
-                android: {elevation: 2},
-              })
-            : {elevation: 0},
+              ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 4,
+              },
+              android: { elevation: 2 },
+            })
+            : { elevation: 0 },
         ]}>
         <Pressable
           onPress={handleClick}
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
           disabled={disabled}>
           {buttonContent}
         </Pressable>
@@ -100,23 +100,23 @@ const Button = ({
         styles?.widthSize[widthSize],
         !borderLess && [
           styles?.border,
-          {borderColor: theme === 'gray' ? colors.darkWhite : colors.darkWhite},
+          { borderColor: theme === 'gray' ? colors.darkWhite : colors.darkWhite },
         ],
         disabled && styles.disabled,
-        {marginTop: marginTop},
-        {borderRadius: rounded},
-        deleteBtn && {backgroundColor: colors.red},
+        { marginTop: marginTop },
+        { borderRadius: rounded },
+        deleteBtn && { backgroundColor: colors.red },
         elevation
           ? Platform.select({
-              ios: {
-                shadowColor: '#000',
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.2,
-                shadowRadius: 4,
-              },
-              android: {elevation: 2},
-            })
-          : {elevation: 0},
+            ios: {
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+            },
+            android: { elevation: 2 },
+          })
+          : { elevation: 0 },
       ]}
       disabled={disabled}>
       {buttonContent}
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     },
     text: {
       color: colors.white,
-      fontWeight: '500',
+       
       fontSize: 16,
       fontFamily: fontFamily.medium,
     },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.darkWhite,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.darkWhite,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.black,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.white,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.black,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
@@ -213,14 +213,15 @@ const styles = StyleSheet.create({
     text: {
       fontFamily: fontFamily.medium,
       color: colors.black,
-      fontWeight: '500',
+       
       fontSize: 16,
     },
   },
   textStyle: {
     margin: 'auto',
-    fontSize: 18,
+    fontSize: 16,
     borderWidth: 1,
+    fontFamily: fontFamily.medium,
     borderColor: 'transparent',
   },
   widthSize: {
@@ -234,7 +235,8 @@ const styles = StyleSheet.create({
       width: '65%',
     },
     xmedium: {
-      width: '45%',
+      width: '48.4%',
+      height:'50%'
     },
     small: {
       width: '41%',
@@ -251,7 +253,7 @@ const styles = StyleSheet.create({
     // fontWeight: '800',
   },
   nonBold: {
-    fontWeight: '500',
+     
   },
   disabled: {
     // backgroundColor: '#DCDCDC',

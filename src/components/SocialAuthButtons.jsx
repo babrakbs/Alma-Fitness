@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginHorizontal: 10,
-    width: widthPercentageToDP(13),
-    height: widthPercentageToDP(13),
+    width: widthPercentageToDP(16),
+    height: widthPercentageToDP(16),
     borderColor: "#E1E4E8",
     borderWidth: 1,
     display: "flex",

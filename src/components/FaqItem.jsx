@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   questionText: {
     color: '#15161E',
     fontSize: 14,
-    fontWeight: '500',
+     
     fontFamily: 'Inter Tight',
   },
   icon: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   answerText: {
     color: '#46515A',
     fontSize: 12,
-    fontWeight: '500',
+     
     fontFamily: 'Inter Tight',
     marginTop: 10,
   },

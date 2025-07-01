@@ -1,14 +1,16 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 import axios from 'axios'; // Import axios
 import HeaderIconText from '../../components/HeaderIconText';
 import Input from '../../components/input';
 import EmailSvg from '../../assets/icons/EmailSvg';
 import Button from '../../components/Button';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/header';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import axiosInstance from '../../helper/axiosInstance';
+import { colors, fontFamily } from '../../constants';
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const ForgotPassword = () => {
   const navigation = useNavigation();
@@ -49,7 +51,7 @@ const ForgotPassword = () => {
         response.data.meta.code !== 200 &&
         response.data.meta.message
       ) {
-        console.error(
+        console.log(
           'Forgot password request failed (application-level):',
           response.data,
         );
@@ -62,7 +64,7 @@ const ForgotPassword = () => {
           (response.data.meta && response.data.meta.code >= 400))
       ) {
         // Fallback for other error structures
-        console.error(
+        console.log(
           'Forgot password request failed (application-level, other structure):',
           response.data,
         );
@@ -74,7 +76,7 @@ const ForgotPassword = () => {
       navigation.navigate('ForgotPasswrodCode');
     } catch (error) {
       // This block will catch network errors or if axiosInstance is configured to throw on HTTP errors
-      console.error(
+      console.log(
         'Error during forgot password request (network/HTTP):',
         error,
       );
@@ -102,8 +104,8 @@ const ForgotPassword = () => {
   return (
     <>
       <ScrollView style={styles.container}>
-                <SafeAreaView/>
-        
+        <SafeAreaView />
+
         <Header
           // theme="dark"
           showArrow={true}
@@ -113,9 +115,11 @@ const ForgotPassword = () => {
           size={116}
           iconMTop={20}
           headingMTop={30}
-          additionalText="Please enter your email address below to receive a one-time verification code."
+        // additionalText={`Please enter your email address below to receive \na one-time verification code.`}
         />
-        <View style={{marginTop: 40}}>
+        <Text style={[styles.additionalText, { marginTop: heightPercentageToDP(1.5) }]}>Please enter your email address below to receive</Text>
+        <Text style={styles.additionalText}>a one-time verification code.</Text>
+        <View style={{ marginTop: 40 }}>
           <Input
             placeholder="Email"
             // showLeftIcon={true}
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '90%',
     marginHorizontal: '5%',
-    marginBottom: 20,
+    marginBottom: heightPercentageToDP(6),
   },
   errorText: {
     // Style for the error message
@@ -161,5 +165,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 5,
     marginLeft: 10, // Adjust as needed for alignment with your Input component
+  },
+  additionalText: {
+    color: colors.darkWhite,
+    fontFamily: fontFamily.regular,
+    textAlign: 'center',
+    fontWeight: '400',
+    fontSize: 14,
+    // marginTop: 20,
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: widthPercentageToDP(80),
+    justifyContent: 'center',
   },
 });

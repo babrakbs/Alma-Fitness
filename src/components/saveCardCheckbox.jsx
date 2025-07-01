@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     label: {
         color: "#3A3A3A",
         fontSize: 14,
-        fontWeight: '500',
+         
         fontFamily: 'Inter Tight, sans-serif',
     },
 });

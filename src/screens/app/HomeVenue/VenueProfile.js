@@ -106,7 +106,7 @@ const VenueProfile = () => {
           <Text
             style={{
               color: '#15161E',
-              fontWeight: '500',
+               
               fontSize: 18,
               marginHorizontal: 10,
             }}>
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   viewSchedule: {
     fontSize: 16,
-    fontWeight: '500',
+     
   },
   arrow: {
     fontSize: 18,
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    fontWeight: '500',
+     
     paddingHorizontal: 10,
   },
   time: {
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     textDecorationLine: 'underline',
     fontSize: 14,
-    fontWeight: '500',
+     
   },
 });
 

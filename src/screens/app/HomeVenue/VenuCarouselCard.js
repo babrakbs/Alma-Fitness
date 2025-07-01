@@ -86,7 +86,7 @@ const VenuCarouselCard = ({
               style={{
                 color: '#373A36',
                 // textDecorationLine: 'underline',
-                fontWeight: '500',
+                 
                 fontSize: 10,
               }}>
               {time}

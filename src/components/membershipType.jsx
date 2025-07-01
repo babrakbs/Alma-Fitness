@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#15161E',
-    fontWeight: '500',
+     
     fontSize: 16,
   },
   radioButtonView: {

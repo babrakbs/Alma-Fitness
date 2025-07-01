@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   container: {flex: 1, padding: 20, backgroundColor: colors.white},
   header: {
     fontSize: 24,
-    fontWeight: '500',
+     
     textAlign: 'center',
     marginBottom: 20,
     fontFamily: fontFamily.regular,
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '500',
+     
     marginVertical: 10,
     fontFamily: fontFamily.medium,
     color: colors.black,

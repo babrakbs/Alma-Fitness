@@ -508,7 +508,7 @@ const MembershipDetails = ({ navigation }) => {
                       styles.creditPrice,
                       credits[key].discount && {
                         color: colors.darkWhite,
-                        fontWeight: '500',
+                         
                         fontFamily: fontFamily.regular,
                       },
                     ]}>
